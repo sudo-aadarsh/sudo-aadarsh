@@ -25,17 +25,7 @@
 + LEVEL: Grinding 🚀
 ---
 
-<p align="center">
-  <img src="https://media.tenor.com/qJ5evVs-_uUAAAAC/coding.gif" width="650"/>
-</p>
 
----
-
-```diff
-+ STATUS: ONLINE
-+ USER: Aadarsh (sudo-aadarsh)
-+ ROLE: Developer
-+ LEVEL: Grinding 🚀
 
 
 
