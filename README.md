@@ -1,7 +1,4 @@
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0f2027,50:203a43,100:2c5364&height=200&section=header&text=Aadarsh&fontSize=40&fontColor=00F7FF&animation=fadeIn" />
-</p>
-<p align="center">
   <img src="https://komarev.com/ghpvc/?username=sudo-aadarsh&label=Profile%20views&color=0e75b6&style=flat" />
 <h1 align="center"> Aadarsh.exe </h1>
 <h3 align="center">> Initializing Developer Profile...</h3>
