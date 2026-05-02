@@ -14,7 +14,7 @@
 ---
 
 ## 🧠 About Me
-- 🎓 CSE @ VTU  
+- 🎓 CSE  
 - 💻 Love building real-world projects  
 - ⚡ Interested in Web Dev + System Design  
 - 🧩 Solving problems & improving daily  
@@ -48,13 +48,6 @@
   <img src="https://raw.githubusercontent.com/sudo-aadarsh/sudo-aadarsh/output/github-contribution-grid-snake.svg" />
 </p>
 
----
-
-## 🌐 Connect With Me
-<p align="center">
-  <a href="#"><img src="https://img.shields.io/badge/Instagram-pink?style=for-the-badge&logo=instagram"/></a>
-  <a href="#"><img src="https://img.shields.io/badge/LinkedIn-blue?style=for-the-badge&logo=linkedin"/></a>
-</p>
 
 ---
 
