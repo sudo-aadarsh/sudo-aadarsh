@@ -1,26 +1,10 @@
-<div align="center">
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?type=rect&color=0:000000,100:001a00&height=200&section=header&text=ACCESS%20GRANTED&fontSize=35&fontColor=00FF00&animation=fadeIn" />
+</p>
+<p align="center">
+  <img src="https://media.tenor.com/oqKQ0w9g9n8AAAAC/hacker.gif" width="600"/>
+</p>
 
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=22&duration=2000&pause=500&color=00FF00&center=true&vCenter=true&width=700&lines=booting+system...;initializing+user...;access+granted+🟢;welcome+sudo-aadarsh;" />
-
-</div>
-
----
-
-```bash
-$ whoami
-sudo-aadarsh
-
-$ role
-Full Stack Developer
-
-$ status
-Grinding 🚀
-
-$ interests
-Web Dev | System Design | Projects
-
-$ fun_fact
-Debugging > Coding 😅
 <p align="center">
   <img src="https://komarev.com/ghpvc/?username=sudo-aadarsh&label=Profile%20views&color=0e75b6&style=flat" />
 <h1 align="center"> Aadarsh.exe </h1>
