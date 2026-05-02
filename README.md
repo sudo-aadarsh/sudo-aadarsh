@@ -17,7 +17,9 @@
 </p>
 
 ---
-
+<p align="center">
+  <img src="https://raw.githubusercontent.com/sudo-aadarsh/sudo-aadarsh/output/github-contribution-grid-snake.svg" />
+</p>
 ```diff
 + STATUS: ONLINE
 + USER: Aadarsh (sudo-aadarsh)
