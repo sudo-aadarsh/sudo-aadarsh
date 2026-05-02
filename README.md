@@ -3,6 +3,8 @@
 <img
 
 src="https://readme-typing-svg.demolab com?font=Fira+Code&size=22&duration= 2000&pause=500&color=00FF00&center= true&vCenter=true&width=700&lines= booting+system...;initializing+user.. .;access+granted+;welcome+sudo- aadarsh;" />
+</div>
+---
 <p align="center">
   <img src="https://komarev.com/ghpvc/?username=sudo-aadarsh&label=Profile%20views&color=0e75b6&style=flat" />
 <h1 align="center"> Aadarsh.exe </h1>
