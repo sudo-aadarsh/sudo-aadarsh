@@ -1,6 +1,9 @@
 <p align="center">
   <img src="https://capsule-render.vercel.app/api?type=rect&color=0:000000,100:001a00&height=200&section=header&text=ACCESS%20GRANTED&fontSize=35&fontColor=00FF00&animation=fadeIn" />
 </p>
+<p align="center">
+  <img src="https://media.tenor.com/oqKQ0w9g9n8AAAAC/hacker.gif" width="600"/>
+</p>
 
 <p align="center">
   <img src="https://komarev.com/ghpvc/?username=sudo-aadarsh&label=Profile%20views&color=0e75b6&style=flat" />
