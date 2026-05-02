@@ -12,7 +12,9 @@
 </p>
 
 ---
+## 🐍 Contribution Snake
 
+![snake gif](https://github.com/sudo-aadarsh/sudo-aadarsh/blob/output/github-contribution-grid-snake.svg)
 ```diff
 + STATUS: ONLINE
 + USER: Aadarsh (sudo-aadarsh)
