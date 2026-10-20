@@ -1,4 +1,6 @@
-<h1 align="center"> Aadarsh </h1>
+<p align="center">
+  <img src="assets/aadarsh-ascii-art.gif" alt="Aadarsh Animated ASCII Art" width="450"/>
+</p>
 <h3 align="center">> Initializing Developer Profile...</h3>
 
 <p align="center">
