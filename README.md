@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/aadarsh-ascii-art.gif" alt="Aadarsh Animated ASCII Art" width="550"/>
+  <img src="assets/aadarsh-ascii-art.gif" alt="Aadarsh Animated ASCII Art" width="500"/>
 </p>
 
 <p align="center">
