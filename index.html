@@ -1,0 +1,2384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Aadarsh's Cyber Arcade ⚡ Chess, Tic-Tac-Toe, Cricket & Wordle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600;700&family=Orbitron:wght@600;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <style>
+    :root {
+      --bg: #070a12;
+      --card-bg: rgba(17, 24, 39, 0.95);
+      --card-border: #1e293b;
+      --cyan: #00f7ff;
+      --cyan-glow: rgba(0, 247, 255, 0.4);
+      --pink: #ff007f;
+      --pink-glow: rgba(255, 0, 127, 0.35);
+      --purple: #a855f7;
+      --gold: #fbbf24;
+      --green: #10b981;
+      --red: #ef4444;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(0, 247, 255, 0.09) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(255, 0, 127, 0.08) 0%, transparent 40%),
+        linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 36px 36px, 36px 36px;
+    }
+
+    /* HEADER */
+    header {
+      background: rgba(11, 17, 29, 0.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(0, 247, 255, 0.2);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand-icon {
+      font-size: 1.6rem;
+      filter: drop-shadow(0 0 8px var(--cyan));
+    }
+
+    .brand-title {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      font-size: 1.25rem;
+      letter-spacing: 2px;
+      background: linear-gradient(90deg, var(--cyan), #c084fc, var(--pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 10px rgba(0, 247, 255, 0.3));
+    }
+
+    .player-stats {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: rgba(15, 23, 42, 0.9);
+      padding: 8px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(0, 247, 255, 0.3);
+      box-shadow: 0 0 12px rgba(0, 247, 255, 0.15);
+      font-size: 0.9rem;
+    }
+
+    .player-name-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      color: var(--cyan);
+      font-weight: 700;
+    }
+
+    .player-name-badge:hover {
+      text-shadow: 0 0 8px var(--cyan);
+    }
+
+    .score-badge {
+      color: var(--gold);
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-icon {
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: var(--text);
+      padding: 8px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 0.88rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+
+    .btn-icon:hover {
+      background: #334155;
+      border-color: var(--cyan);
+      box-shadow: 0 0 12px var(--cyan-glow);
+    }
+
+    /* NAVIGATION TABS */
+    .nav-tabs-container {
+      max-width: 950px;
+      margin: 20px auto 10px;
+      width: 100%;
+      padding: 0 18px;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 10px;
+      background: rgba(17, 24, 39, 0.9);
+      padding: 8px;
+      border-radius: 16px;
+      border: 1px solid rgba(51, 65, 85, 0.8);
+      overflow-x: auto;
+      scrollbar-width: none;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .nav-tabs::-webkit-scrollbar { display: none; }
+
+    .tab-btn {
+      flex: 1;
+      min-width: 140px;
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .tab-btn:hover {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, rgba(0, 247, 255, 0.18), rgba(168, 85, 247, 0.18));
+      color: var(--cyan);
+      border-color: rgba(0, 247, 255, 0.5);
+      box-shadow: 0 0 16px var(--cyan-glow);
+      transform: translateY(-1px);
+    }
+
+    /* MAIN CONTENT */
+    main {
+      flex: 1;
+      max-width: 950px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 14px 18px 50px;
+    }
+
+    .game-section {
+      display: none;
+      animation: tabFadeIn 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .game-section.active { display: block; }
+
+    @keyframes tabFadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .game-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(0, 247, 255, 0.15);
+      border-radius: 20px;
+      padding: 26px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(12px);
+    }
+
+    .game-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 22px;
+      border-bottom: 1px solid rgba(51, 65, 85, 0.6);
+      padding-bottom: 18px;
+    }
+
+    .game-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.45rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .game-status-badge {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.88rem;
+      font-weight: 700;
+      padding: 5px 14px;
+      border-radius: 999px;
+      background: rgba(0, 247, 255, 0.12);
+      border: 1px solid rgba(0, 247, 255, 0.4);
+      color: var(--cyan);
+      box-shadow: 0 0 10px rgba(0, 247, 255, 0.2);
+    }
+
+    .btn-action {
+      background: linear-gradient(135deg, var(--cyan), #0284c7);
+      color: #070a12;
+      font-weight: 800;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 0 12px var(--cyan-glow);
+    }
+
+    .btn-action:hover {
+      box-shadow: 0 0 20px var(--cyan-glow);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: #1e293b;
+      color: var(--text);
+      border: 1px solid #334155;
+      box-shadow: none;
+    }
+
+    .btn-secondary:hover {
+      background: #334155;
+      color: var(--cyan);
+      border-color: var(--cyan);
+    }
+
+    /* =========================================
+       GAME 1: CHESS (ANIMATED PIECES)
+       ========================================= */
+    .chess-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+    }
+
+    #chess-board {
+      width: 380px;
+      height: 380px;
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      grid-template-rows: repeat(8, 1fr);
+      border: 4px solid #334155;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7);
+      user-select: none;
+      position: relative;
+    }
+
+    .chess-sq {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      transition: background-color 0.2s;
+    }
+
+    .chess-sq.light { background: #e2e8f0; }
+    .chess-sq.dark { background: #475569; }
+    .chess-sq.selected { background: #facc15 !important; }
+    .chess-sq.last-from { background: rgba(56, 189, 248, 0.45) !important; }
+    .chess-sq.last-to { background: rgba(56, 189, 248, 0.7) !important; }
+
+    .chess-sq.highlight::after {
+      content: '';
+      width: 16px;
+      height: 16px;
+      background: rgba(16, 185, 129, 0.85);
+      border-radius: 50%;
+      position: absolute;
+      box-shadow: 0 0 8px rgba(16, 185, 129, 0.8);
+      pointer-events: none;
+    }
+
+    .chess-piece {
+      font-size: 2.1rem;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+      z-index: 2;
+    }
+
+    .chess-piece.white {
+      color: #ffffff;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.9));
+    }
+
+    .chess-piece.black {
+      color: #0f172a;
+      filter: drop-shadow(0 2px 4px rgba(255, 255, 255, 0.35));
+    }
+
+    .chess-sq.check { background: #ef4444 !important; }
+
+    .chess-info-bar {
+      display: flex;
+      justify-content: space-between;
+      width: 380px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    /* =========================================
+       GAME 2: TIC-TAC-TOE
+       ========================================= */
+    .ttt-board-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 22px;
+    }
+
+    .ttt-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      grid-template-rows: repeat(3, 100px);
+      gap: 12px;
+      background: #1e293b;
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid #334155;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    }
+
+    .ttt-cell {
+      width: 100px;
+      height: 100px;
+      background: #0f172a;
+      border: 2px solid #334155;
+      border-radius: 14px;
+      font-size: 2.8rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .ttt-cell:hover:empty {
+      background: #1e293b;
+      border-color: var(--cyan);
+      box-shadow: 0 0 16px var(--cyan-glow);
+      transform: scale(1.04);
+    }
+
+    .ttt-cell.x {
+      color: #ef4444;
+      text-shadow: 0 0 16px rgba(239, 68, 68, 0.7);
+      animation: popIn 0.2s ease-out;
+    }
+
+    .ttt-cell.o {
+      color: #38bdf8;
+      text-shadow: 0 0 16px rgba(56, 189, 248, 0.7);
+      animation: popIn 0.2s ease-out;
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.4); opacity: 0; }
+      80% { transform: scale(1.15); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+
+    /* =========================================
+       GAME 3: SUPER CRICKET LEAGUE (AAA GRAPHICS & REAL PHYSICS)
+       ========================================= */
+    .cricket-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      width: 100%;
+    }
+
+    .cricket-scoreboard {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      max-width: 650px;
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(0, 247, 255, 0.3);
+      padding: 12px 22px;
+      border-radius: 14px;
+      box-shadow: 0 0 15px rgba(0, 247, 255, 0.15);
+      font-family: 'Fira Code', monospace;
+      font-size: 0.95rem;
+    }
+
+    .cricket-runs {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--gold);
+      text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+    }
+
+    .cricket-canvas-container {
+      position: relative;
+      width: 100%;
+      max-width: 650px;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 2px solid #334155;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+    }
+
+    #cricket-canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+      background: #070a12;
+    }
+
+    /* Animated Stadium LED Ribbon Header */
+    .stadium-ribbon-led {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.85);
+      border: 1px solid #334155;
+      padding: 4px 18px;
+      border-radius: 8px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      color: var(--cyan);
+      box-shadow: 0 0 10px rgba(0, 247, 255, 0.3);
+      z-index: 5;
+    }
+
+    .cricket-banner-overlay {
+      position: absolute;
+      top: 38%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.6);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.9rem;
+      font-weight: 900;
+      padding: 10px 28px;
+      border-radius: 12px;
+      pointer-events: none;
+      opacity: 0;
+      transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 20;
+      white-space: nowrap;
+      text-align: center;
+    }
+
+    .cricket-banner-overlay.show {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1.05);
+    }
+
+    .cricket-banner-overlay.four {
+      background: rgba(16, 185, 129, 0.95);
+      color: #fff;
+      box-shadow: 0 0 35px rgba(16, 185, 129, 0.9);
+      border: 2px solid #fff;
+    }
+
+    .cricket-banner-overlay.six {
+      background: rgba(234, 179, 8, 0.98);
+      color: #070a12;
+      box-shadow: 0 0 45px rgba(234, 179, 8, 1);
+      border: 2px solid #fff;
+    }
+
+    .cricket-banner-overlay.wicket {
+      background: rgba(239, 68, 68, 0.95);
+      color: #fff;
+      box-shadow: 0 0 35px rgba(239, 68, 68, 0.9);
+      border: 2px solid #fff;
+    }
+
+    .cricket-controls {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      width: 100%;
+      max-width: 650px;
+    }
+
+    .cricket-shot-buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      width: 100%;
+    }
+
+    .shot-btn {
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #fff;
+      padding: 12px 6px;
+      border-radius: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.18s;
+    }
+
+    .shot-btn:hover:not(:disabled) {
+      background: linear-gradient(135deg, var(--cyan), #0284c7);
+      color: #070a12;
+      border-color: var(--cyan);
+      box-shadow: 0 0 16px var(--cyan-glow);
+      transform: translateY(-2px);
+    }
+
+    .shot-btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    .shot-btn-title { font-size: 0.88rem; }
+    .shot-btn-desc { font-size: 0.7rem; opacity: 0.8; font-weight: 500; }
+
+    .cricket-action-bar {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      align-items: center;
+      background: rgba(15, 23, 42, 0.8);
+      padding: 10px 18px;
+      border-radius: 12px;
+      border: 1px solid #334155;
+    }
+
+    .cricket-over-balls {
+      display: flex;
+      gap: 8px;
+    }
+
+    .ball-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #1e293b;
+      border: 1px solid #334155;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 800;
+    }
+
+    .ball-dot.four { background: #10b981; color: #fff; box-shadow: 0 0 8px #10b981; }
+    .ball-dot.six { background: #eab308; color: #000; box-shadow: 0 0 10px #eab308; }
+    .ball-dot.wicket { background: #ef4444; color: #fff; box-shadow: 0 0 8px #ef4444; }
+
+    /* =========================================
+       GAME 4: DEVELOPER WORDLE (WITH HINTS!)
+       ========================================= */
+    .wordle-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .wordle-hint-card {
+      width: 100%;
+      max-width: 520px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px dashed rgba(0, 247, 255, 0.4);
+      border-radius: 14px;
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .wordle-hint-text {
+      font-size: 0.88rem;
+      color: var(--cyan);
+      font-weight: 600;
+    }
+
+    .btn-hint {
+      background: rgba(0, 247, 255, 0.15);
+      border: 1px solid var(--cyan);
+      color: var(--cyan);
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn-hint:hover:not(:disabled) {
+      background: var(--cyan);
+      color: #070a12;
+      box-shadow: 0 0 12px var(--cyan-glow);
+    }
+
+    .wordle-grid {
+      display: grid;
+      grid-template-rows: repeat(6, 1fr);
+      gap: 8px;
+    }
+
+    .wordle-row {
+      display: grid;
+      grid-template-columns: repeat(5, 54px);
+      gap: 8px;
+    }
+
+    .wordle-tile {
+      width: 54px;
+      height: 54px;
+      border: 2px solid #334155;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      background: #0f172a;
+      transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .wordle-tile.pop {
+      transform: scale(1.1);
+      border-color: var(--cyan);
+      box-shadow: 0 0 12px var(--cyan-glow);
+    }
+
+    .wordle-tile.flip {
+      animation: flipCard 0.4s ease forwards;
+    }
+
+    @keyframes flipCard {
+      0% { transform: rotateX(0); }
+      50% { transform: rotateX(90deg); }
+      100% { transform: rotateX(0); }
+    }
+
+    .wordle-tile.green { background: #10b981; border-color: #10b981; color: #fff; box-shadow: 0 0 10px rgba(16, 185, 129, 0.5); }
+    .wordle-tile.yellow { background: #eab308; border-color: #eab308; color: #000; box-shadow: 0 0 10px rgba(234, 179, 8, 0.5); }
+    .wordle-tile.grey { background: #1f293d; border-color: #334155; color: #64748b; }
+
+    .keyboard {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      width: 100%;
+      max-width: 520px;
+    }
+
+    .keyboard-row {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .key-btn {
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: var(--text);
+      font-weight: 800;
+      height: 46px;
+      min-width: 34px;
+      padding: 0 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      transition: all 0.15s;
+    }
+
+    .key-btn.wide { min-width: 58px; font-size: 0.78rem; }
+    .key-btn:hover { background: #334155; border-color: var(--cyan); }
+    .key-btn.green { background: #10b981; border-color: #10b981; color: #fff; }
+    .key-btn.yellow { background: #eab308; border-color: #eab308; color: #000; }
+    .key-btn.grey { background: #141b26; border-color: #141b26; color: #475569; }
+
+    /* LEADERBOARD TABLE */
+    .leaderboard-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 14px;
+    }
+
+    .leaderboard-table th,
+    .leaderboard-table td {
+      padding: 14px 16px;
+      text-align: left;
+      border-bottom: 1px solid rgba(51, 65, 85, 0.6);
+    }
+
+    .leaderboard-table th {
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    .leaderboard-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .leaderboard-table tr.champion td {
+      background: rgba(251, 191, 36, 0.08);
+    }
+
+    .badge-chip {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: rgba(168, 85, 247, 0.15);
+      border: 1px solid rgba(168, 85, 247, 0.4);
+      color: #c084fc;
+      margin-right: 4px;
+      margin-bottom: 2px;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+      padding: 20px;
+    }
+
+    .modal-overlay.open { display: flex; }
+
+    .modal-card {
+      background: #111827;
+      border: 1px solid var(--cyan);
+      box-shadow: 0 0 35px var(--cyan-glow);
+      border-radius: 18px;
+      padding: 26px;
+      max-width: 420px;
+      width: 100%;
+    }
+
+    .modal-card h3 {
+      font-family: 'Orbitron', sans-serif;
+      margin-bottom: 10px;
+      font-size: 1.3rem;
+    }
+
+    .modal-input {
+      width: 100%;
+      background: #0f172a;
+      border: 1px solid #334155;
+      padding: 12px 16px;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 1rem;
+      margin: 16px 0;
+    }
+
+    .modal-input:focus {
+      outline: none;
+      border-color: var(--cyan);
+      box-shadow: 0 0 12px var(--cyan-glow);
+    }
+
+    footer {
+      text-align: center;
+      padding: 28px;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      border-top: 1px solid var(--card-border);
+    }
+
+    @media (max-width: 600px) {
+      .cricket-shot-buttons { grid-template-columns: repeat(2, 1fr); }
+      .cricket-scoreboard { font-size: 0.85rem; padding: 10px 14px; }
+      .cricket-runs { font-size: 1.25rem; }
+      #chess-board { width: 330px; height: 330px; }
+      .chess-piece { font-size: 1.8rem; }
+      .chess-info-bar { width: 330px; }
+      .ttt-grid { grid-template-columns: repeat(3, 80px); grid-template-rows: repeat(3, 80px); }
+      .ttt-cell { width: 80px; height: 80px; font-size: 2.2rem; }
+      .wordle-row { grid-template-columns: repeat(5, 46px); }
+      .wordle-tile { width: 46px; height: 46px; font-size: 1.3rem; }
+      .key-btn { height: 42px; min-width: 28px; padding: 0 8px; font-size: 0.8rem; }
+      .key-btn.wide { min-width: 48px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header Navigation -->
+  <header>
+    <a href="https://github.com/sudo-aadarsh" class="brand" target="_blank">
+      <span class="brand-icon">🕹️</span>
+      <span class="brand-title">AADARSH'S CYBER ARCADE</span>
+    </a>
+
+    <div class="player-stats">
+      <div class="player-name-badge" onclick="openUsernameModal()" title="Click to change your username">
+        <span>👾</span>
+        <span id="display-username">@Visitor</span>
+        <span style="font-size: 0.75rem; color: var(--text-muted);">(edit)</span>
+      </div>
+      <span>•</span>
+      <div class="score-badge">
+        <span>💎</span>
+        <span id="display-score">0</span> pts
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <button class="btn-icon" id="sound-btn" onclick="toggleSound()">
+        <span id="sound-icon">🔊</span>
+      </button>
+      <a href="https://github.com/sudo-aadarsh" class="btn-icon">
+        <span>GitHub Profile ↗</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Navigation Tabs (Order: Chess -> Tic-Tac-Toe -> Cricket -> Wordle -> Leaderboard) -->
+  <div class="nav-tabs-container">
+    <div class="nav-tabs">
+      <button class="tab-btn active" onclick="switchTab('chess')">♟️ Chess vs AI</button>
+      <button class="tab-btn" onclick="switchTab('ttt')">❌ Tic-Tac-Toe</button>
+      <button class="tab-btn" onclick="switchTab('cricket')">🏏 Super Cricket</button>
+      <button class="tab-btn" onclick="switchTab('wordle')">🟩 Dev Wordle</button>
+      <button class="tab-btn" onclick="switchTab('leaderboard')">🏆 Leaderboard</button>
+    </div>
+  </div>
+
+  <main>
+    <!-- =========================================
+         GAME 1: CHESS (WITH SMOOTH PIECE ANIMATION)
+         ========================================= -->
+    <section id="tab-chess" class="game-section active">
+      <div class="game-card">
+        <div class="game-header">
+          <div class="game-title">
+            <span>♟️ Chess vs Aadarsh-AI</span>
+            <span class="game-status-badge" id="chess-status">WHITE TO MOVE</span>
+          </div>
+          <button class="btn-action btn-secondary" onclick="resetChess()">🔄 New Chess Match</button>
+        </div>
+
+        <div class="chess-wrapper">
+          <div id="chess-board"></div>
+          <div class="chess-info-bar">
+            <span>You: White ⚪</span>
+            <span id="chess-eval">Aadarsh-AI: Black ⚫</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================
+         GAME 2: TIC-TAC-TOE
+         ========================================= -->
+    <section id="tab-ttt" class="game-section">
+      <div class="game-card">
+        <div class="game-header">
+          <div class="game-title">
+            <span>❌ Tic-Tac-Toe</span>
+            <span class="game-status-badge" id="ttt-status">YOUR TURN (❌)</span>
+          </div>
+          <button class="btn-action btn-secondary" onclick="resetTicTacToe()">🔄 Restart Game</button>
+        </div>
+
+        <div class="ttt-board-wrapper">
+          <div class="ttt-grid" id="ttt-grid"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================
+         GAME 3: SUPER CRICKET (AUTOMATIC BOWLING & REAL CROWD)
+         ========================================= -->
+    <section id="tab-cricket" class="game-section">
+      <div class="game-card">
+        <div class="game-header">
+          <div class="game-title">
+            <span>🏏 Super Cricket League</span>
+            <span class="game-status-badge" id="cricket-status">BOWLER RUNNING IN AUTOMATICALLY...</span>
+          </div>
+          <button class="btn-action btn-secondary" onclick="resetCricketMatch()">🔄 New Match</button>
+        </div>
+
+        <div class="cricket-wrapper">
+          <div class="cricket-scoreboard">
+            <div>
+              <span style="color:var(--text-muted);">SCORE: </span>
+              <span class="cricket-runs" id="cricket-score">0 / 0</span>
+            </div>
+            <div>
+              <span style="color:var(--text-muted);">TARGET: </span>
+              <span style="color:var(--cyan); font-weight:800;" id="cricket-target">24 runs</span>
+            </div>
+            <div>
+              <span style="color:var(--text-muted);">BALLS LEFT: </span>
+              <span style="font-weight:800;" id="cricket-balls">6</span>
+            </div>
+          </div>
+
+          <div class="cricket-canvas-container">
+            <div class="stadium-ribbon-led">★ CYBER PREMIER LEAGUE 2026 ★</div>
+            <canvas id="cricket-canvas" width="650" height="360"></canvas>
+            <div id="cricket-banner" class="cricket-banner-overlay"></div>
+          </div>
+
+          <div class="cricket-controls">
+            <div class="cricket-shot-buttons">
+              <button class="shot-btn" id="btn-shot-drive" onclick="playCricketShot('drive')">
+                <span class="shot-btn-title">🏏 COVER DRIVE</span>
+                <span class="shot-btn-desc">Ground 4 (A / ◀)</span>
+              </button>
+              <button class="shot-btn" id="btn-shot-straight" onclick="playCricketShot('straight')">
+                <span class="shot-btn-title">🚀 STRAIGHT SIX</span>
+                <span class="shot-btn-desc">Over Bowler (W / ▲)</span>
+              </button>
+              <button class="shot-btn" id="btn-shot-pull" onclick="playCricketShot('pull')">
+                <span class="shot-btn-title">⚡ HOOK / PULL</span>
+                <span class="shot-btn-desc">Mid-Wicket (D / ▶)</span>
+              </button>
+              <button class="shot-btn" id="btn-shot-defend" onclick="playCricketShot('defend')">
+                <span class="shot-btn-title">🛡️ GLANCE / RUN</span>
+                <span class="shot-btn-desc">1-2 Runs (S / ▼)</span>
+              </button>
+            </div>
+
+            <div class="cricket-action-bar">
+              <span id="cricket-auto-indicator" style="font-size:0.85rem; font-weight:700; color:var(--cyan);">
+                ⚡ Automatic Delivery Mode Active (Watch the pitch &amp; time your shot!)
+              </span>
+              <div class="cricket-over-balls" id="cricket-over-display">
+                <div class="ball-dot" id="b-dot-1">-</div>
+                <div class="ball-dot" id="b-dot-2">-</div>
+                <div class="ball-dot" id="b-dot-3">-</div>
+                <div class="ball-dot" id="b-dot-4">-</div>
+                <div class="ball-dot" id="b-dot-5">-</div>
+                <div class="ball-dot" id="b-dot-6">-</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================
+         GAME 4: DEVELOPER WORDLE (WITH TECH HINTS!)
+         ========================================= -->
+    <section id="tab-wordle" class="game-section">
+      <div class="game-card">
+        <div class="game-header">
+          <div class="game-title">
+            <span>🟩 Developer Wordle</span>
+            <span class="game-status-badge" id="wordle-status">GUESS 1 OF 6</span>
+          </div>
+          <button class="btn-action btn-secondary" onclick="resetWordle()">🔄 New Word</button>
+        </div>
+
+        <div class="wordle-wrapper">
+          <!-- Hint Card -->
+          <div class="wordle-hint-card">
+            <div id="wordle-hint-display" class="wordle-hint-text">
+              💡 Need a clue? Click 'Get Hint' for tech domain &amp; letter clues!
+            </div>
+            <button class="btn-hint" id="btn-wordle-hint" onclick="getWordleHint()">
+              <span>💡 Get Hint</span>
+              <span id="hint-count-badge">(3 left)</span>
+            </button>
+          </div>
+
+          <div class="wordle-grid" id="wordle-grid"></div>
+          <div class="keyboard" id="keyboard"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================
+         TAB 5: LEADERBOARD
+         ========================================= -->
+    <section id="tab-leaderboard" class="game-section">
+      <div class="game-card">
+        <div class="game-header">
+          <div class="game-title">
+            <span>🏆 Hall of Fame &amp; Leaderboard</span>
+          </div>
+          <button class="btn-action" onclick="openUsernameModal()">✏️ Set My Username</button>
+        </div>
+
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 14px;">
+          Win matches across Chess, Cricket, Tic-Tac-Toe, and Wordle to earn points and claim victory on the Hall of Fame!
+        </p>
+
+        <table class="leaderboard-table">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Player</th>
+              <th>Score</th>
+              <th>Wins</th>
+              <th>Badges</th>
+            </tr>
+          </thead>
+          <tbody id="leaderboard-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- Username Modal -->
+  <div class="modal-overlay" id="username-modal">
+    <div class="modal-card">
+      <h3>Enter Your Name / Handle</h3>
+      <p style="color: var(--text-muted); font-size: 0.88rem;">This name will appear on the Hall of Fame scoreboard!</p>
+      <input type="text" id="username-input" class="modal-input" maxlength="20" placeholder="e.g. dev_sarah or @yourname" />
+      <div style="display: flex; justify-content: flex-end; gap: 10px;">
+        <button class="btn-action btn-secondary" onclick="closeUsernameModal()">Cancel</button>
+        <button class="btn-action" onclick="saveUsername()">Save Name</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>⚡ Aadarsh's Cyber Arcade • Built with Web Standards &amp; GitHub Pages • Playable anywhere!</p>
+  </footer>
+
+  <script>
+    /* ==========================================================
+       SYNTHESIZER & REALISTIC AUDIO SYSTEM
+       ========================================================== */
+    let audioCtx = null;
+    let soundEnabled = true;
+
+    function initAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+    }
+
+    function playTone(freq, type, duration) {
+      if (!soundEnabled) return;
+      try {
+        initAudio();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.18, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) {}
+    }
+
+    function soundMove() { playTone(440, 'sine', 0.08); }
+    function soundWin() {
+      setTimeout(() => playTone(523, 'triangle', 0.1), 0);
+      setTimeout(() => playTone(659, 'triangle', 0.1), 120);
+      setTimeout(() => playTone(784, 'triangle', 0.15), 240);
+      setTimeout(() => playTone(1046, 'triangle', 0.35), 360);
+    }
+    function soundError() { playTone(150, 'sawtooth', 0.15); }
+
+    // Authentic English Willow Wood Bat Crack
+    function soundBatHit() {
+      if (!soundEnabled) return;
+      try {
+        initAudio();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(880, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(120, audioCtx.currentTime + 0.06);
+        gain.gain.setValueAtTime(0.5, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.1);
+      } catch (e) {}
+    }
+
+    // Wooden Stumps Clatter
+    function soundWicket() {
+      if (!soundEnabled) return;
+      try {
+        initAudio();
+        for (let i = 0; i < 3; i++) {
+          setTimeout(() => {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(340 - i * 50, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.35, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.08);
+          }, i * 45);
+        }
+      } catch (e) {}
+    }
+
+    // Realistic Surging Stadium Crowd Roar (Resonant Filtered White Noise)
+    function soundCrowdCheer(isHuge = false) {
+      if (!soundEnabled) return;
+      try {
+        initAudio();
+        const dur = isHuge ? 2.8 : 1.8;
+        const bufferSize = audioCtx.sampleRate * dur;
+        const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+        const output = noiseBuffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+          output[i] = Math.random() * 2 - 1;
+        }
+
+        const whiteNoise = audioCtx.createBufferSource();
+        whiteNoise.buffer = noiseBuffer;
+
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = 'bandpass';
+        filter.frequency.setValueAtTime(880, audioCtx.currentTime);
+        filter.Q.setValueAtTime(2.4, audioCtx.currentTime);
+
+        const gain = audioCtx.createGain();
+        gain.gain.setValueAtTime(0.01, audioCtx.currentTime);
+        gain.gain.linearRampToValueAtTime(isHuge ? 0.38 : 0.24, audioCtx.currentTime + 0.35);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + dur);
+
+        whiteNoise.connect(filter);
+        filter.connect(gain);
+        gain.connect(audioCtx.destination);
+        whiteNoise.start();
+      } catch (e) {}
+    }
+
+    function toggleSound() {
+      soundEnabled = !soundEnabled;
+      document.getElementById('sound-icon').textContent = soundEnabled ? '🔊' : '🔇';
+    }
+
+    /* ==========================================================
+       USER PROFILE & LEADERBOARD SYSTEM
+       ========================================================== */
+    let currentUser = localStorage.getItem('arcade_user') || 'Challenger';
+    let userStats = JSON.parse(localStorage.getItem('arcade_stats') || JSON.stringify({
+      score: 0,
+      wins: { chess: 0, ttt: 0, cricket: 0, wordle: 0 },
+      badges: []
+    }));
+
+    function saveStats() {
+      localStorage.setItem('arcade_user', currentUser);
+      localStorage.setItem('arcade_stats', JSON.stringify(userStats));
+      updateUIHeader();
+      renderLeaderboard();
+    }
+
+    function updateUIHeader() {
+      document.getElementById('display-username').textContent = '@' + currentUser;
+      document.getElementById('display-score').textContent = userStats.score;
+    }
+
+    function awardPoints(pts, gameKey, won = false) {
+      userStats.score += pts;
+      if (won) {
+        userStats.wins[gameKey] = (userStats.wins[gameKey] || 0) + 1;
+        confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
+        soundWin();
+      }
+      const b = new Set(userStats.badges || []);
+      if (userStats.wins.chess >= 1) b.add('👑 Grandmaster');
+      if (userStats.wins.cricket >= 1) b.add('🏏 Century King');
+      if (userStats.wins.wordle >= 1) b.add('⚡ Wordle Wizard');
+      if (userStats.wins.ttt >= 1) b.add('🤖 AI Slayer');
+      userStats.badges = Array.from(b);
+
+      saveStats();
+    }
+
+    function renderLeaderboard() {
+      const tbody = document.getElementById('leaderboard-body');
+      tbody.innerHTML = '';
+
+      const players = [
+        { name: 'sudo-aadarsh', score: 160, wins: 9, badges: ['👑 Grandmaster', '🏏 Century King', '⚡ Wordle Wizard'] },
+        { name: currentUser, score: userStats.score, wins: Object.values(userStats.wins).reduce((a,b)=>a+b, 0), badges: userStats.badges }
+      ];
+
+      players.sort((a, b) => b.score - a.score);
+
+      players.forEach((p, idx) => {
+        const tr = document.createElement('tr');
+        if (idx === 0) tr.classList.add('champion');
+        const rankMedal = idx === 0 ? '🥇 1' : (idx === 1 ? '🥈 2' : `#${idx+1}`);
+        const badgesHtml = p.badges && p.badges.length 
+          ? p.badges.map(b => `<span class="badge-chip">${b}</span>`).join('') 
+          : '<span style="color:var(--text-muted);font-size:0.8rem;">Rookie</span>';
+
+        tr.innerHTML = `
+          <td style="font-weight:800;">${rankMedal}</td>
+          <td><b style="color:var(--cyan);">@${p.name}</b></td>
+          <td><b style="color:var(--gold);">${p.score} pts</b></td>
+          <td>${p.wins} wins</td>
+          <td>${badgesHtml}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function openUsernameModal() {
+      document.getElementById('username-input').value = currentUser;
+      document.getElementById('username-modal').classList.add('open');
+    }
+
+    function closeUsernameModal() {
+      document.getElementById('username-modal').classList.remove('open');
+    }
+
+    function saveUsername() {
+      const input = document.getElementById('username-input').value.trim().replace(/^@/, '');
+      if (input) {
+        currentUser = input;
+        saveStats();
+      }
+      closeUsernameModal();
+    }
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.game-section').forEach(sec => sec.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+
+      const target = document.getElementById('tab-' + tabId);
+      if (target) target.classList.add('active');
+
+      const activeBtn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.getAttribute('onclick').includes(tabId));
+      if (activeBtn) activeBtn.classList.add('active');
+
+      window.location.hash = tabId;
+      if (tabId === 'cricket') {
+        resizeCricketCanvas();
+        startCricketLoop();
+      }
+    }
+
+    /* ==========================================================
+       GAME 1: CHESS WITH ANIMATED PIECE MOVEMENTS
+       ========================================================== */
+    let chess = null;
+    let selectedSquare = null;
+    let lastMoveFrom = null;
+    let lastMoveTo = null;
+
+    const PIECE_GLYPHS = {
+      p: '♟', r: '♜', n: '♞', b: '♝', q: '♛', k: '♚',
+      P: '♙', R: '♖', N: '♘', B: '♗', Q: '♕', K: '♔'
+    };
+
+    function initChess() {
+      chess = new Chess();
+      renderChessBoard();
+    }
+
+    function resetChess() {
+      chess.reset();
+      selectedSquare = null;
+      lastMoveFrom = null;
+      lastMoveTo = null;
+      document.getElementById('chess-status').textContent = 'WHITE TO MOVE';
+      document.getElementById('chess-status').style.color = 'var(--cyan)';
+      renderChessBoard();
+    }
+
+    function renderChessBoard() {
+      const boardEl = document.getElementById('chess-board');
+      boardEl.innerHTML = '';
+      const b = chess.board();
+
+      for (let r = 0; r < 8; r++) {
+        for (let c = 0; c < 8; c++) {
+          const sqName = String.fromCharCode(97 + c) + (8 - r);
+          const sqEl = document.createElement('div');
+          const isLight = (r + c) % 2 === 0;
+          sqEl.className = `chess-sq ${isLight ? 'light' : 'dark'}`;
+          sqEl.id = `sq-${sqName}`;
+
+          if (sqName === lastMoveFrom) sqEl.classList.add('last-from');
+          if (sqName === lastMoveTo) sqEl.classList.add('last-to');
+
+          const piece = b[r][c];
+          if (piece) {
+            const pieceEl = document.createElement('span');
+            pieceEl.className = `chess-piece ${piece.color === 'w' ? 'white' : 'black'}`;
+            pieceEl.textContent = piece.color === 'w' ? PIECE_GLYPHS[piece.type.toUpperCase()] : PIECE_GLYPHS[piece.type];
+            pieceEl.id = `piece-${sqName}`;
+            sqEl.appendChild(pieceEl);
+          }
+
+          sqEl.onclick = () => handleChessSquareClick(sqName);
+          boardEl.appendChild(sqEl);
+        }
+      }
+    }
+
+    function handleChessSquareClick(sqName) {
+      if (chess.game_over()) return;
+
+      if (selectedSquare === sqName) {
+        clearChessHighlights();
+        selectedSquare = null;
+        return;
+      }
+
+      if (selectedSquare) {
+        animateAndExecuteChessMove(selectedSquare, sqName);
+        return;
+      }
+
+      const piece = chess.get(sqName);
+      if (piece && piece.color === 'w') {
+        clearChessHighlights();
+        selectedSquare = sqName;
+        document.getElementById(`sq-${sqName}`).classList.add('selected');
+
+        const moves = chess.moves({ square: sqName, verbose: true });
+        moves.forEach(m => {
+          document.getElementById(`sq-${m.to}`).classList.add('highlight');
+        });
+      }
+    }
+
+    function animateAndExecuteChessMove(fromSq, toSq) {
+      const move = chess.move({
+        from: fromSq,
+        to: toSq,
+        promotion: 'q'
+      });
+
+      if (!move) {
+        clearChessHighlights();
+        selectedSquare = null;
+        return;
+      }
+
+      // Smooth visual transition
+      const fromEl = document.getElementById(`sq-${fromSq}`);
+      const toEl = document.getElementById(`sq-${toSq}`);
+      const pieceEl = document.getElementById(`piece-${fromSq}`);
+
+      if (fromEl && toEl && pieceEl) {
+        const fromRect = fromEl.getBoundingClientRect();
+        const toRect = toEl.getBoundingClientRect();
+        const dx = toRect.left - fromRect.left;
+        const dy = toRect.top - fromRect.top;
+
+        pieceEl.style.transform = `translate(${dx}px, ${dy}px)`;
+      }
+
+      soundMove();
+      lastMoveFrom = fromSq;
+      lastMoveTo = toSq;
+      clearChessHighlights();
+      selectedSquare = null;
+
+      setTimeout(() => {
+        renderChessBoard();
+
+        if (chess.in_checkmate()) {
+          document.getElementById('chess-status').textContent = '👑 CHECKMATE! YOU WON (+50 pts)';
+          document.getElementById('chess-status').style.color = 'var(--gold)';
+          awardPoints(50, 'chess', true);
+          return;
+        }
+
+        document.getElementById('chess-status').textContent = 'AI THINKING... (⚫)';
+        setTimeout(chessAIMove, 280);
+      }, 220);
+    }
+
+    function clearChessHighlights() {
+      document.querySelectorAll('.chess-sq').forEach(el => {
+        el.classList.remove('selected', 'highlight');
+      });
+    }
+
+    function chessAIMove() {
+      if (chess.game_over()) return;
+
+      const moves = chess.moves({ verbose: true });
+      if (!moves.length) return;
+
+      let bestMove = moves[0];
+      let bestVal = -999;
+      const vals = { p: 1, n: 3, b: 3, r: 5, q: 9, k: 0 };
+
+      for (let m of moves) {
+        let val = m.captured ? vals[m.captured] * 10 : 0;
+        if (val > bestVal) {
+          bestVal = val;
+          bestMove = m;
+        }
+      }
+
+      const fromEl = document.getElementById(`sq-${bestMove.from}`);
+      const toEl = document.getElementById(`sq-${bestMove.to}`);
+      const pieceEl = document.getElementById(`piece-${bestMove.from}`);
+
+      if (fromEl && toEl && pieceEl) {
+        const fromRect = fromEl.getBoundingClientRect();
+        const toRect = toEl.getBoundingClientRect();
+        pieceEl.style.transform = `translate(${toRect.left - fromRect.left}px, ${toRect.top - fromRect.top}px)`;
+      }
+
+      chess.move(bestMove);
+      lastMoveFrom = bestMove.from;
+      lastMoveTo = bestMove.to;
+      soundMove();
+
+      setTimeout(() => {
+        renderChessBoard();
+
+        if (chess.in_checkmate()) {
+          document.getElementById('chess-status').textContent = '🤖 AADARSH-AI DELIVERED CHECKMATE!';
+          document.getElementById('chess-status').style.color = 'var(--red)';
+          return;
+        }
+
+        if (chess.in_check()) {
+          document.getElementById('chess-status').textContent = '⚠️ CHECK! WHITE KING UNDER ATTACK';
+          document.getElementById('chess-status').style.color = 'var(--gold)';
+        } else {
+          document.getElementById('chess-status').textContent = 'WHITE TO MOVE';
+        }
+      }, 220);
+    }
+
+    /* ==========================================================
+       GAME 2: TIC-TAC-TOE LOGIC
+       ========================================================== */
+    let tttBoard = Array(9).fill('');
+    let tttActive = true;
+
+    function initTicTacToe() {
+      const grid = document.getElementById('ttt-grid');
+      grid.innerHTML = '';
+      for (let i = 0; i < 9; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'ttt-cell';
+        cell.onclick = () => handleTTTClick(i);
+        grid.appendChild(cell);
+      }
+      resetTicTacToe();
+    }
+
+    function resetTicTacToe() {
+      tttBoard = Array(9).fill('');
+      tttActive = true;
+      document.getElementById('ttt-status').textContent = 'YOUR TURN (❌)';
+      document.getElementById('ttt-status').style.color = 'var(--cyan)';
+      document.querySelectorAll('.ttt-cell').forEach(c => {
+        c.textContent = '';
+        c.className = 'ttt-cell';
+      });
+    }
+
+    function handleTTTClick(idx) {
+      if (!tttActive || tttBoard[idx] !== '') return;
+
+      tttBoard[idx] = 'X';
+      const cell = document.querySelectorAll('.ttt-cell')[idx];
+      cell.textContent = '❌';
+      cell.classList.add('x');
+      soundMove();
+
+      if (checkTTTWinner('X')) {
+        tttActive = false;
+        document.getElementById('ttt-status').textContent = '🎉 YOU WON! (+20 pts)';
+        document.getElementById('ttt-status').style.color = 'var(--gold)';
+        awardPoints(20, 'ttt', true);
+        return;
+      }
+
+      if (tttBoard.every(c => c !== '')) {
+        tttActive = false;
+        document.getElementById('ttt-status').textContent = "🤝 DRAW GAME!";
+        return;
+      }
+
+      document.getElementById('ttt-status').textContent = 'AI THINKING... (⭕)';
+      setTimeout(tttAIMove, 200);
+    }
+
+    function tttAIMove() {
+      if (!tttActive) return;
+      const empty = tttBoard.map((v, i) => v === '' ? i : null).filter(v => v !== null);
+      if (!empty.length) return;
+
+      let bestMove = null;
+      let bestScore = -999;
+      for (let idx of empty) {
+        tttBoard[idx] = 'O';
+        let score = tttMinimax(0, false);
+        tttBoard[idx] = '';
+        if (score > bestScore) {
+          bestScore = score;
+          bestMove = idx;
+        }
+      }
+
+      tttBoard[bestMove] = 'O';
+      const cell = document.querySelectorAll('.ttt-cell')[bestMove];
+      cell.textContent = '⭕';
+      cell.classList.add('o');
+      soundMove();
+
+      if (checkTTTWinner('O')) {
+        tttActive = false;
+        document.getElementById('ttt-status').textContent = '🤖 AADARSH-AI WON!';
+        document.getElementById('ttt-status').style.color = 'var(--red)';
+        return;
+      }
+
+      if (tttBoard.every(c => c !== '')) {
+        tttActive = false;
+        document.getElementById('ttt-status').textContent = "🤝 DRAW GAME!";
+        return;
+      }
+
+      document.getElementById('ttt-status').textContent = 'YOUR TURN (❌)';
+    }
+
+    function tttMinimax(depth, isMax) {
+      if (checkTTTWinner('O')) return 10 - depth;
+      if (checkTTTWinner('X')) return depth - 10;
+      if (tttBoard.every(c => c !== '')) return 0;
+
+      if (isMax) {
+        let best = -999;
+        for (let i = 0; i < 9; i++) {
+          if (tttBoard[i] === '') {
+            tttBoard[i] = 'O';
+            best = Math.max(best, tttMinimax(depth + 1, false));
+            tttBoard[i] = '';
+          }
+        }
+        return best;
+      } else {
+        let best = 999;
+        for (let i = 0; i < 9; i++) {
+          if (tttBoard[i] === '') {
+            tttBoard[i] = 'X';
+            best = Math.min(best, tttMinimax(depth + 1, true));
+            tttBoard[i] = '';
+          }
+        }
+        return best;
+      }
+    }
+
+    function checkTTTWinner(p) {
+      const lines = [
+        [0,1,2],[3,4,5],[6,7,8],
+        [0,3,6],[1,4,7],[2,5,8],
+        [0,4,8],[2,4,6]
+      ];
+      return lines.some(([a,b,c]) => tttBoard[a]===p && tttBoard[b]===p && tttBoard[c]===p);
+    }
+
+    /* ==========================================================
+       GAME 3: SUPER CRICKET (AUTOMATIC DELIVERIES & DETAILED CROWD)
+       ========================================================== */
+    const canvas = document.getElementById('cricket-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let cricketMatch = {
+      runs: 0,
+      wickets: 0,
+      target: 24,
+      ballsLeft: 6,
+      currentBall: 0,
+      state: 'COUNTDOWN', // 'COUNTDOWN', 'BOWLING', 'SHOT_PLAYED', 'DEAD_BALL'
+      autoTimer: 120, // frames till next ball
+      ball: {
+        x: 325, y: 70, z: 0,
+        vx: 0, vy: 0, vz: 0,
+        radius: 6,
+        isLive: false,
+        pitched: false
+      },
+      batter: {
+        x: 325, y: 300,
+        stancePhase: 0,
+        swingState: 'READY' // 'DRIVE', 'STRAIGHT', 'PULL', 'DEFEND'
+      },
+      stumps: {
+        broken: false,
+        bailsY: 305,
+        stumpAngle: 0
+      },
+      crowdCheering: false,
+      crowdAnimTime: 0
+    };
+
+    function resizeCricketCanvas() {
+      canvas.width = 650;
+      canvas.height = 360;
+    }
+
+    function resetCricketMatch() {
+      cricketMatch.runs = 0;
+      cricketMatch.wickets = 0;
+      cricketMatch.ballsLeft = 6;
+      cricketMatch.currentBall = 0;
+      cricketMatch.state = 'COUNTDOWN';
+      cricketMatch.autoTimer = 90;
+      cricketMatch.stumps.broken = false;
+      cricketMatch.stumps.bailsY = 305;
+      cricketMatch.stumps.stumpAngle = 0;
+      cricketMatch.ball.isLive = false;
+      cricketMatch.crowdCheering = false;
+
+      document.getElementById('cricket-score').textContent = '0 / 0';
+      document.getElementById('cricket-balls').textContent = '6';
+      document.getElementById('cricket-status').textContent = 'GET READY! FIRST BALL COMING IN 2s...';
+
+      for (let i = 1; i <= 6; i++) {
+        const dot = document.getElementById(`b-dot-${i}`);
+        dot.textContent = '-';
+        dot.className = 'ball-dot';
+      }
+      hideCricketBanner();
+    }
+
+    // AUTOMATIC BOWLING ENGINE
+    function triggerNextBallAutomatically() {
+      if (cricketMatch.ballsLeft <= 0 || cricketMatch.wickets >= 2) return;
+
+      hideCricketBanner();
+      cricketMatch.stumps.broken = false;
+      cricketMatch.stumps.bailsY = 305;
+      cricketMatch.stumps.stumpAngle = 0;
+      cricketMatch.batter.swingState = 'READY';
+      cricketMatch.crowdCheering = false;
+
+      // Realistic speed and swing variations (outswinger, inswinger, straight yorker)
+      const speeds = [4.2, 4.8, 5.3, 5.7];
+      const speed = speeds[Math.floor(Math.random() * speeds.length)];
+      const swingVariation = (Math.random() - 0.5) * 1.6;
+
+      cricketMatch.ball = {
+        x: 325,
+        y: 70,
+        z: 14,
+        vx: swingVariation,
+        vy: speed,
+        vz: -0.35,
+        radius: 6,
+        isLive: true,
+        pitched: false
+      };
+
+      cricketMatch.state = 'BOWLING';
+      document.getElementById('cricket-status').textContent = 'INCOMING DELIVERY! TIME YOUR SHOT!';
+    }
+
+    function playCricketShot(type) {
+      if (cricketMatch.state !== 'BOWLING') return;
+
+      cricketMatch.batter.swingState = type.toUpperCase();
+      const b = cricketMatch.ball;
+      const distFromCrease = Math.abs(b.y - 290);
+
+      // Sweet Spot Range: 272 to 298
+      if (distFromCrease < 14) {
+        // MAXIMUM / SIX!
+        soundBatHit();
+        soundCrowdCheer(true);
+        cricketMatch.crowdCheering = true;
+        triggerCricketResult(6, 'six', '🚀 MAXIMUM! HUGE SIX! 🚀');
+        b.vy = -7.5;
+        b.vx = (type === 'drive' ? -4 : (type === 'pull' ? 4 : 0));
+        b.z = 32;
+        cricketMatch.state = 'SHOT_PLAYED';
+      } else if (distFromCrease < 28) {
+        // CRACKING FOUR!
+        soundBatHit();
+        soundCrowdCheer(false);
+        cricketMatch.crowdCheering = true;
+        triggerCricketResult(4, 'four', '⚡ CRACKING BOUNDARY FOUR! ⚡');
+        b.vy = -5.8;
+        b.vx = (type === 'drive' ? -5 : (type === 'pull' ? 5 : 1));
+        b.z = 6;
+        cricketMatch.state = 'SHOT_PLAYED';
+      } else if (distFromCrease < 42) {
+        // 1 or 2 runs
+        soundBatHit();
+        const runs = type === 'defend' ? 1 : 2;
+        triggerCricketResult(runs, 'four', `⚡ GOOD TIMING! ${runs} RUNS`);
+        b.vy = -3.2;
+        b.vx = (Math.random() - 0.5) * 3;
+        cricketMatch.state = 'SHOT_PLAYED';
+      } else if (distFromCrease < 64) {
+        // EDGED & CAUGHT!
+        soundBatHit();
+        soundWicket();
+        cricketMatch.wickets += 1;
+        triggerCricketResult(0, 'wicket', '🧤 EDGED & CAUGHT OUT!');
+        b.vy = -2.2;
+        b.vx = (Math.random() - 0.5) * 5;
+        cricketMatch.state = 'DEAD_BALL';
+      } else {
+        // BEATEN
+        document.getElementById('cricket-status').textContent = 'BEATEN BY PACE! DOT BALL';
+      }
+    }
+
+    function triggerCricketResult(runs, type, text) {
+      cricketMatch.runs += runs;
+      cricketMatch.ballsLeft -= 1;
+      cricketMatch.currentBall += 1;
+
+      const dot = document.getElementById(`b-dot-${cricketMatch.currentBall}`);
+      if (dot) {
+        dot.textContent = type === 'wicket' ? 'W' : runs;
+        dot.className = `ball-dot ${type}`;
+      }
+
+      document.getElementById('cricket-score').textContent = `${cricketMatch.runs} / ${cricketMatch.wickets}`;
+      document.getElementById('cricket-balls').textContent = cricketMatch.ballsLeft;
+
+      showCricketBanner(text, type);
+
+      if (runs > 0) {
+        awardPoints(runs * 3, 'cricket', runs === 6);
+      }
+
+      // Automatically queue next ball in 2 seconds
+      setTimeout(() => {
+        if (cricketMatch.runs >= cricketMatch.target) {
+          showCricketBanner('🏆 VICTORY! TARGET CHASED!', 'six');
+          awardPoints(40, 'cricket', true);
+          document.getElementById('cricket-status').textContent = '🎉 TARGET CHASED! YOU WON!';
+        } else if (cricketMatch.ballsLeft <= 0 || cricketMatch.wickets >= 2) {
+          showCricketBanner('🏁 MATCH CONCLUDED!', 'four');
+          document.getElementById('cricket-status').textContent = `FINAL SCORE: ${cricketMatch.runs}/${cricketMatch.wickets}. CLICK 'NEW MATCH'`;
+        } else {
+          cricketMatch.state = 'COUNTDOWN';
+          cricketMatch.autoTimer = 75; // ~1.2s delay
+          document.getElementById('cricket-status').textContent = 'NEXT BALL COMING IN 1s...';
+        }
+      }, 1600);
+    }
+
+    function showCricketBanner(text, className) {
+      const banner = document.getElementById('cricket-banner');
+      banner.textContent = text;
+      banner.className = `cricket-banner-overlay ${className} show`;
+    }
+
+    function hideCricketBanner() {
+      const banner = document.getElementById('cricket-banner');
+      banner.className = 'cricket-banner-overlay';
+    }
+
+    // Keyboard support for Cricket
+    window.addEventListener('keydown', (e) => {
+      if (!document.getElementById('tab-cricket').classList.contains('active')) return;
+      if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') playCricketShot('drive');
+      else if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') playCricketShot('straight');
+      else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') playCricketShot('pull');
+      else if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') playCricketShot('defend');
+    });
+
+    // HIGH QUALITY 60FPS STADIUM & CROWD CANVAS RENDERER
+    let cricketLoopRunning = false;
+    function startCricketLoop() {
+      if (!cricketLoopRunning) {
+        cricketLoopRunning = true;
+        requestAnimationFrame(renderCricketEngine);
+      }
+    }
+
+    function renderCricketEngine() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // 1. Stadium Sky
+      const sky = ctx.createLinearGradient(0, 0, 0, 150);
+      sky.addColorStop(0, '#040711');
+      sky.addColorStop(1, '#0c1527');
+      ctx.fillStyle = sky;
+      ctx.fillRect(0, 0, canvas.width, 150);
+
+      // 2. DETAILED ANIMATED MULTI-TIER CROWD
+      cricketMatch.crowdAnimTime += 0.08;
+      const cheerJump = cricketMatch.crowdCheering ? Math.sin(cricketMatch.crowdAnimTime * 3) * 6 : 0;
+
+      // Tier 2 (Upper Deck)
+      ctx.fillStyle = '#111827';
+      ctx.fillRect(0, 40, canvas.width, 35);
+      // Crowd figures tier 2
+      const colorsT2 = ['#38bdf8', '#fbbf24', '#f43f5e', '#a855f7', '#10b981', '#ffffff'];
+      for (let x = 12; x < canvas.width; x += 12) {
+        const bounce = Math.sin(cricketMatch.crowdAnimTime + x * 0.3) * (cricketMatch.crowdCheering ? 4 : 1.5) + cheerJump;
+        ctx.fillStyle = colorsT2[(x * 7) % colorsT2.length];
+        // Head
+        ctx.beginPath();
+        ctx.arc(x, 48 + bounce, 3.5, 0, Math.PI * 2);
+        ctx.fill();
+        // Body / Shirt
+        ctx.fillRect(x - 3, 52 + bounce, 6, 8);
+      }
+
+      // Tier 1 (Lower Deck / Railing)
+      ctx.fillStyle = '#1e293b';
+      ctx.fillRect(0, 75, canvas.width, 40);
+      // Crowd figures tier 1 (Bigger, more detailed)
+      for (let x = 8; x < canvas.width; x += 14) {
+        const bounce = Math.sin(cricketMatch.crowdAnimTime + x * 0.5) * (cricketMatch.crowdCheering ? 6 : 2) + cheerJump;
+        ctx.fillStyle = colorsT2[(x * 3) % colorsT2.length];
+        // Head with cap/hair
+        ctx.beginPath();
+        ctx.arc(x, 84 + bounce, 4.5, 0, Math.PI * 2);
+        ctx.fill();
+        // Torso
+        ctx.fillRect(x - 4, 89 + bounce, 8, 10);
+
+        // Raised Waving Hands during Cheer!
+        if (cricketMatch.crowdCheering) {
+          ctx.strokeStyle = '#fff';
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.moveTo(x - 4, 91 + bounce); ctx.lineTo(x - 8, 80 + bounce);
+          ctx.moveTo(x + 4, 91 + bounce); ctx.lineTo(x + 8, 80 + bounce);
+          ctx.stroke();
+        }
+      }
+
+      // Stadium Floodlight Towers with realistic light beams
+      drawFloodlight(50, 30);
+      drawFloodlight(600, 30);
+
+      // 3. Realistic Stadium Green Outfield with alternating mower patterns
+      const grassGrad = ctx.createLinearGradient(0, 115, 0, canvas.height);
+      grassGrad.addColorStop(0, '#15803d');
+      grassGrad.addColorStop(1, '#14532d');
+      ctx.fillStyle = grassGrad;
+      ctx.fillRect(0, 115, canvas.width, canvas.height - 115);
+
+      // Mower circular rings on outfield
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+      ctx.lineWidth = 20;
+      ctx.beginPath();
+      ctx.ellipse(325, 280, 260, 120, 0, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // 4. Perspective 22-Yard Cricket Pitch
+      ctx.fillStyle = '#c5a059'; // Clay/turf pitch
+      ctx.beginPath();
+      ctx.moveTo(270, 115); // Bowling end left
+      ctx.lineTo(380, 115); // Bowling end right
+      ctx.lineTo(425, 350); // Batting end right
+      ctx.lineTo(225, 350); // Batting end left
+      ctx.closePath();
+      ctx.fill();
+
+      // White Crease Markings
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 2;
+      // Batting Popping Crease
+      ctx.beginPath(); ctx.moveTo(235, 296); ctx.lineTo(415, 296); ctx.stroke();
+      // Bowling Crease
+      ctx.beginPath(); ctx.moveTo(276, 128); ctx.lineTo(374, 128); ctx.stroke();
+
+      // 5. Wooden Stumps & Bails
+      const st = cricketMatch.stumps;
+      ctx.strokeStyle = '#d97706';
+      ctx.lineWidth = 3;
+
+      if (!st.broken) {
+        // 3 Stumps at Batting end
+        ctx.beginPath(); ctx.moveTo(319, 310); ctx.lineTo(319, 286); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(325, 310); ctx.lineTo(325, 286); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(331, 310); ctx.lineTo(331, 286); ctx.stroke();
+        // Bails
+        ctx.strokeStyle = '#fef08a';
+        ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(317, 285); ctx.lineTo(333, 285); ctx.stroke();
+      } else {
+        // Flying shattered stumps on bowled!
+        ctx.save();
+        ctx.translate(325, 300);
+        ctx.rotate(st.stumpAngle);
+        ctx.beginPath(); ctx.moveTo(-6, 0); ctx.lineTo(-14, -24); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(6, 0); ctx.lineTo(16, -22); ctx.stroke();
+        ctx.restore();
+        // Flying bails
+        ctx.fillStyle = '#fef08a';
+        ctx.fillRect(315, st.bailsY, 6, 2.5);
+        ctx.fillRect(332, st.bailsY + 4, 6, 2.5);
+      }
+
+      // 6. Batter (Pro Cricket Avatar in Whites)
+      const bat = cricketMatch.batter;
+      bat.stancePhase += 0.05;
+      const tapY = Math.sin(bat.stancePhase) * 1.5;
+
+      // Batter Helmet & Head
+      ctx.fillStyle = '#0284c7'; // Blue helmet
+      ctx.beginPath();
+      ctx.arc(bat.x - 22, bat.y - 32, 9, 0, Math.PI * 2);
+      ctx.fill();
+      // Visor grill
+      ctx.strokeStyle = '#94a3b8';
+      ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(bat.x - 20, bat.y - 30); ctx.lineTo(bat.x - 14, bat.y - 28); ctx.stroke();
+
+      // Jersey & Pads
+      ctx.fillStyle = '#f8fafc';
+      ctx.fillRect(bat.x - 26, bat.y - 22, 12, 26); // Torso & leg pads
+
+      // Cricket Bat
+      ctx.save();
+      ctx.translate(bat.x - 16, bat.y - 12);
+      let batAngle = 0.3 + tapY * 0.05;
+      if (bat.swingState === 'DRIVE') batAngle = -1.3;
+      else if (bat.swingState === 'STRAIGHT') batAngle = -1.9;
+      else if (bat.swingState === 'PULL') batAngle = 1.35;
+      else if (bat.swingState === 'DEFEND') batAngle = -0.4;
+      ctx.rotate(batAngle);
+
+      ctx.fillStyle = '#92400e'; // Wooden bat
+      ctx.fillRect(-2, -3, 6, 28);
+      ctx.fillStyle = '#f59e0b'; // Bat grip
+      ctx.fillRect(-2, -10, 6, 8);
+      ctx.restore();
+
+      // 7. Ball Physics & Rendering
+      const b = cricketMatch.ball;
+      if (b.isLive) {
+        b.x += b.vx;
+        b.y += b.vy;
+
+        // Pitch Bounce
+        if (b.y > 200 && !b.pitched) {
+          b.pitched = true;
+          b.vy *= 0.95;
+          // Pitch dust puff effect
+          ctx.fillStyle = 'rgba(217, 119, 6, 0.4)';
+          ctx.beginPath(); ctx.arc(b.x, b.y, 10, 0, Math.PI * 2); ctx.fill();
+        }
+
+        // Clean Bowled Detection
+        if (cricketMatch.state === 'BOWLING' && b.y >= 295 && b.y <= 312) {
+          if (Math.abs(b.x - 325) < 14) {
+            cricketMatch.ball.isLive = false;
+            cricketMatch.stumps.broken = true;
+            cricketMatch.state = 'DEAD_BALL';
+            soundWicket();
+            cricketMatch.wickets += 1;
+            triggerCricketResult(0, 'wicket', '💥 CLEAN BOWLED! TIMBER! 💥');
+          }
+        }
+
+        // Shadow on pitch
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.45)';
+        ctx.beginPath();
+        ctx.ellipse(b.x, b.y, b.radius + 1, (b.radius + 1) * 0.5, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        // 3D Leather Cricket Ball
+        ctx.fillStyle = '#dc2626';
+        ctx.beginPath();
+        ctx.arc(b.x, b.y - b.z, b.radius, 0, Math.PI * 2);
+        ctx.fill();
+
+        // White ball seam
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.arc(b.x, b.y - b.z, b.radius - 1, 0.3, 2.7);
+        ctx.stroke();
+
+        if (b.y > 360 || b.y < 30 || b.x < 20 || b.x > 630) {
+          b.isLive = false;
+        }
+      }
+
+      // Animate flying bails
+      if (cricketMatch.stumps.broken && cricketMatch.stumps.bailsY > 250) {
+        cricketMatch.stumps.bailsY -= 2.5;
+        cricketMatch.stumps.stumpAngle += 0.06;
+      }
+
+      // Automatic countdown for next delivery
+      if (cricketMatch.state === 'COUNTDOWN') {
+        cricketMatch.autoTimer--;
+        if (cricketMatch.autoTimer <= 0) {
+          triggerNextBallAutomatically();
+        }
+      }
+
+      requestAnimationFrame(renderCricketEngine);
+    }
+
+    function drawFloodlight(x, y) {
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+      ctx.beginPath(); ctx.arc(x, y, 12, 0, Math.PI * 2); ctx.fill();
+
+      // Atmospheric cone light beam
+      const beam = ctx.createRadialGradient(x, y, 6, x > 300 ? x - 80 : x + 80, 160, 160);
+      beam.addColorStop(0, 'rgba(0, 247, 255, 0.28)');
+      beam.addColorStop(1, 'transparent');
+      ctx.fillStyle = beam;
+      ctx.beginPath();
+      ctx.moveTo(x - 12, y);
+      ctx.lineTo(x > 300 ? x - 180 : x + 20, 240);
+      ctx.lineTo(x > 300 ? x - 20 : x + 180, 240);
+      ctx.lineTo(x + 12, y);
+      ctx.fill();
+    }
+
+    /* ==========================================================
+       GAME 4: DEVELOPER WORDLE (WITH MULTI-LEVEL TECH HINTS!)
+       ========================================================== */
+    const DEV_WORDS = [
+      { word: "REACT", domain: "Frontend / UI Library", clue: "Popular component-based JavaScript library by Meta." },
+      { word: "LINUX", domain: "Operating Systems / Kernel", clue: "Open-source Unix-like OS kernel created by Linus Torvalds." },
+      { word: "REDIS", domain: "Databases / Caching", clue: "Blazing-fast in-memory key-value data structure store." },
+      { word: "ASYNC", domain: "Concurrent Programming", clue: "Keyword paired with 'await' for non-blocking execution." },
+      { word: "PROXY", domain: "Networking & Security", clue: "Intermediary server forwarding requests between clients and targets." },
+      { word: "STACK", domain: "Data Structures", clue: "LIFO (Last In First Out) structure with push & pop." },
+      { word: "CLOUD", domain: "Infrastructure / DevOps", clue: "On-demand network of remote servers (AWS, GCP, Azure)." },
+      { word: "BYTES", domain: "Computer Architecture", clue: "8-bit sequence fundamental to data storage and memory." },
+      { word: "QUERY", domain: "Databases / SQL", clue: "Request made to retrieve or manipulate data from a database." },
+      { word: "CACHE", domain: "Performance Optimization", clue: "High-speed temporary storage layer to reduce latency." },
+      { word: "TOKEN", domain: "Authentication / Auth", clue: "Cryptographic credential (e.g. JWT) passed in Authorization headers." },
+      { word: "GRAPH", domain: "Algorithms & Networks", clue: "Set of nodes and edges representing interconnected relationships." },
+      { word: "ROBOT", domain: "Automation & Robotics", clue: "Automated agent or bot running repetitive scripts." },
+      { word: "LOGIC", domain: "Computer Science Core", clue: "Boolean operations (AND, OR, NOT) governing circuit execution." },
+      { word: "SPARK", domain: "Big Data / Analytics", clue: "Apache distributed engine for large-scale data processing." },
+      { word: "KAFKA", domain: "Event Streaming", clue: "Distributed publish-subscribe event bus by Apache." },
+      { word: "SWIFT", domain: "Mobile Development", clue: "Apple's modern programming language for iOS & macOS." },
+      { word: "SHELL", domain: "Command Line / CLI", clue: "Terminal interface (e.g. bash, zsh) executing OS commands." },
+      { word: "PATCH", domain: "Version Control & APIs", clue: "HTTP method or git file applying partial updates." },
+      { word: "INDEX", domain: "Databases & Arrays", clue: "B-Tree data structure accelerating database search lookups." },
+      { word: "MACRO", domain: "Compilers & Languages", clue: "Code pattern expanded by preprocessors during compilation." },
+      { word: "PARSE", domain: "Compilers / Serialization", clue: "Analyzing syntax strings to produce an Abstract Syntax Tree (AST)." },
+      { word: "PIPES", domain: "Unix & Streams", clue: "Operator (|) directing stdout of one process to stdin of another." },
+      { word: "QUEUE", domain: "Data Structures", clue: "FIFO (First In First Out) structure used in message brokers." },
+      { word: "ROUTE", domain: "Web Frameworks / HTTP", clue: "URL path mapping incoming client requests to controller handlers." },
+      { word: "SCALE", domain: "System Design", clue: "Expanding system capacity horizontally or vertically." },
+      { word: "SCOPE", domain: "Language Semantics", clue: "Visibility and lifetime boundary of declared variables." },
+      { word: "TABLE", domain: "Relational Databases", clue: "Structured collection of rows and columns in SQL schemas." },
+      { word: "YIELD", domain: "Generators / Concurrency", clue: "Keyword pausing a generator function to return an intermediate value." },
+      { word: "AGILE", domain: "Software Methodology", clue: "Iterative development philosophy with sprints and standups." }
+    ];
+
+    let wordleEntry = DEV_WORDS[0];
+    let wordleGuesses = [];
+    let wordleCurrentGuess = "";
+    let wordleActive = true;
+    let wordleHintLevel = 0; // 0, 1, 2, 3
+
+    function initWordle() {
+      buildWordleGrid();
+      buildWordleKeyboard();
+      resetWordle();
+
+      window.addEventListener('keydown', (e) => {
+        if (!document.getElementById('tab-wordle').classList.contains('active')) return;
+        if (e.key === 'Enter') handleWordleKey('ENTER');
+        else if (e.key === 'Backspace') handleWordleKey('⌫');
+        else if (/^[a-zA-Z]$/.test(e.key)) handleWordleKey(e.key.toUpperCase());
+      });
+    }
+
+    function resetWordle() {
+      wordleEntry = DEV_WORDS[Math.floor(Math.random() * DEV_WORDS.length)];
+      wordleGuesses = [];
+      wordleCurrentGuess = "";
+      wordleActive = true;
+      wordleHintLevel = 0;
+
+      document.getElementById('wordle-status').textContent = 'GUESS 1 OF 6';
+      document.getElementById('wordle-status').style.color = 'var(--cyan)';
+      document.getElementById('wordle-hint-display').textContent = "💡 Need a clue? Click 'Get Hint' for tech domain & letter clues!";
+      document.getElementById('hint-count-badge').textContent = '(3 left)';
+      document.getElementById('btn-wordle-hint').disabled = false;
+
+      document.querySelectorAll('.wordle-tile').forEach(t => {
+        t.textContent = '';
+        t.className = 'wordle-tile';
+      });
+
+      document.querySelectorAll('.key-btn').forEach(k => {
+        k.className = k.classList.contains('wide') ? 'key-btn wide' : 'key-btn';
+      });
+    }
+
+    function getWordleHint() {
+      if (!wordleActive || wordleHintLevel >= 3) return;
+
+      wordleHintLevel++;
+      const target = wordleEntry.word;
+      const display = document.getElementById('wordle-hint-display');
+
+      if (wordleHintLevel === 1) {
+        display.innerHTML = `💡 <b>Domain Hint:</b> <i>${wordleEntry.domain}</i>`;
+        document.getElementById('hint-count-badge').textContent = '(2 left)';
+      } else if (wordleHintLevel === 2) {
+        // Vowel hint
+        const vowels = ['A', 'E', 'I', 'O', 'U'];
+        const targetVowels = target.split('').filter(c => vowels.includes(c));
+        const uniqueVowels = Array.from(new Set(targetVowels));
+        display.innerHTML = `💡 <b>Letter Clue:</b> Contains ${uniqueVowels.length} vowel(s): <b>${uniqueVowels.join(', ') || 'None'}</b>`;
+        document.getElementById('hint-count-badge').textContent = '(1 left)';
+      } else if (wordleHintLevel === 3) {
+        // Definition clue
+        display.innerHTML = `💡 <b>Definition:</b> Starts with <b>'${target[0]}'</b> • ${wordleEntry.clue}`;
+        document.getElementById('hint-count-badge').textContent = '(0 left)';
+        document.getElementById('btn-wordle-hint').disabled = true;
+      }
+    }
+
+    function buildWordleGrid() {
+      const grid = document.getElementById('wordle-grid');
+      grid.innerHTML = '';
+      for (let r = 0; r < 6; r++) {
+        const row = document.createElement('div');
+        row.className = 'wordle-row';
+        row.id = `w-row-${r}`;
+        for (let c = 0; c < 5; c++) {
+          const tile = document.createElement('div');
+          tile.className = 'wordle-tile';
+          tile.id = `w-tile-${r}-${c}`;
+          row.appendChild(tile);
+        }
+        grid.appendChild(row);
+      }
+    }
+
+    function buildWordleKeyboard() {
+      const kb = document.getElementById('keyboard');
+      kb.innerHTML = '';
+      const rows = [
+        ['Q','W','E','R','T','Y','U','I','O','P'],
+        ['A','S','D','F','G','H','J','K','L'],
+        ['ENTER','Z','X','C','V','B','N','M','⌫']
+      ];
+
+      rows.forEach(r => {
+        const rowEl = document.createElement('div');
+        rowEl.className = 'keyboard-row';
+        r.forEach(k => {
+          const btn = document.createElement('button');
+          btn.className = `key-btn ${k.length > 1 ? 'wide' : ''}`;
+          btn.textContent = k;
+          btn.id = `key-${k}`;
+          btn.onclick = () => handleWordleKey(k);
+          rowEl.appendChild(btn);
+        });
+        kb.appendChild(rowEl);
+      });
+    }
+
+    function handleWordleKey(k) {
+      if (!wordleActive) return;
+
+      if (k === '⌫') {
+        if (wordleCurrentGuess.length > 0) {
+          wordleCurrentGuess = wordleCurrentGuess.slice(0, -1);
+          updateWordleRow();
+        }
+      } else if (k === 'ENTER') {
+        if (wordleCurrentGuess.length !== 5) {
+          soundError();
+          return;
+        }
+        submitWordleGuess();
+      } else if (wordleCurrentGuess.length < 5) {
+        wordleCurrentGuess += k;
+        updateWordleRow();
+        soundMove();
+      }
+    }
+
+    function updateWordleRow() {
+      const r = wordleGuesses.length;
+      for (let c = 0; c < 5; c++) {
+        const tile = document.getElementById(`w-tile-${r}-${c}`);
+        tile.textContent = wordleCurrentGuess[c] || '';
+        if (wordleCurrentGuess[c]) tile.classList.add('pop');
+        else tile.classList.remove('pop');
+      }
+    }
+
+    function submitWordleGuess() {
+      const r = wordleGuesses.length;
+      const guess = wordleCurrentGuess;
+      const target = wordleEntry.word;
+      const targetChars = target.split('');
+      const colors = Array(5).fill('grey');
+
+      for (let i = 0; i < 5; i++) {
+        if (guess[i] === targetChars[i]) {
+          colors[i] = 'green';
+          targetChars[i] = null;
+        }
+      }
+      for (let i = 0; i < 5; i++) {
+        if (colors[i] !== 'green' && targetChars.includes(guess[i])) {
+          colors[i] = 'yellow';
+          targetChars[targetChars.indexOf(guess[i])] = null;
+        }
+      }
+
+      for (let i = 0; i < 5; i++) {
+        const tile = document.getElementById(`w-tile-${r}-${i}`);
+        setTimeout(() => {
+          tile.classList.add('flip', colors[i]);
+        }, i * 80);
+
+        const key = document.getElementById(`key-${guess[i]}`);
+        if (key) {
+          setTimeout(() => {
+            if (colors[i] === 'green') {
+              key.className = 'key-btn green';
+            } else if (colors[i] === 'yellow' && !key.classList.contains('green')) {
+              key.className = 'key-btn yellow';
+            } else if (!key.classList.contains('green') && !key.classList.contains('yellow')) {
+              key.className = 'key-btn grey';
+            }
+          }, 450);
+        }
+      }
+
+      wordleGuesses.push(guess);
+      wordleCurrentGuess = "";
+
+      if (guess === target) {
+        wordleActive = false;
+        const tries = wordleGuesses.length;
+        const pts = 25 + (6 - tries) * 3 - (wordleHintLevel * 2);
+        document.getElementById('wordle-status').textContent = `🎉 SOLVED IN ${tries}/6! (+${pts} pts)`;
+        document.getElementById('wordle-status').style.color = 'var(--gold)';
+        document.getElementById('wordle-hint-display').innerHTML = `🎉 <b>${target}</b>: ${wordleEntry.clue}`;
+        awardPoints(Math.max(pts, 15), 'wordle', true);
+        return;
+      }
+
+      if (wordleGuesses.length >= 6) {
+        wordleActive = false;
+        document.getElementById('wordle-status').textContent = `💀 THE WORD WAS: ${target}`;
+        document.getElementById('wordle-status').style.color = 'var(--red)';
+        document.getElementById('wordle-hint-display').innerHTML = `💀 <b>${target}</b>: ${wordleEntry.clue}`;
+        return;
+      }
+
+      document.getElementById('wordle-status').textContent = `GUESS ${wordleGuesses.length + 1} OF 6`;
+    }
+
+    /* ==========================================================
+       STARTUP INIT
+       ========================================================== */
+    window.onload = () => {
+      updateUIHeader();
+      renderLeaderboard();
+      initChess();
+      initTicTacToe();
+      resizeCricketCanvas();
+      resetCricketMatch();
+      initWordle();
+
+      const hash = window.location.hash.replace('#', '');
+      if (['chess', 'ttt', 'cricket', 'wordle', 'leaderboard'].includes(hash)) {
+        switchTab(hash);
+      } else {
+        switchTab('chess');
+      }
+    };
+  </script>
+</body>
+</html>
