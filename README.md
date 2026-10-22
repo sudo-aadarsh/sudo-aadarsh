@@ -1,14 +1,14 @@
 <div align="center">
 
 <p align="center">
-  <img src="assets/coding.gif" alt="Developer Coding" width="340" />
+  <img src="assets/coding.gif" alt="Developer Coding" width="440" />
 </p>
 
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/arcade-header-dark.svg">
     <source media="(prefers-color-scheme: light)" srcset="assets/arcade-header-light.svg">
-    <img src="assets/arcade-header-light.svg" alt="Playable Arcade" width="850">
+    <img src="assets/arcade-header-light.svg" alt="Playable Arcade" width="715">
   </picture>
 </p>
 

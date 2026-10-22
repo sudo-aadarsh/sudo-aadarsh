@@ -1020,6 +1020,350 @@
       text-decoration: none;
       font-weight: 600;
     }
+
+    /* =========================================================================
+       DYNAMIC THEME ENGINE (LIGHT & DARK MODE ADAPTABILITY)
+       ========================================================================= */
+    [data-theme="light"] {
+      --bg-canvas: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-card: #ffffff;
+      --bg-card-subtle: #f1f5f9;
+      --border-subtle: #e2e8f0;
+      --border-accent: #cbd5e1;
+
+      --white-pure: #0f172a;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-dim: #64748b;
+
+      --accent-flame: #ea580c;
+      --accent-amber: #d97706;
+      --accent-sky: #0284c7;
+      --accent-emerald: #059669;
+      --accent-crimson: #dc2626;
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root:not([data-theme="dark"]) {
+        --bg-canvas: #f8fafc;
+        --bg-surface: #ffffff;
+        --bg-card: #ffffff;
+        --bg-card-subtle: #f1f5f9;
+        --border-subtle: #e2e8f0;
+        --border-accent: #cbd5e1;
+
+        --white-pure: #0f172a;
+        --text-main: #0f172a;
+        --text-muted: #475569;
+        --text-dim: #64748b;
+
+        --accent-flame: #ea580c;
+        --accent-amber: #d97706;
+        --accent-sky: #0284c7;
+        --accent-emerald: #059669;
+        --accent-crimson: #dc2626;
+      }
+    }
+
+    [data-theme="light"] body {
+      background-color: #f8fafc;
+      background-image:
+        radial-gradient(circle at 50% 0%, rgba(203, 213, 225, 0.45) 0%, transparent 65%),
+        linear-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+      color: #0f172a;
+    }
+
+    [data-theme="light"] header {
+      background: rgba(255, 255, 255, 0.94);
+      border-bottom: 1px solid #e2e8f0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    }
+
+    [data-theme="light"] .brand-icon-box {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      color: #0f172a;
+    }
+
+    [data-theme="light"] .brand-copy h1 {
+      color: #0f172a;
+    }
+
+    [data-theme="light"] .brand-copy span {
+      color: #64748b;
+    }
+
+    [data-theme="light"] .user-pill-tag {
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+    }
+
+    [data-theme="light"] .user-pill-tag .tag-label {
+      color: #0f172a;
+    }
+
+    [data-theme="light"] .user-score-badge {
+      background: rgba(217, 119, 6, 0.12);
+      color: #b45309;
+    }
+
+    [data-theme="light"] .ui-btn {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      color: #0f172a;
+    }
+
+    [data-theme="light"] .ui-btn:hover {
+      background: #f1f5f9;
+      border-color: #94a3b8;
+      color: #0f172a;
+    }
+
+    [data-theme="light"] .segmented-control-bar {
+      background: #e2e8f0;
+      border: 1px solid #cbd5e1;
+    }
+
+    [data-theme="light"] .segment-tab-item {
+      color: #475569;
+    }
+
+    [data-theme="light"] .segment-tab-item:hover {
+      color: #0f172a;
+    }
+
+    [data-theme="light"] .segment-tab-item.active {
+      color: #0f172a;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    [data-theme="light"] .game-arena-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    }
+
+    [data-theme="light"] .arena-title-area h2 {
+      color: #0f172a;
+    }
+
+    [data-theme="light"] .arena-title-area p {
+      color: #64748b;
+    }
+
+    [data-theme="light"] .status-text-pill {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      color: #0f172a;
+    }
+
+    /* Chess Light Mode */
+    [data-theme="light"] .chess-board-frame {
+      background: #e2e8f0;
+      border: 1px solid #cbd5e1;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    [data-theme="light"] .chess-cell.light { background: #f8fafc; }
+    [data-theme="light"] .chess-cell.dark { background: #94a3b8; }
+
+    [data-theme="light"] .chess-diff-pills {
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+    }
+
+    [data-theme="light"] .chess-diff-pill {
+      color: #475569;
+    }
+
+    [data-theme="light"] .chess-diff-pill:hover {
+      color: #0f172a;
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    [data-theme="light"] .chess-diff-pill.active {
+      background: #dc2626;
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+    }
+
+    [data-theme="light"] .chess-meta-row {
+      color: #475569;
+    }
+
+    /* Tic-Tac-Toe Light Mode */
+    [data-theme="light"] .ttt-matrix-grid {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    }
+
+    [data-theme="light"] .ttt-cell-box {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+    }
+
+    [data-theme="light"] .ttt-cell-box:hover:empty {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+    }
+
+    /* Super Cricket Light Mode */
+    [data-theme="light"] .cricket-mode-pills,
+    [data-theme="light"] .cricket-diff-pills {
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+    }
+
+    [data-theme="light"] .cricket-diff-pill {
+      color: #475569;
+    }
+
+    [data-theme="light"] .cricket-diff-pill:hover {
+      color: #0f172a;
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    [data-theme="light"] .cricket-diff-pill.active {
+      background: #059669;
+      color: #ffffff;
+    }
+
+    [data-theme="light"] .cricket-scoreboard,
+    [data-theme="light"] .overs-tracker {
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    }
+
+    [data-theme="light"] .cricket-stat-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+    }
+
+    [data-theme="light"] .cricket-stat-card .stat-label {
+      color: #64748b;
+    }
+
+    [data-theme="light"] .cricket-stat-card .stat-value {
+      color: #0f172a;
+    }
+
+    [data-theme="light"] .cricket-canvas-wrapper {
+      border: 1px solid #cbd5e1;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    [data-theme="light"] .cricket-overlay {
+      background: rgba(255, 255, 255, 0.95);
+      color: #0f172a;
+    }
+
+    [data-theme="light"] .shot-btn {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      color: #0f172a;
+    }
+
+    [data-theme="light"] .shot-btn:hover {
+      background: #f1f5f9;
+      border-color: #94a3b8;
+    }
+
+    [data-theme="light"] .ball-dot-slot.dot {
+      background: #e2e8f0;
+      color: #64748b;
+    }
+
+    /* Wordle Light Mode */
+    [data-theme="light"] .wordle-cell {
+      background: #ffffff;
+      border: 2px solid #cbd5e1;
+      color: #0f172a;
+    }
+
+    [data-theme="light"] .wordle-cell.absent {
+      background: #64748b !important;
+      border-color: #475569 !important;
+      color: #ffffff !important;
+    }
+
+    [data-theme="light"] .wordle-hint-box {
+      background: #f1f5f9;
+      border-left: 3px solid #cbd5e1;
+      color: #475569;
+    }
+
+    [data-theme="light"] .typing-key-btn {
+      background: #e2e8f0;
+      border: 1px solid #cbd5e1;
+      color: #0f172a;
+    }
+
+    [data-theme="light"] .typing-key-btn:hover {
+      background: #cbd5e1;
+    }
+
+    [data-theme="light"] .typing-key-btn.absent {
+      background: #94a3b8;
+      border-color: #64748b;
+      color: #ffffff;
+    }
+
+    /* Leaderboard Light Mode */
+    [data-theme="light"] .leaderboard-table-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+    }
+
+    [data-theme="light"] .leaderboard-header {
+      background: #f1f5f9;
+      border-bottom: 1px solid #e2e8f0;
+      color: #475569;
+    }
+
+    [data-theme="light"] .leaderboard-row {
+      background: #ffffff;
+      border-bottom: 1px solid #f1f5f9;
+      color: #0f172a;
+    }
+
+    [data-theme="light"] .leaderboard-row:hover {
+      background: #f8fafc;
+    }
+
+    /* Modals & Dialogs Light Mode */
+    [data-theme="light"] .modal-backdrop {
+      background: rgba(15, 23, 42, 0.45);
+    }
+
+    [data-theme="light"] .modal-content-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+      color: #0f172a;
+    }
+
+    [data-theme="light"] .modal-input-field {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      color: #0f172a;
+    }
+
+    [data-theme="light"] footer {
+      background: #f1f5f9;
+      border-top: 1px solid #e2e8f0;
+      color: #64748b;
+    }
+
+    [data-theme="light"] footer a {
+      color: #0f172a;
+    }
+
   </style>
 </head>
 <body>
@@ -1040,6 +1384,12 @@
         <span class="tag-label" onclick="openProfileModal()" id="user-display-tag">@Guest</span>
         <span class="user-score-badge" id="user-display-score">0 PTS</span>
       </div>
+
+      <button class="ui-btn" id="btn-toggle-theme" onclick="toggleArcadeTheme()" title="Toggle Dark/Light Theme">
+        <svg id="theme-svg-sun" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg id="theme-svg-moon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <span id="label-theme-state">THEME</span>
+      </button>
 
       <button class="ui-btn" id="btn-toggle-sound" onclick="toggleMuteAudio()">
         <span id="label-sound-state">SOUND: ON</span>
@@ -3760,7 +4110,56 @@
     /* =========================================================================
        INITIALIZATION
        ========================================================================= */
+    
+    /* =========================================================================
+       DYNAMIC THEME ENGINE
+       ========================================================================= */
+    function initArcadeTheme() {
+      const saved = localStorage.getItem('arcade-theme');
+      const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+      const initialTheme = saved ? saved : (prefersLight ? 'light' : 'dark');
+      applyArcadeTheme(initialTheme, false);
+
+      if (window.matchMedia) {
+        window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
+          if (!localStorage.getItem('arcade-theme')) {
+            applyArcadeTheme(e.matches ? 'light' : 'dark', false);
+          }
+        });
+      }
+    }
+
+    function applyArcadeTheme(theme, save = true) {
+      document.documentElement.setAttribute('data-theme', theme);
+      if (save) {
+        localStorage.setItem('arcade-theme', theme);
+      }
+      const sunIcon = document.getElementById('theme-svg-sun');
+      const moonIcon = document.getElementById('theme-svg-moon');
+      const themeLabel = document.getElementById('label-theme-state');
+
+      if (theme === 'light') {
+        if (sunIcon) sunIcon.style.display = 'none';
+        if (moonIcon) moonIcon.style.display = 'inline-block';
+        if (themeLabel) themeLabel.textContent = 'DARK';
+      } else {
+        if (sunIcon) sunIcon.style.display = 'inline-block';
+        if (moonIcon) moonIcon.style.display = 'none';
+        if (themeLabel) themeLabel.textContent = 'LIGHT';
+      }
+    }
+
+    function toggleArcadeTheme() {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      const target = current === 'dark' ? 'light' : 'dark';
+      applyArcadeTheme(target, true);
+    }
+
+    // Immediate run to avoid theme flicker before onload
+    initArcadeTheme();
+
     window.onload = () => {
+      initArcadeTheme();
       renderHeaderStats();
       renderLeaderboardView();
       initChessGame();
