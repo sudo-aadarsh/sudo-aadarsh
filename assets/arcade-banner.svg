@@ -1,149 +1,119 @@
-<svg width="860" height="240" viewBox="0 0 860 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="860" height="230" viewBox="0 0 860 230" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <!-- Background Gradients -->
+    <!-- Background Gradient matching GitHub Dark Mode -->
     <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0b0f19" />
-      <stop offset="50%" stop-color="#111827" />
-      <stop offset="100%" stop-color="#070a12" />
+      <stop offset="0%" stop-color="#0d1117" />
+      <stop offset="50%" stop-color="#161b22" />
+      <stop offset="100%" stop-color="#090d13" />
     </linearGradient>
 
-    <!-- Neon Title Gradient -->
+    <!-- Glowing Title Gradient -->
     <linearGradient id="titleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#00F7FF" />
-      <stop offset="30%" stop-color="#38BDF8" />
-      <stop offset="70%" stop-color="#C084FC" />
-      <stop offset="100%" stop-color="#F43F5E" />
+      <stop offset="0%" stop-color="#58A6FF" />
+      <stop offset="35%" stop-color="#38BDF8" />
+      <stop offset="70%" stop-color="#A855F7" />
+      <stop offset="100%" stop-color="#EC4899" />
     </linearGradient>
 
-    <!-- Border Glow Gradient -->
+    <!-- Border Gradient -->
     <linearGradient id="borderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#00F7FF" stop-opacity="0.8" />
-      <stop offset="50%" stop-color="#A855F7" stop-opacity="0.3" />
-      <stop offset="100%" stop-color="#EC4899" stop-opacity="0.8" />
+      <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.7" />
+      <stop offset="50%" stop-color="#8B5CF6" stop-opacity="0.4" />
+      <stop offset="100%" stop-color="#EC4899" stop-opacity="0.7" />
     </linearGradient>
 
-    <!-- Badge Gradients -->
-    <linearGradient id="badgeGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#00F7FF" stop-opacity="0.15" />
-      <stop offset="100%" stop-color="#0284C7" stop-opacity="0.25" />
+    <!-- Card Gradients -->
+    <linearGradient id="cardGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.12" />
+      <stop offset="100%" stop-color="#0284C7" stop-opacity="0.05" />
     </linearGradient>
 
-    <linearGradient id="badgeGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#A855F7" stop-opacity="0.15" />
-      <stop offset="100%" stop-color="#7C3AED" stop-opacity="0.25" />
+    <linearGradient id="cardGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#A855F7" stop-opacity="0.12" />
+      <stop offset="100%" stop-color="#7C3AED" stop-opacity="0.05" />
     </linearGradient>
 
-    <linearGradient id="badgeGrad3" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#F59E0B" stop-opacity="0.15" />
-      <stop offset="100%" stop-color="#D97706" stop-opacity="0.25" />
+    <linearGradient id="cardGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F59E0B" stop-opacity="0.12" />
+      <stop offset="100%" stop-color="#D97706" stop-opacity="0.05" />
     </linearGradient>
 
-    <!-- Drop Shadows & Glow Filters -->
-    <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="4" result="blur" />
-      <feMerge>
-        <feMergeNode in="blur" />
-        <feMergeNode in="SourceGraphic" />
-      </feMerge>
-    </filter>
-
-    <filter id="boxGlow" x="-10%" y="-10%" width="120%" height="120%">
-      <feDropShadow dx="0" dy="4" stdDeviation="10" flood-color="#00F7FF" flood-opacity="0.2" />
+    <!-- Glow Filter -->
+    <filter id="neonFilter" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="6" flood-color="#38BDF8" flood-opacity="0.35" />
     </filter>
   </defs>
 
   <style>
-    @keyframes pulseGlow {
-      0%, 100% { opacity: 0.85; }
-      50% { opacity: 1; }
+    .title {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      font-weight: 800;
+      font-size: 34px;
+      letter-spacing: 2px;
     }
-    @keyframes scanline {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(240px); }
+    .subtitle {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      fill: #8B949E;
     }
-    .main-title {
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
-      font-weight: 900;
-      font-size: 38px;
-      letter-spacing: 3px;
-    }
-    .sub-title {
-      font-family: 'Fira Code', 'Courier New', monospace;
+    .card-title {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
       font-size: 13px;
-      letter-spacing: 4px;
-      fill: #94A3B8;
-      font-weight: 600;
-    }
-    .badge-text {
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-      font-size: 12px;
       font-weight: 700;
       letter-spacing: 0.5px;
     }
-    .scan-beam {
-      animation: scanline 8s linear infinite;
+    .card-desc {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      fill: #8B949E;
     }
   </style>
 
-  <!-- Container Box with Rounded Corners and Neon Border -->
-  <rect x="3" y="3" width="854" height="234" rx="16" fill="url(#bgGrad)" stroke="url(#borderGrad)" stroke-width="2" filter="url(#boxGlow)" />
+  <!-- Container Box -->
+  <rect x="2" y="2" width="856" height="226" rx="14" fill="url(#bgGrad)" stroke="url(#borderGrad)" stroke-width="1.5" />
 
-  <!-- Grid Accents -->
-  <g opacity="0.08" stroke="#00F7FF" stroke-width="1">
-    <line x1="40" y1="0" x2="40" y2="240" />
-    <line x1="140" y1="0" x2="140" y2="240" />
-    <line x1="240" y1="0" x2="240" y2="240" />
-    <line x1="340" y1="0" x2="340" y2="240" />
-    <line x1="440" y1="0" x2="440" y2="240" />
-    <line x1="540" y1="0" x2="540" y2="240" />
-    <line x1="640" y1="0" x2="640" y2="240" />
-    <line x1="740" y1="0" x2="740" y2="240" />
-    <line x1="840" y1="0" x2="840" y2="240" />
-    <line x1="0" y1="40" x2="860" y2="40" />
-    <line x1="0" y1="90" x2="860" y2="90" />
-    <line x1="0" y1="140" x2="860" y2="140" />
-    <line x1="0" y1="190" x2="860" y2="190" />
-  </g>
+  <!-- Top Terminal Controls -->
+  <circle cx="28" cy="24" r="5" fill="#FA7970" />
+  <circle cx="44" cy="24" r="5" fill="#FAA356" />
+  <circle cx="60" cy="24" r="5" fill="#7CE38B" />
+  <text x="80" y="28" font-family="'Courier New', monospace" font-size="11" fill="#6E7681" font-weight="600">AADARSH_ARCADE_ENGINE // LIVE ON GITHUB</text>
 
-  <!-- Top Status Bar -->
-  <circle cx="28" cy="26" r="5" fill="#EF4444" />
-  <circle cx="44" cy="26" r="5" fill="#F59E0B" />
-  <circle cx="60" cy="26" r="5" fill="#10B981" />
-  <text x="80" y="30" font-family="'Fira Code', monospace" font-size="11" fill="#64748B" font-weight="600">ARCADE_SYS // V2.0 // GITHUB_ACTIONS_ONLINE</text>
-  <rect x="740" y="16" width="94" height="20" rx="10" fill="#10B981" fill-opacity="0.15" stroke="#10B981" stroke-width="1" />
-  <circle cx="752" cy="26" r="3.5" fill="#10B981" />
-  <text x="762" y="30" font-family="'Segoe UI', sans-serif" font-size="10" font-weight="800" fill="#10B981">LIVE ARCADE</text>
+  <!-- Live Pulse Status Badge -->
+  <rect x="735" y="14" width="100" height="22" rx="11" fill="#238636" fill-opacity="0.2" stroke="#2EA043" stroke-width="1" />
+  <circle cx="749" cy="25" r="4" fill="#3FB950" />
+  <text x="760" y="29" font-family="-apple-system, sans-serif" font-size="10" font-weight="700" fill="#3FB950">PLAYABLE NOW</text>
 
   <!-- Main Arcade Title -->
-  <g filter="url(#neonGlow)">
-    <text x="430" y="98" text-anchor="middle" class="main-title" fill="url(#titleGrad)">🕹️ AADARSH'S CYBER ARCADE ⚡</text>
+  <g filter="url(#neonFilter)">
+    <text x="430" y="82" text-anchor="middle" class="title" fill="url(#titleGrad)">🕹️ AADARSH'S CYBER ARCADE ⚡</text>
   </g>
-  <text x="430" y="126" text-anchor="middle" class="sub-title">// 4 PLAYABLE GAMES • REAL-TIME LEADERBOARD • 100% GITHUB ACTIONS</text>
+  <text x="430" y="108" text-anchor="middle" class="subtitle">Play interactive games directly on my GitHub profile • Powered by GitHub Actions</text>
 
-  <!-- Interactive Badges Row -->
-  <!-- Badge 1: 4 Games -->
-  <g transform="translate(130, 155)">
-    <rect width="180" height="42" rx="8" fill="url(#badgeGrad1)" stroke="#00F7FF" stroke-width="1" stroke-opacity="0.4" />
-    <text x="24" y="26" font-size="18">🟡❌</text>
-    <text x="64" y="26" fill="#38BDF8" class="badge-text">4 Interactive Games</text>
-  </g>
-
-  <!-- Badge 2: AI Battle -->
-  <g transform="translate(340, 155)">
-    <rect width="180" height="42" rx="8" fill="url(#badgeGrad2)" stroke="#A855F7" stroke-width="1" stroke-opacity="0.4" />
-    <text x="24" y="26" font-size="18">♟️🤖</text>
-    <text x="64" y="26" fill="#C084FC" class="badge-text">Tactical AI Engine</text>
+  <!-- 3 Balanced Cards -->
+  <!-- Card 1: 4 Games -->
+  <g transform="translate(60, 132)">
+    <rect width="220" height="68" rx="10" fill="url(#cardGrad1)" stroke="#38BDF8" stroke-width="1" stroke-opacity="0.35" />
+    <text x="18" y="28" font-size="20">🟡</text>
+    <text x="50" y="28" fill="#38BDF8" class="card-title">4 Playable Games</text>
+    <text x="50" y="48" class="card-desc">Connect 4 • TTT • Chess • Wordle</text>
   </g>
 
-  <!-- Badge 3: Hall of Fame -->
-  <g transform="translate(550, 155)">
-    <rect width="180" height="42" rx="8" fill="url(#badgeGrad3)" stroke="#F59E0B" stroke-width="1" stroke-opacity="0.4" />
-    <text x="24" y="26" font-size="18">🏆🔥</text>
-    <text x="64" y="26" fill="#FBBF24" class="badge-text">Live Hall of Fame</text>
+  <!-- Card 2: AI Battle -->
+  <g transform="translate(320, 132)">
+    <rect width="220" height="68" rx="10" fill="url(#cardGrad2)" stroke="#A855F7" stroke-width="1" stroke-opacity="0.35" />
+    <text x="18" y="28" font-size="20">🤖</text>
+    <text x="50" y="28" fill="#C084FC" class="card-title">Aadarsh-AI Opponent</text>
+    <text x="50" y="48" class="card-desc">Smart counter-moves in ~10s</text>
   </g>
 
-  <!-- Bottom Terminal Hint -->
-  <text x="430" y="222" text-anchor="middle" font-family="'Fira Code', monospace" font-size="11" fill="#475569">
-    &gt; Click any move below to submit your turn. GitHub Actions updates the board in ~10 seconds.
-  </text>
+  <!-- Card 3: Hall of Fame -->
+  <g transform="translate(580, 132)">
+    <rect width="220" height="68" rx="10" fill="url(#cardGrad3)" stroke="#F59E0B" stroke-width="1" stroke-opacity="0.35" />
+    <text x="18" y="28" font-size="20">🏆</text>
+    <text x="50" y="28" fill="#FBBF24" class="card-title">Live Hall of Fame</text>
+    <text x="50" y="48" class="card-desc">Earn points, win streaks &amp; badges</text>
+  </g>
 </svg>

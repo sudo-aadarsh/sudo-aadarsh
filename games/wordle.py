@@ -32,8 +32,8 @@ def issue_url(title: str, body: str) -> str:
 def default_state() -> Dict[str, Any]:
     return {
         "target_word": random.choice(TECH_WORDS),
-        "guesses": [],  # list of {"word": "REACT", "colors": ["🟩", "🟨", ...], "user": "alice"}
-        "status": "in_progress",  # "in_progress", "won", "lost"
+        "guesses": [],
+        "status": "in_progress",
         "winner": None,
         "max_attempts": 6
     }
@@ -59,13 +59,11 @@ def evaluate_guess(target: str, guess: str) -> List[str]:
     result = ["⬛"] * 5
     target_chars = list(target)
 
-    # First pass: Green
     for i in range(5):
         if guess[i] == target[i]:
             result[i] = "🟩"
             target_chars[i] = None
 
-    # Second pass: Yellow
     for i in range(5):
         if result[i] != "🟩" and guess[i] in target_chars:
             result[i] = "🟨"
@@ -75,10 +73,6 @@ def evaluate_guess(target: str, guess: str) -> List[str]:
 
 
 def process_guess(guess_str: str, username: str) -> Tuple[bool, str, int, bool, bool]:
-    """
-    Processes 5-letter wordle guess.
-    Returns (success, message, points_earned, won, lost).
-    """
     state = load_state()
 
     if state["status"] != "in_progress":
@@ -88,7 +82,6 @@ def process_guess(guess_str: str, username: str) -> Tuple[bool, str, int, bool, 
     if len(clean_guess) != 5 or not clean_guess.isalpha():
         return False, f"Invalid guess `{guess_str}`! Guesses must be exactly 5 letters (A-Z).", 0, False, False
 
-    # Check if already guessed
     existing_guesses = [g["word"] for g in state.get("guesses", [])]
     if clean_guess in existing_guesses:
         return False, f"The word `{clean_guess}` was already guessed! Try another word.", 0, False, False
@@ -102,7 +95,6 @@ def process_guess(guess_str: str, username: str) -> Tuple[bool, str, int, bool, 
         "user": username
     })
 
-    # Check win
     if clean_guess == target:
         state["status"] = "won"
         state["winner"] = username
@@ -112,7 +104,6 @@ def process_guess(guess_str: str, username: str) -> Tuple[bool, str, int, bool, 
         save_state(state)
         return True, f"🎯 INCREDIBLE! @{username} cracked the Dev Wordle in {attempt_num}/6 tries! The word was **{target}**! (+{points} pts)", points, True, False
 
-    # Check loss
     if len(guesses) >= state["max_attempts"]:
         state["status"] = "lost"
         save_state(state)
@@ -136,10 +127,10 @@ def render_markdown() -> str:
 
     md = []
     md.append("### 🟩 Game 4: Developer Wordle")
-    md.append("> **Rules:** Guess the secret 5-letter software engineering term in 6 tries or less! Letters give feedback: 🟩 Correct spot, 🟨 Wrong spot, ⬛ Not in word.\n")
+    md.append("> **Goal:** Guess the secret 5-letter software engineering term in 6 tries! Feedback: 🟩 Correct spot, 🟨 Wrong spot, ⬛ Not in word.\n")
 
-    # Wordle Grid Table
-    md.append("| L1 | L2 | L3 | L4 | L5 | Challenger |")
+    md.append('<div align="center">\n')
+    md.append("| 1️⃣ | 2️⃣ | 3️⃣ | 4️⃣ | 5️⃣ | Challenger |")
     md.append("| :---: | :---: | :---: | :---: | :---: | :--- |")
 
     for i in range(6):
@@ -151,11 +142,12 @@ def render_markdown() -> str:
             cells = [f"{c[j]} **{w[j]}**" for j in range(5)]
             md.append(f"| {' | '.join(cells)} | [@{u}](https://github.com/{u}) |")
         else:
-            empty_cells = ["⬛ ` - `" for _ in range(5)]
+            empty_cells = ["⬜ ` `"] * 5
             md.append(f"| {' | '.join(empty_cells)} | *Empty* |")
 
-    md.append("")
-    # Alphabet Keyboard tracker
+    md.append("\n</div>\n")
+
+    # Keyboard tracker
     used_letters = {}
     for g in guesses:
         for idx, char in enumerate(g["word"]):
@@ -168,14 +160,13 @@ def render_markdown() -> str:
                 used_letters[char] = "⬛"
 
     alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    kb_display = []
-    for char in alphabet:
-        symbol = used_letters.get(char, "⚪")
-        kb_display.append(f"`{char}`{symbol}")
+    kb_display = [f"`{char}`{used_letters.get(char, '⚪')}" for char in alphabet]
 
     md.append("<details>")
-    md.append("<summary><b>🔤 Alphabet Letter Tracker</b> (Click to inspect)</summary>\n")
-    md.append(" ".join(kb_display[:13]) + "\n\n" + " ".join(kb_display[13:]) + "\n")
+    md.append("<summary><b>🔤 Alphabet Key Status</b> (Click to inspect available letters)</summary>\n")
+    md.append('<p align="center">\n')
+    md.append(" &nbsp; ".join(kb_display[:13]) + "<br/><br/>" + " &nbsp; ".join(kb_display[13:]) + "\n")
+    md.append("</p>\n")
     md.append("</details>\n")
 
     if status == "in_progress":
@@ -183,19 +174,20 @@ def render_markdown() -> str:
             "arcade:wordle:guess:REACT",
             "Replace 'REACT' in the issue title above with your 5-letter tech guess (e.g. LINUX, REDIS, ASYNC, STACK, CLOUD) and submit!"
         )
-        md.append(f"👉 **Ready to Guess?** [ 🎯 Click here to submit your 5-letter guess ]({guess_url})\n")
+        md.append('<div align="center">\n')
+        md.append(f"[ 🎯 Click Here to Submit a 5-Letter Word Guess ]({guess_url})\n")
 
-        # Quick starter suggestions if 0 or 1 guess
         if len(guesses) < 2:
             quick_suggestions = [w for w in ["REACT", "LINUX", "ASYNC", "REDIS"] if w not in [g["word"] for g in guesses]]
             quick_btns = []
             for sw in quick_suggestions[:3]:
                 s_url = issue_url(f"arcade:wordle:guess:{sw}", f"Click 'Submit new issue' to guess `{sw}`!")
                 quick_btns.append(f"[`{sw}`]({s_url})")
-            md.append(f"💡 **Quick Starter Guesses:** " + " &nbsp;|&nbsp; ".join(quick_btns) + "\n")
+            md.append(f"💡 **Suggested Starters:** " + " &nbsp;|&nbsp; ".join(quick_btns) + "\n")
 
         attempts_left = 6 - len(guesses)
-        md.append(f"**Status:** ⏳ **{attempts_left} attempts remaining!** Submit a guess above.\n")
+        md.append(f"**Attempts Remaining:** ⏳ **{attempts_left} / 6**\n")
+        md.append("</div>\n")
     elif status == "won":
         winner = state.get("winner", "Someone")
         md.append(f"**Status:** 🎉 **SOLVED!** [@{winner}](https://github.com/{winner}) cracked the word **{target}**! (+Bonus pts)\n")

@@ -11,7 +11,6 @@ import json
 import urllib.request
 import urllib.error
 
-# Add games directory to sys.path
 sys.path.insert(0, os.path.dirname(__file__))
 
 import connect4
@@ -67,9 +66,9 @@ def build_arcade_markdown() -> str:
 
     lines = [
         "<!-- ARCADE:START -->",
-        f'<p align="center">',
+        '<p align="center">',
         f'  <img src="{banner_url}" alt="Aadarsh\'s Cyber Arcade" width="850"/>',
-        f'</p>\n',
+        '</p>\n',
         '<p align="center">',
         '  <a href="#-game-1-connect-four-vs-aadarsh-ai"><b>🟡 Connect Four</b></a> &nbsp;•&nbsp;',
         '  <a href="#-game-2-tic-tac-toe-vs-aadarsh-ai"><b>❌ Tic-Tac-Toe</b></a> &nbsp;•&nbsp;',
@@ -77,7 +76,11 @@ def build_arcade_markdown() -> str:
         '  <a href="#-game-4-developer-wordle"><b>🟩 Dev Wordle</b></a> &nbsp;•&nbsp;',
         '  <a href="#-hall-of-fame--community-leaderboard"><b>🏆 Hall of Fame</b></a>',
         '</p>\n',
-        '> 💡 **How it works:** Click any move or button below to submit your turn via a pre-filled GitHub Issue. Our GitHub Actions engine parses your move in real time, executes the AI response, and updates the board right here within seconds! 🚀\n',
+        '<div align="center">\n',
+        "| 1️⃣ Choose Your Move | 2️⃣ Click 'Submit new issue' | 3️⃣ Watch the Board Update! |",
+        "| :---: | :---: | :---: |",
+        "| Click any number or move button below | A pre-filled issue opens with your move | GitHub Actions plays the AI's turn in ~10s! 🚀 |",
+        "\n</div>\n",
         "---",
         connect4.render_markdown(),
         "---",
@@ -104,8 +107,6 @@ def update_readme() -> None:
         if re.search(pattern, content, re.DOTALL):
             new_content = re.sub(pattern, arcade_content, content, flags=re.DOTALL)
         else:
-            # Preserve header/footer elements if desired, or replace the entire file with our rich profile
-            # Let's check what existing elements to preserve (e.g. contribution snake, developer info)
             snake_part = ""
             if "## 🐍 Contribution Snake" in content:
                 snake_part = content[content.find("## 🐍 Contribution Snake"):]

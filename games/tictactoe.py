@@ -46,14 +46,12 @@ def save_state(state: Dict[str, Any]) -> None:
 
 
 def check_winner(board: list) -> Optional[str]:
-    # Rows & Cols
     for i in range(3):
         if board[i][0] != " " and board[i][0] == board[i][1] == board[i][2]:
             return board[i][0]
         if board[0][i] != " " and board[0][i] == board[1][i] == board[2][i]:
             return board[0][i]
 
-    # Diagonals
     if board[0][0] != " " and board[0][0] == board[1][1] == board[2][2]:
         return board[0][0]
     if board[0][2] != " " and board[0][2] == board[1][1] == board[2][0]:
@@ -102,7 +100,6 @@ def choose_ai_move(board: list) -> Optional[Tuple[int, int]]:
     if not empty_cells:
         return None
 
-    # Occasionally (20% chance on first couple turns) make a tactical move to give human players a fair shot at winning!
     if len(empty_cells) >= 7 and random.random() < 0.25:
         return random.choice(empty_cells)
 
@@ -120,10 +117,6 @@ def choose_ai_move(board: list) -> Optional[Tuple[int, int]]:
 
 
 def process_move(row: int, col: int, username: str) -> Tuple[bool, str, int, bool, bool]:
-    """
-    Processes a move at (row, col) 0-indexed.
-    Returns (success, message, points_earned, won, draw).
-    """
     state = load_state()
 
     if state["status"] != "in_progress":
@@ -136,12 +129,10 @@ def process_move(row: int, col: int, username: str) -> Tuple[bool, str, int, boo
     if board[row][col] != " ":
         return False, f"Position ({row + 1}, {col + 1}) is already taken! Choose an empty square.", 0, False, False
 
-    # Player 1 move
     board[row][col] = "X"
     state["last_player"] = username
-    state["last_move"] = f"@{username} placed ❌ at Row {row + 1}, Col {col + 1}"
+    state["last_move"] = f"@{username} placed ❌ at ({row + 1}, {col + 1})"
 
-    # Check player win
     if check_winner(board) == "X":
         state["status"] = "won_player"
         state["winner"] = username
@@ -153,12 +144,11 @@ def process_move(row: int, col: int, username: str) -> Tuple[bool, str, int, boo
         save_state(state)
         return True, "🤝 Tic-Tac-Toe ended in a hard-fought DRAW!", 5, False, True
 
-    # AI move
     ai_move = choose_ai_move(board)
     if ai_move:
         ar, ac = ai_move
         board[ar][ac] = "O"
-        state["last_move"] += f" | Aadarsh-AI countered ⭕ at Row {ar + 1}, Col {ac + 1}"
+        state["last_move"] += f" | Aadarsh-AI placed ⭕ at ({ar + 1}, {ac + 1})"
 
         if check_winner(board) == "O":
             state["status"] = "won_ai"
@@ -172,7 +162,7 @@ def process_move(row: int, col: int, username: str) -> Tuple[bool, str, int, boo
             return True, "🤝 Tic-Tac-Toe ended in a hard-fought DRAW!", 5, False, True
 
     save_state(state)
-    return True, f"Move accepted! Aadarsh-AI responded at Row {ar + 1}, Col {ac + 1}.", 1, False, False
+    return True, f"Move accepted! Aadarsh-AI responded at ({ar + 1}, {ac + 1}).", 1, False, False
 
 
 def reset_game() -> str:
@@ -189,9 +179,10 @@ def render_markdown() -> str:
 
     md = []
     md.append("### ❌ Game 2: Tic-Tac-Toe vs Aadarsh-AI")
-    md.append("> **Rules:** Play ❌ against Aadarsh-AI's ⭕. Click any empty square `[ ⬜ ]` to place your mark!\n")
+    md.append("> **Goal:** Get 3 in a row! You are ❌, Aadarsh-AI is ⭕. Click any empty `[ ⬜ ]` to place your mark.\n")
 
-    md.append("| Col 1 | Col 2 | Col 3 |")
+    md.append('<div align="center">\n')
+    md.append("| 1️⃣ | 2️⃣ | 3️⃣ |")
     md.append("| :---: | :---: | :---: |")
 
     for r in range(3):
@@ -213,23 +204,24 @@ def render_markdown() -> str:
                     row_cells.append("⬜")
         md.append(f"| {' | '.join(row_cells)} |")
 
-    md.append("")
+    md.append("\n</div>\n")
+
     if status == "in_progress":
-        md.append("**Status:** ❌ **Visitor's Turn** vs ⭕ **Aadarsh-AI** &nbsp;|&nbsp; *Click any empty square above to play!*")
+        md.append("**Turn:** ❌ **Visitor's Turn** vs ⭕ **Aadarsh-AI** &nbsp;|&nbsp; *Click any `[ ⬜ ]` square above!*")
     elif status == "won_player":
         winner = state.get("winner", "Visitor")
-        md.append(f"**Status:** 🏆 **VICTORY!** [@{winner}](https://github.com/{winner}) triumphed over Aadarsh-AI! (+20 pts)")
+        md.append(f"🏆 **VICTORY!** [@{winner}](https://github.com/{winner}) triumphed over Aadarsh-AI! (+20 pts)")
     elif status == "won_ai":
         md.append("**Status:** 🤖 **Aadarsh-AI won!** Better luck next round!")
     else:
         md.append("**Status:** 🤝 **It's a DRAW!** Well defended!")
 
-    md.append(f"**Last Turn:** {last_move}\n")
+    md.append(f"**Last Play:** `{last_move}`\n")
 
     reset_url = issue_url(
         "arcade:ttt:new",
         "Click 'Submit new issue' to start a fresh Tic-Tac-Toe match!"
     )
-    md.append(f"[ 🔄 Start New Tic-Tac-Toe Game ]({reset_url})\n")
+    md.append(f"[ 🔄 Start New Tic-Tac-Toe Match ]({reset_url})\n")
 
     return "\n".join(md)

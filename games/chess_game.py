@@ -1,6 +1,6 @@
 """
 Chess Engine with Interactive Board and Heuristic AI for GitHub Profile Arcade.
-Generates live SVG chessboard (assets/chess_board.svg) and one-click move buttons.
+Generates live SVG chessboard (assets/chess_board.svg) and cleanly formatted move tables.
 """
 
 import json
@@ -34,7 +34,7 @@ def default_state() -> Dict[str, Any]:
     b = chess.Board()
     return {
         "fen": b.fen(),
-        "status": "in_progress",  # "in_progress", "won_player", "won_ai", "draw"
+        "status": "in_progress",
         "last_player": None,
         "winner": None,
         "last_move_uci": None,
@@ -64,13 +64,13 @@ def render_svg(board: chess.Board, last_move: Optional[chess.Move] = None) -> No
     check_sq = board.king(board.turn) if board.is_check() else None
     svg_data = chess.svg.board(
         board=board,
-        size=440,
+        size=420,
         lastmove=last_move,
         check=check_sq,
         colors={
-            "square light": "#f0d9b5",
-            "square dark": "#b58863",
-            "margin": "#1f2428",
+            "square light": "#eaebd0",
+            "square dark": "#779954",
+            "margin": "#161b22",
             "coord": "#8b949e"
         }
     )
@@ -79,7 +79,6 @@ def render_svg(board: chess.Board, last_move: Optional[chess.Move] = None) -> No
 
 
 def evaluate_board(board: chess.Board) -> int:
-    """Evaluates material from Black's perspective (AI)."""
     if board.is_checkmate():
         return 99999 if board.turn == chess.WHITE else -99999
     if board.is_stalemate() or board.is_insufficient_material():
@@ -95,7 +94,6 @@ def evaluate_board(board: chess.Board) -> int:
 
 
 def choose_ai_move(board: chess.Board) -> Optional[chess.Move]:
-    """Depth-2 MiniMax / alpha-beta evaluation for tactical bot moves."""
     legal_moves = list(board.legal_moves)
     if not legal_moves:
         return None
@@ -109,11 +107,10 @@ def choose_ai_move(board: chess.Board) -> Optional[chess.Move]:
             board.pop()
             return move
 
-        # 2nd ply: White's best reply
         reply_score = 999999
         replies = list(board.legal_moves)
         if not replies:
-            score = 0  # stalemate or checkmate already handled
+            score = 0
         else:
             for rep in replies:
                 board.push(rep)
@@ -135,10 +132,6 @@ def choose_ai_move(board: chess.Board) -> Optional[chess.Move]:
 
 
 def process_move(move_str: str, username: str) -> Tuple[bool, str, int, bool, bool]:
-    """
-    Processes chess move in SAN (e.g. 'e4', 'Nf3') or UCI (e.g. 'e2e4').
-    Returns (success, message, points_earned, won, draw).
-    """
     state = load_state()
     board = chess.Board(state["fen"])
 
@@ -148,7 +141,6 @@ def process_move(move_str: str, username: str) -> Tuple[bool, str, int, bool, bo
     clean_str = move_str.strip()
     parsed_move = None
 
-    # Try parsing as UCI
     try:
         parsed_move = chess.Move.from_uci(clean_str.lower())
         if parsed_move not in board.legal_moves:
@@ -156,7 +148,6 @@ def process_move(move_str: str, username: str) -> Tuple[bool, str, int, bool, bo
     except Exception:
         pass
 
-    # Try parsing as SAN
     if not parsed_move:
         try:
             parsed_move = board.parse_san(clean_str)
@@ -164,7 +155,7 @@ def process_move(move_str: str, username: str) -> Tuple[bool, str, int, bool, bo
             pass
 
     if not parsed_move or parsed_move not in board.legal_moves:
-        legal_san = [board.san(m) for m in list(board.legal_moves)[:10]]
+        legal_san = [board.san(m) for m in list(board.legal_moves)[:8]]
         return False, f"Illegal chess move: `{move_str}`. Legal moves include: {', '.join(legal_san)}...", 0, False, False
 
     san_player = board.san(parsed_move)
@@ -175,7 +166,6 @@ def process_move(move_str: str, username: str) -> Tuple[bool, str, int, bool, bo
     history = state.setdefault("move_history", [])
     history.append(f"@{username}: {san_player}")
 
-    # Check game over after player move
     if board.is_checkmate():
         state["status"] = "won_player"
         state["winner"] = username
@@ -191,7 +181,7 @@ def process_move(move_str: str, username: str) -> Tuple[bool, str, int, bool, bo
         render_svg(board, parsed_move)
         return True, f"🤝 Game ended in a DRAW with `{san_player}`!", 15, False, True
 
-    # AI turn (Black)
+    # AI Turn
     ai_move = choose_ai_move(board)
     ai_san = board.san(ai_move)
     board.push(ai_move)
@@ -232,10 +222,8 @@ def render_markdown() -> str:
     state = load_state()
     board = chess.Board(state["fen"])
     status = state["status"]
-    last_san = state.get("last_move_san", "Game just started")
     history = state.get("move_history", [])
 
-    # Ensure SVG exists
     last_m = None
     if state.get("last_move_uci"):
         try:
@@ -246,48 +234,65 @@ def render_markdown() -> str:
 
     md = []
     md.append("### ♟️ Game 3: Community Chess vs Aadarsh-AI")
-    md.append("> **Rules:** Visitors play White ⚪ against Aadarsh-AI's Black ⚫. Click any suggested move below or submit any legal SAN/UCI move!\n")
-    md.append('<p align="center">')
-    md.append('  <img src="assets/chess_board.svg" alt="Live Chess Board" width="420"/>')
-    md.append("</p>\n")
+    md.append("> **Goal:** Outsmart Aadarsh-AI! You play White ⚪, Aadarsh-AI plays Black ⚫. Click any move below to play!\n")
+
+    md.append('<div align="center">\n')
+    md.append('  <img src="assets/chess_board.svg" alt="Live Chess Board" width="400"/>\n')
 
     if status == "in_progress":
         if board.is_check():
-            md.append("⚠️ **CHECK!** White King is under attack!\n")
+            md.append("\n> ⚠️ **CHECK! White King is under attack!**\n")
 
-        # Legal move buttons (Top 10)
+        # Build clean 4-column legal moves table
         legal_moves = list(board.legal_moves)
-        move_buttons = []
-        for m in legal_moves[:10]:
+        top_moves = legal_moves[:8]
+
+        move_links = []
+        for m in top_moves:
             san = board.san(m)
             url = issue_url(
                 f"arcade:chess:move:{m.uci()}",
                 f"Click 'Submit new issue' to play `{san}` ({m.uci()})!\n\n*(Automated chess move)*"
             )
-            move_buttons.append(f"[`{san}`]({url})")
+            move_links.append(f"[ `{san}` ]({url})")
 
-        md.append(f"**⚡ Quick Legal Moves:** " + " &nbsp;|&nbsp; ".join(move_buttons) + "\n")
-        
+        md.append("**⚡ Quick Suggested Moves for White:**\n")
+        md.append("| Move Option 1 | Move Option 2 | Move Option 3 | Move Option 4 |")
+        md.append("| :---: | :---: | :---: | :---: |")
+
+        row1 = move_links[0:4]
+        row2 = move_links[4:8]
+        if row1:
+            while len(row1) < 4:
+                row1.append("-")
+            md.append("| " + " | ".join(row1) + " |")
+        if row2:
+            while len(row2) < 4:
+                row2.append("-")
+            md.append("| " + " | ".join(row2) + " |")
+
         custom_url = issue_url(
             "arcade:chess:move:e4",
             "Replace 'e4' in the title above with your desired SAN move (e.g. Nf3, Bb5, O-O, d4) and submit this issue!"
         )
-        md.append(f"👉 **Custom Move:** Want to play a different move? [ Click here to submit any legal move ]({custom_url})\n")
+        reset_url = issue_url(
+            "arcade:chess:new",
+            "Click 'Submit new issue' to reset the chessboard to start a new game!"
+        )
+
+        md.append(f"\n[ ✍️ Submit Any Custom Move ]({custom_url}) &nbsp;|&nbsp; [ 🔄 Start New Chess Match ]({reset_url})\n")
+
     elif status == "won_player":
         winner = state.get("winner", "Visitor")
-        md.append(f"🏆 **VICTORY!** [@{winner}](https://github.com/{winner}) checkmated Aadarsh-AI! (+50 pts)\n")
+        md.append(f"🏆 **CHECKMATE!** [@{winner}](https://github.com/{winner}) defeated Aadarsh-AI! (+50 pts 👑)\n")
     elif status == "won_ai":
         md.append("🤖 **Checkmate!** Aadarsh-AI won this match!\n")
     else:
         md.append("🤝 **Game Over:** Draw / Stalemate!\n")
 
-    hist_str = " | ".join(history[-4:]) if history else "e2-e4 waiting..."
-    md.append(f"**Recent Moves:** `{hist_str}`\n")
+    md.append("</div>\n")
 
-    reset_url = issue_url(
-        "arcade:chess:new",
-        "Click 'Submit new issue' to reset the chessboard to start a new game!"
-    )
-    md.append(f"[ 🔄 Start New Chess Game ]({reset_url})\n")
+    hist_str = " &nbsp;|&nbsp; ".join(history[-4:]) if history else "Game just began (1. e4...)"
+    md.append(f"**Last Plays:** `{hist_str}`\n")
 
     return "\n".join(md)

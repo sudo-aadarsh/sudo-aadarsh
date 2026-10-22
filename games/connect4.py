@@ -15,6 +15,7 @@ REPO_NAME = "sudo-aadarsh"
 
 ROWS = 6
 COLS = 7
+NUMBER_EMOJIS = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣"]
 
 
 def issue_url(title: str, body: str) -> str:
@@ -50,22 +51,18 @@ def save_state(state: Dict[str, Any]) -> None:
 
 
 def check_win(board: list, piece: int) -> bool:
-    # Horizontal
     for r in range(ROWS):
         for c in range(COLS - 3):
             if all(board[r][c + i] == piece for i in range(4)):
                 return True
-    # Vertical
     for r in range(ROWS - 3):
         for c in range(COLS):
             if all(board[r + i][c] == piece for i in range(4)):
                 return True
-    # Diagonal Positive
     for r in range(ROWS - 3):
         for c in range(COLS - 3):
             if all(board[r + i][c + i] == piece for i in range(4)):
                 return True
-    # Diagonal Negative
     for r in range(3, ROWS):
         for c in range(COLS - 3):
             if all(board[r - i][c + i] == piece for i in range(4)):
@@ -93,7 +90,6 @@ def choose_ai_move(board: list) -> Optional[int]:
     if not valid_cols:
         return None
 
-    # 1. Can AI win immediately?
     for c in valid_cols:
         r = get_available_row(board, c)
         board[r][c] = 2
@@ -102,7 +98,6 @@ def choose_ai_move(board: list) -> Optional[int]:
             return c
         board[r][c] = 0
 
-    # 2. Block player immediate win
     for c in valid_cols:
         r = get_available_row(board, c)
         board[r][c] = 1
@@ -111,7 +106,6 @@ def choose_ai_move(board: list) -> Optional[int]:
             return c
         board[r][c] = 0
 
-    # 3. Avoid moves that let player win on the next turn right above
     safe_cols = []
     for c in valid_cols:
         r = get_available_row(board, c)
@@ -127,8 +121,6 @@ def choose_ai_move(board: list) -> Optional[int]:
             safe_cols.append(c)
 
     candidate_cols = safe_cols if safe_cols else valid_cols
-
-    # Prefer center columns: col 3, then 2,4, then 1,5, then 0,6
     preference = [3, 2, 4, 1, 5, 0, 6]
     for c in preference:
         if c in candidate_cols:
@@ -138,10 +130,6 @@ def choose_ai_move(board: list) -> Optional[int]:
 
 
 def process_move(col: int, username: str) -> Tuple[bool, str, int, bool, bool]:
-    """
-    Processes a drop move in column `col` (0-indexed).
-    Returns (success, message, points_earned, won, draw).
-    """
     state = load_state()
 
     if state["status"] != "in_progress":
@@ -155,31 +143,27 @@ def process_move(col: int, username: str) -> Tuple[bool, str, int, bool, bool]:
     if row is None:
         return False, f"Column {col + 1} is already full! Please pick another column.", 0, False, False
 
-    # Player 1 (Visitor) drop
     board[row][col] = 1
     state["last_player"] = username
     state["turn_count"] = state.get("turn_count", 0) + 1
-    state["last_move"] = f"@{username} dropped in Column {col + 1}"
+    state["last_move"] = f"@{username} dropped in Col {col + 1}"
 
-    # Check if player won
     if check_win(board, 1):
         state["status"] = "won_player"
         state["winner"] = username
         save_state(state)
         return True, f"🎉 CONNECT FOUR! @{username} won the match!", 30, True, False
 
-    # Check draw
     if is_board_full(board):
         state["status"] = "draw"
         save_state(state)
         return True, f"🤝 Board is full! Connect Four ended in a DRAW.", 10, False, True
 
-    # AI Turn
     ai_col = choose_ai_move(board)
     if ai_col is not None:
         ai_row = get_available_row(board, ai_col)
         board[ai_row][ai_col] = 2
-        state["last_move"] += f" | Aadarsh-AI countered in Column {ai_col + 1}"
+        state["last_move"] += f" | Aadarsh-AI countered in Col {ai_col + 1}"
 
         if check_win(board, 2):
             state["status"] = "won_ai"
@@ -206,56 +190,59 @@ def render_markdown() -> str:
     state = load_state()
     board = state["board"]
     status = state["status"]
-    last_move = state.get("last_move", "No moves yet.")
+    last_move = state.get("last_move", "No moves played yet")
 
     piece_map = {0: "⚪", 1: "🟡", 2: "🔵"}
 
     md = []
     md.append("### 🟡 Game 1: Connect Four vs Aadarsh-AI")
-    md.append("> **Rules:** Align 4 yellow tokens (🟡) horizontally, vertically, or diagonally before Aadarsh-AI (🔵) blocks you!\n")
+    md.append("> **Goal:** Drop tokens to align 4 in a row (horizontal, vertical, or diagonal). You are 🟡, Aadarsh-AI is 🔵!\n")
 
-    # Drop buttons row
+    md.append('<div align="center">\n')
+
+    # Drop buttons row - using square number emojis for 100% equal width columns
     if status == "in_progress":
         drop_links = []
         for c in range(COLS):
             if board[0][c] == 0:
                 url = issue_url(
                     f"arcade:c4:drop:{c}",
-                    f"Just click 'Submit new issue' to drop your token in Column {c + 1}!\n\n*(Automated turn for @sudo-aadarsh's arcade)*"
+                    f"Click 'Submit new issue' to drop your 🟡 token in Column {c + 1}!\n\n*(Automated turn for @sudo-aadarsh's arcade)*"
                 )
-                drop_links.append(f"[ ⬇️ Col {c + 1} ]({url})")
+                drop_links.append(f"[ {NUMBER_EMOJIS[c]} ]({url})")
             else:
-                drop_links.append("🚫 Full")
+                drop_links.append("🚫")
         md.append("| " + " | ".join(drop_links) + " |")
     else:
-        headers = [f"Col {c + 1}" for c in range(COLS)]
+        headers = [f"{NUMBER_EMOJIS[c]}" for c in range(COLS)]
         md.append("| " + " | ".join(headers) + " |")
 
     md.append("| " + " | ".join([":---:"] * COLS) + " |")
 
-    # Render board rows
+    # Render 6 board rows
     for r in range(ROWS):
         row_str = " | ".join(piece_map[board[r][c]] for c in range(COLS))
         md.append(f"| {row_str} |")
 
+    md.append("\n</div>\n")
+
     # Status line
-    md.append("")
     if status == "in_progress":
-        md.append(f"**Status:** 🟡 **Visitor's Turn** vs 🔵 **Aadarsh-AI** &nbsp;|&nbsp; *Click any `⬇️ Col` button above to drop!*")
+        md.append(f"**Turn:** 🟡 **Visitor's Turn** vs 🔵 **Aadarsh-AI** &nbsp;|&nbsp; *Click any number button (`1️⃣` to `7️⃣`) above to drop!*")
     elif status == "won_player":
         winner = state.get("winner", "Visitor")
-        md.append(f"**Status:** 🏆 **VICTORY!** [@{winner}](https://github.com/{winner}) connected four and defeated Aadarsh-AI! (+30 pts)")
+        md.append(f"🏆 **VICTORY!** [@{winner}](https://github.com/{winner}) connected 4 in a row! (+30 pts)")
     elif status == "won_ai":
         md.append("**Status:** 🤖 **Aadarsh-AI won this match!** Better luck next round!")
     else:
-        md.append("**Status:** 🤝 **It's a DRAW!** The grid is full.")
+        md.append("**Status:** 🤝 **It's a DRAW!** The grid is completely full.")
 
-    md.append(f"**Last Turn:** {last_move}\n")
+    md.append(f"**Last Play:** `{last_move}`\n")
 
     reset_url = issue_url(
         "arcade:c4:new",
         "Click 'Submit new issue' to start a fresh Connect Four game!"
     )
-    md.append(f"[ 🔄 Start New Connect Four Game ]({reset_url})\n")
+    md.append(f"[ 🔄 Start New Connect Four Match ]({reset_url})\n")
 
     return "\n".join(md)
