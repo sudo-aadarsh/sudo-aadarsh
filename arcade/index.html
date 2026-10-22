@@ -372,6 +372,57 @@
       filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
     }
 
+        .chess-difficulty-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .diff-label {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.78rem;
+      letter-spacing: 0.8px;
+      color: var(--text-muted);
+    }
+
+    .chess-diff-pills {
+      display: flex;
+      background: rgba(15, 23, 42, 0.7);
+      padding: 3px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      gap: 4px;
+    }
+
+    .chess-diff-pill {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.76rem;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      user-select: none;
+    }
+
+    .chess-diff-pill:hover {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .chess-diff-pill.active {
+      background: #ef4444;
+      color: #ffffff;
+      box-shadow: 0 2px 10px rgba(239, 68, 68, 0.4);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
     .chess-meta-row {
       display: flex;
       justify-content: space-between;
@@ -1045,6 +1096,15 @@
             <span>AI: <b>AADARSH-AI (BLACK)</b></span>
           </div>
 
+          <div class="chess-difficulty-row">
+            <span class="diff-label">AI STRENGTH:</span>
+            <div class="chess-diff-pills">
+              <button class="chess-diff-pill" id="cdiff-casual" onclick="setChessDifficulty('casual')">CASUAL (1200)</button>
+              <button class="chess-diff-pill" id="cdiff-expert" onclick="setChessDifficulty('expert')">EXPERT (1650)</button>
+              <button class="chess-diff-pill active" id="cdiff-gm" onclick="setChessDifficulty('grandmaster')">GRANDMASTER (2100+)</button>
+            </div>
+          </div>
+
           <button class="ui-btn" onclick="resetChessGame()">RESTART MATCH</button>
         </div>
       </div>
@@ -1383,7 +1443,7 @@
     /* =========================================================================
        USER PROFILE & LEADERBOARD STORE
        ========================================================================= */
-    const STORAGE_KEY = 'aadarsh_arcade_v9_pro';
+    const STORAGE_KEY = 'aadarsh_arcade_v10_pro';
     let userHandle = localStorage.getItem('aadarsh_user_handle') || 'Player_' + Math.floor(100 + Math.random() * 900);
     let userStats = {
       score: 0,
@@ -1625,24 +1685,199 @@
       });
     }
 
+    // =========================================================================
+    // GRANDMASTER CHESS MINIMAX ENGINE WITH ALPHA-BETA PRUNING & PST
+    // =========================================================================
+    let chessDifficulty = 'grandmaster';
+
+    function setChessDifficulty(lvl) {
+      chessDifficulty = lvl;
+      ['casual', 'expert', 'gm'].forEach(k => {
+        const el = document.getElementById('cdiff-' + k);
+        if (el) el.classList.remove('active');
+      });
+      const map = { casual: 'casual', expert: 'expert', grandmaster: 'gm' };
+      const target = document.getElementById('cdiff-' + map[lvl]);
+      if (target) target.classList.add('active');
+    }
+
+    const CHESS_PIECE_VALS = { p: 100, n: 320, b: 330, r: 500, q: 900, k: 20000 };
+
+    const PST_P = [
+      [0,   0,   0,   0,   0,   0,   0,   0],
+      [50,  50,  50,  50,  50,  50,  50,  50],
+      [10,  10,  20,  30,  30,  20,  10,  10],
+      [5,   5,  10,  25,  25,  10,   5,   5],
+      [0,   0,   0,  20,  20,   0,   0,   0],
+      [5,  -5, -10,   0,   0, -10,  -5,   5],
+      [5,  10,  10, -20, -20,  10,  10,   5],
+      [0,   0,   0,   0,   0,   0,   0,   0]
+    ];
+
+    const PST_N = [
+      [-50,-40,-30,-30,-30,-30,-40,-50],
+      [-40,-20,  0,  0,  0,  0,-20,-40],
+      [-30,  0, 10, 15, 15, 10,  0,-30],
+      [-30,  5, 15, 20, 20, 15,  5,-30],
+      [-30,  0, 15, 20, 20, 15,  0,-30],
+      [-30,  5, 10, 15, 15, 10,  5,-30],
+      [-40,-20,  0,  5,  5,  0,-20,-40],
+      [-50,-40,-30,-30,-30,-30,-40,-50]
+    ];
+
+    const PST_B = [
+      [-20,-10,-10,-10,-10,-10,-10,-20],
+      [-10,  0,  0,  0,  0,  0,  0,-10],
+      [-10,  0,  5, 10, 10,  5,  0,-10],
+      [-10,  5,  5, 10, 10,  5,  5,-10],
+      [-10,  0, 10, 10, 10, 10,  0,-10],
+      [-10, 10, 10, 10, 10, 10, 10,-10],
+      [-10,  5,  0,  0,  0,  0,  5,-10],
+      [-20,-10,-10,-10,-10,-10,-10,-20]
+    ];
+
+    const PST_R = [
+      [0,   0,   0,   0,   0,   0,   0,   0],
+      [5,  10,  10,  10,  10,  10,  10,   5],
+      [-5,   0,   0,   0,   0,   0,   0,  -5],
+      [-5,   0,   0,   0,   0,   0,   0,  -5],
+      [-5,   0,   0,   0,   0,   0,   0,  -5],
+      [-5,   0,   0,   0,   0,   0,   0,  -5],
+      [-5,   0,   0,   0,   0,   0,   0,  -5],
+      [0,   0,   0,   5,   5,   0,   0,   0]
+    ];
+
+    const PST_Q = [
+      [-20,-10,-10, -5, -5,-10,-10,-20],
+      [-10,  0,  0,  0,  0,  0,  0,-10],
+      [-10,  0,  5,  5,  5,  5,  0,-10],
+      [-5,   0,  5,  5,  5,  5,  0, -5],
+      [0,    0,  5,  5,  5,  5,  0, -5],
+      [-10,  5,  5,  5,  5,  5,  0,-10],
+      [-10,  0,  5,  0,  0,  0,  0,-10],
+      [-20,-10,-10, -5, -5,-10,-10,-20]
+    ];
+
+    const PST_K = [
+      [-30,-40,-40,-50,-50,-40,-40,-30],
+      [-30,-40,-40,-50,-50,-40,-40,-30],
+      [-30,-40,-40,-50,-50,-40,-40,-30],
+      [-30,-40,-40,-50,-50,-40,-40,-30],
+      [-20,-30,-30,-40,-40,-30,-30,-20],
+      [-10,-20,-20,-20,-20,-20,-20,-10],
+      [20,  20,   0,   0,   0,   0,  20,  20],
+      [20,  30,  10,   0,   0,  10,  30,  20]
+    ];
+
+    function evaluateChessBoard(g) {
+      let score = 0;
+      const b = g.board();
+      for (let r = 0; r < 8; r++) {
+        for (let c = 0; c < 8; c++) {
+          const p = b[r][c];
+          if (!p) continue;
+          const table = p.type === 'p' ? PST_P :
+                        p.type === 'n' ? PST_N :
+                        p.type === 'b' ? PST_B :
+                        p.type === 'r' ? PST_R :
+                        p.type === 'q' ? PST_Q : PST_K;
+          const row = p.color === 'w' ? r : (7 - r);
+          const pst = table[row][c];
+          const val = CHESS_PIECE_VALS[p.type] + pst;
+          score += (p.color === 'w' ? val : -val);
+        }
+      }
+      return score;
+    }
+
+    function minimaxChess(g, depth, alpha, beta, isMaximizing) {
+      if (depth === 0 || g.game_over()) {
+        if (g.in_checkmate()) return isMaximizing ? -99999 : 99999;
+        if (g.in_draw() || g.in_stalemate() || g.in_threefold_repetition()) return 0;
+        return evaluateChessBoard(g);
+      }
+
+      const moves = g.moves({ verbose: true });
+      // Move Ordering: Captures & Checks first
+      moves.sort((a, b) => {
+        const valA = (a.captured ? (CHESS_PIECE_VALS[a.captured] * 10 - CHESS_PIECE_VALS[a.piece]) : 0) + (a.san.includes('+') ? 50 : 0);
+        const valB = (b.captured ? (CHESS_PIECE_VALS[b.captured] * 10 - CHESS_PIECE_VALS[b.piece]) : 0) + (b.san.includes('+') ? 50 : 0);
+        return valB - valA;
+      });
+
+      if (isMaximizing) {
+        let maxEval = -Infinity;
+        for (const m of moves) {
+          g.move(m);
+          const ev = minimaxChess(g, depth - 1, alpha, beta, false);
+          g.undo();
+          if (ev > maxEval) maxEval = ev;
+          if (ev > alpha) alpha = ev;
+          if (beta <= alpha) break;
+        }
+        return maxEval;
+      } else {
+        let minEval = Infinity;
+        for (const m of moves) {
+          g.move(m);
+          const ev = minimaxChess(g, depth - 1, alpha, beta, true);
+          g.undo();
+          if (ev < minEval) minEval = ev;
+          if (ev < beta) beta = ev;
+          if (beta <= alpha) break;
+        }
+        return minEval;
+      }
+    }
+
+    function findGrandmasterMove(g, searchDepth) {
+      const moves = g.moves({ verbose: true });
+      if (!moves.length) return null;
+
+      if (chessDifficulty === 'casual') {
+        // Casual: Depth 1 with minor randomization
+        moves.sort((a, b) => {
+          const valA = (a.captured ? CHESS_PIECE_VALS[a.captured] : 0) + (Math.random() * 20);
+          const valB = (b.captured ? CHESS_PIECE_VALS[b.captured] : 0) + (Math.random() * 20);
+          return valB - valA;
+        });
+        return moves[0];
+      }
+
+      moves.sort((a, b) => {
+        const valA = (a.captured ? (CHESS_PIECE_VALS[a.captured] * 10 - CHESS_PIECE_VALS[a.piece]) : 0) + (a.san.includes('+') ? 50 : 0);
+        const valB = (b.captured ? (CHESS_PIECE_VALS[b.captured] * 10 - CHESS_PIECE_VALS[b.piece]) : 0) + (b.san.includes('+') ? 50 : 0);
+        return valB - valA;
+      });
+
+      let bestMove = moves[0];
+      let bestScore = Infinity; // Black wants to MINIMIZE white eval
+      let alpha = -Infinity;
+      let beta = Infinity;
+
+      for (const m of moves) {
+        g.move(m);
+        const score = minimaxChess(g, searchDepth - 1, alpha, beta, true);
+        g.undo();
+
+        if (score < bestScore) {
+          bestScore = score;
+          bestMove = m;
+        }
+        if (score < beta) {
+          beta = score;
+        }
+      }
+
+      return bestMove;
+    }
+
     function executeChessAIMove() {
       if (chess.game_over()) return;
 
-      const moves = chess.moves({ verbose: true });
-      if (!moves.length) return;
-
-      const pieceValues = { p: 1, n: 3, b: 3, r: 5, q: 9, k: 0 };
-      let bestMove = moves[0];
-      let bestVal = -999;
-
-      for (let m of moves) {
-        let v = m.captured ? pieceValues[m.captured] * 10 : 0;
-        if (m.san.includes('+')) v += 4;
-        if (v > bestVal) {
-          bestVal = v;
-          bestMove = m;
-        }
-      }
+      const depth = chessDifficulty === 'casual' ? 1 : (chessDifficulty === 'expert' ? 2 : 3);
+      const bestMove = findGrandmasterMove(chess, depth);
+      if (!bestMove) return;
 
       const fEl = document.getElementById(`cell-${bestMove.from}`);
       const tEl = document.getElementById(`cell-${bestMove.to}`);
@@ -1663,8 +1898,14 @@
         drawChessBoard();
 
         if (chess.in_checkmate()) {
-          document.getElementById('chess-status-badge').textContent = 'CHECKMATE BY AADARSH-AI';
+          document.getElementById('chess-status-badge').textContent = 'CHECKMATE BY GRANDMASTER AI';
           document.getElementById('chess-status-badge').style.color = 'var(--accent-crimson)';
+          return;
+        }
+
+        if (chess.in_draw() || chess.in_stalemate() || chess.in_threefold_repetition()) {
+          document.getElementById('chess-status-badge').textContent = 'DRAW / STALEMATE';
+          document.getElementById('chess-status-badge').style.color = 'var(--text-muted)';
           return;
         }
 
@@ -1673,6 +1914,7 @@
           document.getElementById('chess-status-badge').style.color = 'var(--accent-amber)';
         } else {
           document.getElementById('chess-status-badge').textContent = 'WHITE TO MOVE';
+          document.getElementById('chess-status-badge').style.color = 'var(--text-main)';
         }
       }, 230);
     }
