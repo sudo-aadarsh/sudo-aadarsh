@@ -1,11 +1,7 @@
 <div align="center">
 
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/intro-banner-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="assets/intro-banner-light.svg">
-    <img src="assets/intro-banner-light.svg" alt="Aadarsh Jha" width="850">
-  </picture>
+  <img src="assets/coding.gif" alt="Developer Coding" width="340" />
 </p>
 
 <p align="center">
