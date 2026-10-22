@@ -1,0 +1,36 @@
+<svg width="130" height="110" viewBox="0 0 130 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="leadBg" x1="0" y1="0" x2="130" y2="110" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#141926"/>
+      <stop offset="100%" stop-color="#0a0d16"/>
+    </linearGradient>
+    <linearGradient id="leadBorder" x1="0" y1="0" x2="130" y2="110" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ff5722" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#ff5722" stop-opacity="0.1"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="128" height="108" rx="14" fill="url(#leadBg)"/>
+  <rect x="1" y="1" width="128" height="108" rx="14" stroke="url(#leadBorder)" stroke-width="1.5"/>
+
+  <!-- Top Accent Glow -->
+  <path d="M20 2 H110" stroke="#ff5722" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+
+  <!-- Golden Champion Trophy Favicon -->
+  <g transform="translate(47, 18) scale(0.9)">
+    <!-- Cup Body -->
+    <path d="M6 6 H34 V18 C34 26 28 32 20 32 C12 32 6 26 6 18 Z" fill="#f59e0b"/>
+    <!-- Left Handle -->
+    <path d="M6 10 H2 C0 10 0 20 6 20" stroke="#f59e0b" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <!-- Right Handle -->
+    <path d="M34 10 H38 C40 10 40 20 34 20" stroke="#f59e0b" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <!-- Stem and Base -->
+    <path d="M17 32 H23 V36 H17 Z" fill="#d97706"/>
+    <path d="M12 36 H28 V40 H12 Z" fill="#b45309"/>
+    <!-- Star on Cup -->
+    <polygon points="20,11 22,16 27,16 23,19 25,24 20,21 15,24 17,19 13,16 18,16" fill="#ffffff" opacity="0.9"/>
+  </g>
+
+  <!-- Label -->
+  <text x="65" y="94" font-family="'Outfit', -apple-system, sans-serif" font-size="11" font-weight="800" fill="#f8fafc" text-anchor="middle" letter-spacing="0.8">RANKS</text>
+</svg>
