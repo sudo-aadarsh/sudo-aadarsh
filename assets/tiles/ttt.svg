@@ -1,30 +1,38 @@
-<svg width="130" height="110" viewBox="0 0 130 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="135" height="135" viewBox="0 0 135 135" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="tttBg" x1="0" y1="0" x2="130" y2="110" gradientUnits="userSpaceOnUse">
+    <linearGradient id="tttBg" x1="0" y1="0" x2="135" y2="135" gradientUnits="userSpaceOnUse">
       <stop offset="0%" stop-color="#141926"/>
       <stop offset="100%" stop-color="#0a0d16"/>
     </linearGradient>
-    <linearGradient id="tttBorder" x1="0" y1="0" x2="130" y2="110" gradientUnits="userSpaceOnUse">
+    <linearGradient id="tttBorder" x1="0" y1="0" x2="135" y2="135" gradientUnits="userSpaceOnUse">
       <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.6"/>
-      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.15"/>
     </linearGradient>
   </defs>
 
-  <rect x="1" y="1" width="128" height="108" rx="14" fill="url(#tttBg)"/>
-  <rect x="1" y="1" width="128" height="108" rx="14" stroke="url(#tttBorder)" stroke-width="1.5"/>
+  <rect x="1" y="1" width="133" height="133" rx="14" fill="url(#tttBg)"/>
+  <rect x="1" y="1" width="133" height="133" rx="14" stroke="url(#tttBorder)" stroke-width="1.5"/>
 
   <!-- Top Accent Glow -->
-  <path d="M20 2 H110" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+  <path d="M24 2 H111" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" opacity="0.85"/>
+
+  <!-- Top Category Tag -->
+  <text x="67.5" y="19" font-family="'JetBrains Mono', -apple-system, monospace" font-size="8" font-weight="700" fill="#38bdf8" text-anchor="middle" letter-spacing="1.5" opacity="0.85">VERSUS AI</text>
 
   <!-- Minimalist X and O Favicon -->
-  <g transform="translate(37, 20)">
+  <g transform="translate(40, 29)">
     <!-- X in Cyan -->
-    <line x1="4" y1="8" x2="22" y2="26" stroke="#38bdf8" stroke-width="4.5" stroke-linecap="round"/>
-    <line x1="22" y1="8" x2="4" y2="26" stroke="#38bdf8" stroke-width="4.5" stroke-linecap="round"/>
+    <line x1="4" y1="8" x2="22" y2="26" stroke="#38bdf8" stroke-width="4" stroke-linecap="round"/>
+    <line x1="22" y1="8" x2="4" y2="26" stroke="#38bdf8" stroke-width="4" stroke-linecap="round"/>
     <!-- O in Coral -->
-    <circle cx="44" cy="17" r="10" stroke="#f43f5e" stroke-width="4.5" fill="none"/>
+    <circle cx="44" cy="17" r="9" stroke="#f43f5e" stroke-width="4" fill="none"/>
   </g>
 
-  <!-- Label -->
-  <text x="65" y="94" font-family="'Outfit', -apple-system, sans-serif" font-size="11" font-weight="800" fill="#f8fafc" text-anchor="middle" letter-spacing="0.8">TIC-TAC-TOE</text>
+  <!-- Title -->
+  <text x="67.5" y="85" font-family="'Outfit', -apple-system, sans-serif" font-size="11.5" font-weight="800" fill="#f8fafc" text-anchor="middle" letter-spacing="0.8">TIC-TAC-TOE</text>
+
+  <!-- Interactive Action Button Pill -->
+  <rect x="22" y="98" width="91" height="24" rx="12" fill="rgba(56, 189, 248, 0.15)" stroke="#38bdf8" stroke-width="1.2"/>
+  <polygon points="45,105 45,115 54,110" fill="#38bdf8"/>
+  <text x="73" y="113.5" font-family="'Outfit', -apple-system, sans-serif" font-size="10.5" font-weight="800" fill="#38bdf8" text-anchor="middle" letter-spacing="1.2">PLAY</text>
 </svg>

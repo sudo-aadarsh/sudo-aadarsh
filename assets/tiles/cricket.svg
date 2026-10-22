@@ -1,23 +1,26 @@
-<svg width="130" height="110" viewBox="0 0 130 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="135" height="135" viewBox="0 0 135 135" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="cricketBg" x1="0" y1="0" x2="130" y2="110" gradientUnits="userSpaceOnUse">
+    <linearGradient id="cricketBg" x1="0" y1="0" x2="135" y2="135" gradientUnits="userSpaceOnUse">
       <stop offset="0%" stop-color="#141926"/>
       <stop offset="100%" stop-color="#0a0d16"/>
     </linearGradient>
-    <linearGradient id="cricketBorder" x1="0" y1="0" x2="130" y2="110" gradientUnits="userSpaceOnUse">
+    <linearGradient id="cricketBorder" x1="0" y1="0" x2="135" y2="135" gradientUnits="userSpaceOnUse">
       <stop offset="0%" stop-color="#10b981" stop-opacity="0.6"/>
-      <stop offset="100%" stop-color="#10b981" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#10b981" stop-opacity="0.15"/>
     </linearGradient>
   </defs>
 
-  <rect x="1" y="1" width="128" height="108" rx="14" fill="url(#cricketBg)"/>
-  <rect x="1" y="1" width="128" height="108" rx="14" stroke="url(#cricketBorder)" stroke-width="1.5"/>
+  <rect x="1" y="1" width="133" height="133" rx="14" fill="url(#cricketBg)"/>
+  <rect x="1" y="1" width="133" height="133" rx="14" stroke="url(#cricketBorder)" stroke-width="1.5"/>
 
   <!-- Top Accent Glow -->
-  <path d="M20 2 H110" stroke="#10b981" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+  <path d="M24 2 H111" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" opacity="0.85"/>
+
+  <!-- Top Category Tag -->
+  <text x="67.5" y="19" font-family="'JetBrains Mono', -apple-system, monospace" font-size="8" font-weight="700" fill="#10b981" text-anchor="middle" letter-spacing="1.5" opacity="0.85">BAT &amp; BOWL</text>
 
   <!-- Cricket Bat & Ball Favicon -->
-  <g transform="translate(42, 18)">
+  <g transform="translate(45, 27) scale(0.9)">
     <!-- Wooden Bat Angled -->
     <rect x="12" y="4" width="5" height="10" rx="1" fill="#ffffff" transform="rotate(-35 12 4)"/>
     <rect x="11" y="12" width="10" height="26" rx="2" fill="#d97706" transform="rotate(-35 11 12)"/>
@@ -28,6 +31,11 @@
     <path d="M29 32 C33 28, 35 28, 39 32" stroke="#ffffff" stroke-width="1.2" fill="none"/>
   </g>
 
-  <!-- Label -->
-  <text x="65" y="94" font-family="'Outfit', -apple-system, sans-serif" font-size="11" font-weight="800" fill="#f8fafc" text-anchor="middle" letter-spacing="0.8">CRICKET</text>
+  <!-- Title -->
+  <text x="67.5" y="85" font-family="'Outfit', -apple-system, sans-serif" font-size="12" font-weight="800" fill="#f8fafc" text-anchor="middle" letter-spacing="1">CRICKET</text>
+
+  <!-- Interactive Action Button Pill -->
+  <rect x="22" y="98" width="91" height="24" rx="12" fill="rgba(16, 185, 129, 0.15)" stroke="#10b981" stroke-width="1.2"/>
+  <polygon points="45,105 45,115 54,110" fill="#10b981"/>
+  <text x="73" y="113.5" font-family="'Outfit', -apple-system, sans-serif" font-size="10.5" font-weight="800" fill="#10b981" text-anchor="middle" letter-spacing="1.2">PLAY</text>
 </svg>

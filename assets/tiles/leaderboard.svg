@@ -1,23 +1,26 @@
-<svg width="130" height="110" viewBox="0 0 130 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="135" height="135" viewBox="0 0 135 135" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="leadBg" x1="0" y1="0" x2="130" y2="110" gradientUnits="userSpaceOnUse">
+    <linearGradient id="leadBg" x1="0" y1="0" x2="135" y2="135" gradientUnits="userSpaceOnUse">
       <stop offset="0%" stop-color="#141926"/>
       <stop offset="100%" stop-color="#0a0d16"/>
     </linearGradient>
-    <linearGradient id="leadBorder" x1="0" y1="0" x2="130" y2="110" gradientUnits="userSpaceOnUse">
+    <linearGradient id="leadBorder" x1="0" y1="0" x2="135" y2="135" gradientUnits="userSpaceOnUse">
       <stop offset="0%" stop-color="#ff5722" stop-opacity="0.6"/>
-      <stop offset="100%" stop-color="#ff5722" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#ff5722" stop-opacity="0.15"/>
     </linearGradient>
   </defs>
 
-  <rect x="1" y="1" width="128" height="108" rx="14" fill="url(#leadBg)"/>
-  <rect x="1" y="1" width="128" height="108" rx="14" stroke="url(#leadBorder)" stroke-width="1.5"/>
+  <rect x="1" y="1" width="133" height="133" rx="14" fill="url(#leadBg)"/>
+  <rect x="1" y="1" width="133" height="133" rx="14" stroke="url(#leadBorder)" stroke-width="1.5"/>
 
   <!-- Top Accent Glow -->
-  <path d="M20 2 H110" stroke="#ff5722" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+  <path d="M24 2 H111" stroke="#ff5722" stroke-width="2.5" stroke-linecap="round" opacity="0.85"/>
+
+  <!-- Top Category Tag -->
+  <text x="67.5" y="19" font-family="'JetBrains Mono', -apple-system, monospace" font-size="8" font-weight="700" fill="#ff5722" text-anchor="middle" letter-spacing="1.5" opacity="0.85">HALL OF FAME</text>
 
   <!-- Golden Champion Trophy Favicon -->
-  <g transform="translate(47, 18) scale(0.9)">
+  <g transform="translate(49, 26) scale(0.9)">
     <!-- Cup Body -->
     <path d="M6 6 H34 V18 C34 26 28 32 20 32 C12 32 6 26 6 18 Z" fill="#f59e0b"/>
     <!-- Left Handle -->
@@ -31,6 +34,10 @@
     <polygon points="20,11 22,16 27,16 23,19 25,24 20,21 15,24 17,19 13,16 18,16" fill="#ffffff" opacity="0.9"/>
   </g>
 
-  <!-- Label -->
-  <text x="65" y="94" font-family="'Outfit', -apple-system, sans-serif" font-size="11" font-weight="800" fill="#f8fafc" text-anchor="middle" letter-spacing="0.8">RANKS</text>
+  <!-- Title -->
+  <text x="67.5" y="85" font-family="'Outfit', -apple-system, sans-serif" font-size="11" font-weight="800" fill="#f8fafc" text-anchor="middle" letter-spacing="0.8">LEADERBOARD</text>
+
+  <!-- Interactive Action Button Pill -->
+  <rect x="22" y="98" width="91" height="24" rx="12" fill="rgba(255, 87, 34, 0.15)" stroke="#ff5722" stroke-width="1.2"/>
+  <text x="67.5" y="113.5" font-family="'Outfit', -apple-system, sans-serif" font-size="10" font-weight="800" fill="#ff5722" text-anchor="middle" letter-spacing="1">★ RANKS</text>
 </svg>
