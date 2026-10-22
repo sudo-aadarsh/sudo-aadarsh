@@ -1,0 +1,37 @@
+<svg width="135" height="135" viewBox="0 0 135 135" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="chessBgLight" x1="0" y1="0" x2="135" y2="135" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="60%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#f1f5f9"/>
+    </linearGradient>
+    <linearGradient id="chessBorderLight" x1="0" y1="0" x2="135" y2="135" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#cbd5e1" stop-opacity="0.9"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="133" height="133" rx="14" fill="url(#chessBgLight)"/>
+  <rect x="1" y="1" width="133" height="133" rx="14" stroke="url(#chessBorderLight)" stroke-width="1.5"/>
+
+  <!-- Top Accent Glow -->
+  <path d="M24 2 H111" stroke="#d97706" stroke-width="2.5" stroke-linecap="round" opacity="0.9"/>
+
+  <!-- Top Category Tag -->
+  <text x="67.5" y="19" font-family="'JetBrains Mono', -apple-system, monospace" font-size="8" font-weight="700" fill="#b45309" text-anchor="middle" letter-spacing="1.5">AI GRANDMASTER</text>
+
+  <!-- Staunton Knight Favicon -->
+  <g transform="translate(52, 26) scale(0.85)">
+    <path d="M22 6 C18 6, 12 10, 10 16 C8 22, 10 26, 8 30 C7 32, 5 33, 3 34 L3 38 L25 38 L24 35 C24 35, 27 33, 29 27 C31 21, 31 16, 28 12 C26 9, 24 6, 22 6 Z" fill="#d97706"/>
+    <circle cx="12" cy="15" r="1.8" fill="#ffffff"/>
+    <path d="M1 38 L27 38 L27 42 L1 42 Z" fill="#0f172a"/>
+  </g>
+
+  <!-- Title -->
+  <text x="67.5" y="85" font-family="'Outfit', -apple-system, sans-serif" font-size="12" font-weight="800" fill="#0f172a" text-anchor="middle" letter-spacing="1">CHESS</text>
+
+  <!-- Interactive Action Button Pill -->
+  <rect x="22" y="98" width="91" height="24" rx="12" fill="rgba(217, 119, 6, 0.12)" stroke="#d97706" stroke-width="1.4"/>
+  <polygon points="45,105 45,115 54,110" fill="#b45309"/>
+  <text x="73" y="113.5" font-family="'Outfit', -apple-system, sans-serif" font-size="10.5" font-weight="800" fill="#b45309" text-anchor="middle" letter-spacing="1.2">PLAY</text>
+</svg>
