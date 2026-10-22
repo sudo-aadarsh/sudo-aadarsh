@@ -121,65 +121,68 @@ def update_readme() -> None:
 
 def process_command(title: str, username: str) -> str:
     title = title.strip()
-    norm = title.lower()
 
     # 1. Connect Four
-    if norm.startswith("arcade:c4:drop:"):
-        match = re.search(r"arcade:c4:drop:(\d+)", norm)
-        if match:
-            col = int(match.group(1))
-            success, msg, pts, won, draw = connect4.process_move(col, username)
-            if success:
-                award_msg = leaderboard.award_player(username, pts, "connect4", won=won, draw=draw)
-                return f"{msg}\n\n{award_msg}"
-            return f"⚠️ {msg}"
-    elif norm in ["arcade:c4:new", "arcade:c4:reset"]:
+    m_c4_drop = re.search(r"arcade\s*:\s*c4\s*:\s*drop\s*:\s*(\d+)", title, re.IGNORECASE)
+    if m_c4_drop:
+        col = int(m_c4_drop.group(1))
+        success, msg, pts, won, draw = connect4.process_move(col, username)
+        if success:
+            award_msg = leaderboard.award_player(username, pts, "connect4", won=won, draw=draw)
+            return f"{msg}\n\n{award_msg}"
+        return f"⚠️ {msg}"
+
+    if re.search(r"arcade\s*:\s*c4\s*:\s*(new|reset)", title, re.IGNORECASE):
         return connect4.reset_game()
 
     # 2. Tic-Tac-Toe
-    elif norm.startswith("arcade:ttt:move:"):
-        match = re.search(r"arcade:ttt:move:(\d+),(\d+)", norm)
-        if match:
-            r, c = int(match.group(1)), int(match.group(2))
-            success, msg, pts, won, draw = tictactoe.process_move(r, c, username)
-            if success:
-                award_msg = leaderboard.award_player(username, pts, "tictactoe", won=won, draw=draw)
-                return f"{msg}\n\n{award_msg}"
-            return f"⚠️ {msg}"
-    elif norm in ["arcade:ttt:new", "arcade:ttt:reset"]:
+    m_ttt_move = re.search(r"arcade\s*:\s*ttt\s*:\s*move\s*:\s*(\d+)\s*,\s*(\d+)", title, re.IGNORECASE)
+    if m_ttt_move:
+        r, c = int(m_ttt_move.group(1)), int(m_ttt_move.group(2))
+        success, msg, pts, won, draw = tictactoe.process_move(r, c, username)
+        if success:
+            award_msg = leaderboard.award_player(username, pts, "tictactoe", won=won, draw=draw)
+            return f"{msg}\n\n{award_msg}"
+        return f"⚠️ {msg}"
+
+    if re.search(r"arcade\s*:\s*ttt\s*:\s*(new|reset)", title, re.IGNORECASE):
         return tictactoe.reset_game()
 
     # 3. Chess
-    elif norm.startswith("arcade:chess:move:"):
-        move_str = title.split("arcade:chess:move:", 1)[1].strip()
+    m_chess_move = re.search(r"arcade\s*:\s*chess\s*:\s*move\s*:\s*(\S+)", title, re.IGNORECASE)
+    if m_chess_move:
+        move_str = m_chess_move.group(1).strip()
         success, msg, pts, won, draw = chess_game.process_move(move_str, username)
         if success:
             award_msg = leaderboard.award_player(username, pts, "chess", won=won, draw=draw)
             return f"{msg}\n\n{award_msg}"
         return f"⚠️ {msg}"
-    elif norm in ["arcade:chess:new", "arcade:chess:reset"]:
+
+    if re.search(r"arcade\s*:\s*chess\s*:\s*(new|reset)", title, re.IGNORECASE):
         return chess_game.reset_game()
 
     # 4. Wordle
-    elif norm.startswith("arcade:wordle:guess:"):
-        guess_str = title.split("arcade:wordle:guess:", 1)[1].strip()
+    m_wordle_guess = re.search(r"arcade\s*:\s*wordle\s*:\s*guess\s*:\s*(\w+)", title, re.IGNORECASE)
+    if m_wordle_guess:
+        guess_str = m_wordle_guess.group(1).strip()
         success, msg, pts, won, lost = wordle.process_guess(guess_str, username)
         if success:
             award_msg = leaderboard.award_player(username, pts, "wordle", won=won, draw=False)
             return f"{msg}\n\n{award_msg}"
         return f"⚠️ {msg}"
-    elif norm in ["arcade:wordle:new", "arcade:wordle:reset"]:
+
+    if re.search(r"arcade\s*:\s*wordle\s*:\s*(new|reset)", title, re.IGNORECASE):
         return wordle.reset_game()
 
     # 5. Global reset / admin
-    elif norm in ["arcade:reset:all", "--reset-all"]:
+    if re.search(r"(arcade\s*:\s*reset\s*:\s*all|--reset-all)", title, re.IGNORECASE):
         connect4.reset_game()
         tictactoe.reset_game()
         chess_game.reset_game()
         wordle.reset_game()
         return "All 4 games have been reset to initial state!"
 
-    elif norm in ["--render-only", "arcade:render"]:
+    if title in ["--render-only", "arcade:render"]:
         return "Arcade rendered."
 
     return f"Unrecognized arcade command: `{title}`"
