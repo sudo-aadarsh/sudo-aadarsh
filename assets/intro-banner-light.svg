@@ -1,0 +1,54 @@
+<svg width="880" height="175" viewBox="0 0 880 175" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Background Gradient for Light Mode -->
+    <linearGradient id="bgGradLight" x1="0" y1="0" x2="880" y2="175" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="60%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#f1f5f9"/>
+    </linearGradient>
+
+    <!-- Border Gradient -->
+    <linearGradient id="borderGradLight" x1="0" y1="0" x2="880" y2="175" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0284c7" stop-opacity="0.4"/>
+      <stop offset="50%" stop-color="#cbd5e1" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#6366f1" stop-opacity="0.35"/>
+    </linearGradient>
+
+    <!-- Radial Glows -->
+    <radialGradient id="glowCyanLight" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(120, 30) scale(240 160)">
+      <stop offset="0%" stop-color="#0284c7" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#0284c7" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="glowIndigoLight" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(760, 140) scale(220 150)">
+      <stop offset="0%" stop-color="#6366f1" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#6366f1" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <style>
+    .name-title-light { font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 34px; font-weight: 800; fill: #0f172a; letter-spacing: -0.5px; }
+    .subtitle-text-light { font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 14.5px; font-weight: 500; fill: #475569; }
+    .tag-badge-light { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; fill: #0284c7; letter-spacing: 1px; }
+  </style>
+
+  <!-- Card Background -->
+  <rect x="1" y="1" width="878" height="173" rx="16" fill="url(#bgGradLight)"/>
+  <rect x="1" y="1" width="878" height="173" rx="16" fill="url(#glowCyanLight)"/>
+  <rect x="1" y="1" width="878" height="173" rx="16" fill="url(#glowIndigoLight)"/>
+  <rect x="1" y="1" width="878" height="173" rx="16" stroke="url(#borderGradLight)" stroke-width="1.5"/>
+
+  <!-- Top Terminal Bar -->
+  <circle cx="28" cy="24" r="5" fill="#ef4444"/>
+  <circle cx="44" cy="24" r="5" fill="#f59e0b"/>
+  <circle cx="60" cy="24" r="5" fill="#10b981"/>
+
+  <!-- Active Status Tag -->
+  <rect x="690" y="14" width="162" height="22" rx="11" fill="rgba(2, 132, 199, 0.08)" stroke="rgba(2, 132, 199, 0.25)" stroke-width="1"/>
+  <circle cx="706" cy="25" r="3.5" fill="#0284c7"/>
+  <text x="716" y="29" class="tag-badge-light">SYSTEMS ONLINE</text>
+
+  <!-- Content -->
+  <text x="440" y="92" text-anchor="middle" class="name-title-light">Aadarsh Jha</text>
+  <text x="440" y="126" text-anchor="middle" class="subtitle-text-light">Software Engineer &amp; Systems Builder • Bengaluru, India</text>
+</svg>

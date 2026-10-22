@@ -1,0 +1,53 @@
+<svg width="135" height="135" viewBox="0 0 135 135" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="wordleBgLight" x1="0" y1="0" x2="135" y2="135" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="60%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#f1f5f9"/>
+    </linearGradient>
+    <linearGradient id="wordleBorderLight" x1="0" y1="0" x2="135" y2="135" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#7e22ce" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#cbd5e1" stop-opacity="0.9"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="133" height="133" rx="14" fill="url(#wordleBgLight)"/>
+  <rect x="1" y="1" width="133" height="133" rx="14" stroke="url(#wordleBorderLight)" stroke-width="1.5"/>
+
+  <!-- Top Accent Glow -->
+  <path d="M24 2 H111" stroke="#7e22ce" stroke-width="2.5" stroke-linecap="round" opacity="0.9"/>
+
+  <!-- Top Category Tag -->
+  <text x="67.5" y="19" font-family="'JetBrains Mono', -apple-system, monospace" font-size="8" font-weight="700" fill="#6b21a8" text-anchor="middle" letter-spacing="1.5">WORD PUZZLE</text>
+
+  <!-- 5 Wordle Letter Tiles -->
+  <g transform="translate(20, 31)">
+    <!-- Tile 1: Green -->
+    <rect x="0" y="4" width="16" height="20" rx="3" fill="#059669"/>
+    <text x="8" y="19" font-family="'Outfit', sans-serif" font-size="12" font-weight="800" fill="#ffffff" text-anchor="middle">W</text>
+
+    <!-- Tile 2: Yellow -->
+    <rect x="19" y="4" width="16" height="20" rx="3" fill="#d97706"/>
+    <text x="27" y="19" font-family="'Outfit', sans-serif" font-size="12" font-weight="800" fill="#ffffff" text-anchor="middle">O</text>
+
+    <!-- Tile 3: Slate -->
+    <rect x="38" y="4" width="16" height="20" rx="3" fill="#64748b"/>
+    <text x="46" y="19" font-family="'Outfit', sans-serif" font-size="12" font-weight="800" fill="#ffffff" text-anchor="middle">R</text>
+
+    <!-- Tile 4: Green -->
+    <rect x="57" y="4" width="16" height="20" rx="3" fill="#059669"/>
+    <text x="65" y="19" font-family="'Outfit', sans-serif" font-size="12" font-weight="800" fill="#ffffff" text-anchor="middle">D</text>
+
+    <!-- Tile 5: Slate -->
+    <rect x="76" y="4" width="16" height="20" rx="3" fill="#64748b"/>
+    <text x="84" y="19" font-family="'Outfit', sans-serif" font-size="12" font-weight="800" fill="#ffffff" text-anchor="middle">L</text>
+  </g>
+
+  <!-- Title -->
+  <text x="67.5" y="85" font-family="'Outfit', -apple-system, sans-serif" font-size="12" font-weight="800" fill="#0f172a" text-anchor="middle" letter-spacing="1">WORDLE</text>
+
+  <!-- Interactive Action Button Pill -->
+  <rect x="22" y="98" width="91" height="24" rx="12" fill="rgba(126, 34, 206, 0.1)" stroke="#7e22ce" stroke-width="1.4"/>
+  <polygon points="45,105 45,115 54,110" fill="#6b21a8"/>
+  <text x="73" y="113.5" font-family="'Outfit', -apple-system, sans-serif" font-size="10.5" font-weight="800" fill="#6b21a8" text-anchor="middle" letter-spacing="1.2">PLAY</text>
+</svg>

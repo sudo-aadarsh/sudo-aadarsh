@@ -20,14 +20,16 @@ jobs:
         with:
           node-version: 20
 
-      - name: Generate Pacman Contribution SVG
+      - name: Generate Pacman Contribution SVGs
         run: |
-          npx pacman-contribution-graph --platform github --username sudo-aadarsh --gameTheme github-dark --output assets/pacman.svg
+          npx pacman-contribution-graph --platform github --username sudo-aadarsh --gameTheme github-dark --output assets/pacman-dark.svg
+          npx pacman-contribution-graph --platform github --username sudo-aadarsh --gameTheme github --output assets/pacman-light.svg
+          cp assets/pacman-dark.svg assets/pacman.svg
 
       - name: Commit and push changes
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add assets/pacman.svg
-          git commit -m "chore: update pacman contribution graph [skip ci]" || exit 0
+          git add assets/pacman*.svg
+          git commit -m "chore: update dark and light pacman contribution graphs [skip ci]" || exit 0
           git push

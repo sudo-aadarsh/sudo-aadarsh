@@ -1,0 +1,29 @@
+<svg width="850" height="44" viewBox="0 0 850 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="arcBg" x1="0" y1="0" x2="850" y2="44" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0b101d"/>
+      <stop offset="50%" stop-color="#0e1526"/>
+      <stop offset="100%" stop-color="#0b101d"/>
+    </linearGradient>
+    <linearGradient id="arcBorder" x1="0" y1="0" x2="850" y2="44" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.3"/>
+      <stop offset="50%" stop-color="#6366f1" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.3"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="848" height="42" rx="10" fill="url(#arcBg)"/>
+  <rect x="1" y="1" width="848" height="42" rx="10" stroke="url(#arcBorder)" stroke-width="1.2"/>
+
+  <!-- Left: Live Arcade indicator -->
+  <circle cx="28" cy="22" r="4.5" fill="#10b981"/>
+  <circle cx="28" cy="22" r="7.5" stroke="#10b981" stroke-opacity="0.4" stroke-width="1.2"/>
+  <text x="44" y="26" font-family="'JetBrains Mono', -apple-system, monospace" font-size="11" font-weight="700" fill="#f8fafc" letter-spacing="1.2">PLAYABLE ARCADE</text>
+
+  <!-- Middle: Instruction -->
+  <text x="440" y="26" font-family="'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="500" fill="#94a3b8" text-anchor="middle">Select any game card below to play directly in your browser</text>
+
+  <!-- Right: Badge -->
+  <rect x="715" y="10" width="112" height="24" rx="12" fill="rgba(56, 189, 248, 0.12)" stroke="rgba(56, 189, 248, 0.3)" stroke-width="1"/>
+  <text x="771" y="25.5" font-family="'JetBrains Mono', -apple-system, monospace" font-size="10" font-weight="700" fill="#38bdf8" text-anchor="middle" letter-spacing="1">INSTANT PLAY</text>
+</svg>

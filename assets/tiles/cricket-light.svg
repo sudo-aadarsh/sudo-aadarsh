@@ -1,0 +1,42 @@
+<svg width="135" height="135" viewBox="0 0 135 135" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="cricketBgLight" x1="0" y1="0" x2="135" y2="135" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="60%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#f1f5f9"/>
+    </linearGradient>
+    <linearGradient id="cricketBorderLight" x1="0" y1="0" x2="135" y2="135" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#059669" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#cbd5e1" stop-opacity="0.9"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="133" height="133" rx="14" fill="url(#cricketBgLight)"/>
+  <rect x="1" y="1" width="133" height="133" rx="14" stroke="url(#cricketBorderLight)" stroke-width="1.5"/>
+
+  <!-- Top Accent Glow -->
+  <path d="M24 2 H111" stroke="#059669" stroke-width="2.5" stroke-linecap="round" opacity="0.9"/>
+
+  <!-- Top Category Tag -->
+  <text x="67.5" y="19" font-family="'JetBrains Mono', -apple-system, monospace" font-size="8" font-weight="700" fill="#047857" text-anchor="middle" letter-spacing="1.5">BAT &amp; BOWL</text>
+
+  <!-- Cricket Bat & Ball Favicon -->
+  <g transform="translate(45, 27) scale(0.9)">
+    <!-- Wooden Bat Angled -->
+    <rect x="12" y="4" width="5" height="10" rx="1" fill="#64748b" transform="rotate(-35 12 4)"/>
+    <rect x="11" y="12" width="10" height="26" rx="2" fill="#d97706" transform="rotate(-35 11 12)"/>
+    <rect x="13" y="14" width="6" height="22" rx="1" fill="#b45309" transform="rotate(-35 13 14)"/>
+
+    <!-- Red Cricket Ball with Seam -->
+    <circle cx="34" cy="30" r="7.5" fill="#dc2626"/>
+    <path d="M29 32 C33 28, 35 28, 39 32" stroke="#ffffff" stroke-width="1.2" fill="none"/>
+  </g>
+
+  <!-- Title -->
+  <text x="67.5" y="85" font-family="'Outfit', -apple-system, sans-serif" font-size="12" font-weight="800" fill="#0f172a" text-anchor="middle" letter-spacing="1">CRICKET</text>
+
+  <!-- Interactive Action Button Pill -->
+  <rect x="22" y="98" width="91" height="24" rx="12" fill="rgba(5, 150, 105, 0.1)" stroke="#059669" stroke-width="1.4"/>
+  <polygon points="45,105 45,115 54,110" fill="#047857"/>
+  <text x="73" y="113.5" font-family="'Outfit', -apple-system, sans-serif" font-size="10.5" font-weight="800" fill="#047857" text-anchor="middle" letter-spacing="1.2">PLAY</text>
+</svg>
