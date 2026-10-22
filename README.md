@@ -10,17 +10,17 @@
 </p>
 
 <p align="center">
-  <b>🕹️ Play all 4 games instantly in your browser • Zero setup • Mobile & PC friendly!</b><br/>
-  <i>Click any game below to launch it directly:</i>
+  <b>🕹️ Play all 4 games instantly in your browser • Zero issues/tickets • Mobile & PC friendly!</b><br/>
+  <i>Click any game below to launch directly:</i>
 </p>
 
 <div align="center">
 
-| 🎮 Game | 📜 Objective | 🚀 Instant Play Link |
+| 🎮 Game | 📜 Objective | 🚀 Instant 1-Click Play |
 | :--- | :--- | :---: |
-| 🟡 **Connect Four** | Align 4 yellow tokens before Aadarsh-AI blocks you! | [ **▶ Launch Connect 4** ](https://sudo-aadarsh.github.io/sudo-aadarsh/#c4) |
-| ❌ **Tic-Tac-Toe** | Fast 3×3 duel against smart tactical Minimax AI! | [ **▶ Launch Tic-Tac-Toe** ](https://sudo-aadarsh.github.io/sudo-aadarsh/#ttt) |
-| ♟️ **Chess vs AI** | Full interactive chessboard with tap-to-move & checkmate! | [ **▶ Launch Chess** ](https://sudo-aadarsh.github.io/sudo-aadarsh/#chess) |
+| ♟️ **Chess vs AI** | Full interactive board with legal move dots, captures & checkmate! | [ **▶ Launch Chess** ](https://sudo-aadarsh.github.io/sudo-aadarsh/#chess) |
+| ❌ **Tic-Tac-Toe** | Fast-paced 3×3 tactical duel vs smart Minimax AI! | [ **▶ Launch Tic-Tac-Toe** ](https://sudo-aadarsh.github.io/sudo-aadarsh/#ttt) |
+| 🏏 **Super Cricket League** | Real ball physics, swing timing, 4s & 6s, wickets & cheering crowd! | [ **▶ Launch Cricket** ](https://sudo-aadarsh.github.io/sudo-aadarsh/#cricket) |
 | 🟩 **Developer Wordle** | Guess the secret 5-letter software engineering term in 6 tries! | [ **▶ Launch Dev Wordle** ](https://sudo-aadarsh.github.io/sudo-aadarsh/#wordle) |
 
 </div>
@@ -30,24 +30,13 @@
 ### 🕹️ Interactive Game Preview
 
 <details open>
-<summary><b>🟡 Game 1: Connect Four vs Aadarsh-AI</b></summary>
+<summary><b>♟️ Game 1: Chess vs Aadarsh-AI (Featured Game)</b></summary>
 <br/>
 
 <div align="center">
-
-| [ 1️⃣ ](https://sudo-aadarsh.github.io/sudo-aadarsh/#c4) | [ 2️⃣ ](https://sudo-aadarsh.github.io/sudo-aadarsh/#c4) | [ 3️⃣ ](https://sudo-aadarsh.github.io/sudo-aadarsh/#c4) | [ 4️⃣ ](https://sudo-aadarsh.github.io/sudo-aadarsh/#c4) | [ 5️⃣ ](https://sudo-aadarsh.github.io/sudo-aadarsh/#c4) | [ 6️⃣ ](https://sudo-aadarsh.github.io/sudo-aadarsh/#c4) | [ 7️⃣ ](https://sudo-aadarsh.github.io/sudo-aadarsh/#c4) |
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| ⚪ | ⚪ | ⚪ | ⚪ | ⚪ | ⚪ | ⚪ |
-| ⚪ | ⚪ | ⚪ | ⚪ | ⚪ | ⚪ | ⚪ |
-| ⚪ | ⚪ | ⚪ | ⚪ | ⚪ | ⚪ | ⚪ |
-| ⚪ | ⚪ | ⚪ | ⚪ | ⚪ | ⚪ | ⚪ |
-| ⚪ | ⚪ | ⚪ | 🔵 | ⚪ | ⚪ | ⚪ |
-| ⚪ | ⚪ | ⚪ | 🟡 | ⚪ | ⚪ | ⚪ |
-
-<br/>
-
-👉 **[ 🚀 Click Here to Play Connect Four Directly in Browser ](https://sudo-aadarsh.github.io/sudo-aadarsh/#c4)**
-
+  <img src="assets/chess_board.svg" alt="Live Chess Board" width="380"/>
+  <br/><br/>
+  👉 **[ 🚀 Click Here to Play Interactive Chess in Browser ](https://sudo-aadarsh.github.io/sudo-aadarsh/#chess)**
 </div>
 </details>
 
@@ -71,13 +60,26 @@
 </details>
 
 <details>
-<summary><b>♟️ Game 3: Community Chess vs Aadarsh-AI</b></summary>
+<summary><b>🏏 Game 3: Super Cricket League (Real Physics & Cheering Crowd)</b></summary>
 <br/>
 
 <div align="center">
-  <img src="assets/chess_board.svg" alt="Live Chess Board" width="380"/>
-  <br/><br/>
-  👉 **[ 🚀 Click Here to Play Interactive Chess in Browser ](https://sudo-aadarsh.github.io/sudo-aadarsh/#chess)**
+
+```
+   🏟️ ================= SUPER CRICKET LEAGUE ================= 🏟️
+   
+       [ CROWD STANDS // CHEERING ON 4s & 6s // FLOODLIGHTS ON ]
+       
+                    BOWLER  ➔  ( 140 KMPH )
+                                 • (Pitch Bounce)
+                     BATTER ➔  [ 🏏 OFF-DRIVE | ▲ LOFTED SIX | ▶ PULL ]
+                     STUMPS ➔  [ ⫯ ⫯ ⫯ ] (Flying bails physics!)
+```
+
+<br/>
+
+👉 **[ 🚀 Click Here to Play Super Cricket League in Browser ](https://sudo-aadarsh.github.io/sudo-aadarsh/#cricket)**
+
 </div>
 </details>
 
@@ -109,15 +111,15 @@
 
 | Rank | Challenger | Total Score | Games Won | Current Streak | Badges |
 | :---: | :--- | :---: | :---: | :---: | :--- |
-| 🥇 1 | [@sudo-aadarsh](https://github.com/sudo-aadarsh) | **120 pts** | 7 | 🔥 3 | 👑 Grandmaster, ⚡ Wordle Wizard, 🎯 Tactician |
+| 🥇 1 | [@sudo-aadarsh](https://github.com/sudo-aadarsh) | **140 pts** | 8 | 🔥 4 | 👑 Grandmaster, 🏏 Century King, ⚡ Wordle Wizard |
 | 🥈 2 | *Your Name Here* | 0 pts | 0 | 0 | 🎯 Play any game above to claim your spot! |
 
 <details>
 <summary><b>📜 Scoring Rules & How to Earn Points</b></summary>
 
-- 🎯 **Connect Four:** Win = **+30 pts**
-- ❌ **Tic-Tac-Toe:** Win = **+20 pts**
 - ♟️ **Chess:** Win = **+50 pts** (Earns 👑 Grandmaster badge!)
+- ❌ **Tic-Tac-Toe:** Win = **+20 pts** (Earns 🤖 AI Slayer badge!)
+- 🏏 **Super Cricket League:** Every Run = **+3 pts** | Match Win = **+35 pts** (Earns 🏏 Century King badge!)
 - 🟩 **Developer Wordle:** Solved = **+25 to +40 pts** (Earns ⚡ Wordle Wizard badge!)
 - 🏅 **Streaks:** Win multiple games in a row to earn the **🔥 On Fire** badge!
 </details>
