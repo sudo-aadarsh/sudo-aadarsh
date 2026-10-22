@@ -435,7 +435,7 @@
     }
 
     /* =========================================================================
-       GAME 3: SUPER CRICKET (BATTING & BOWLING MODES, BIG 960x540 CANVAS)
+       GAME 3: SUPER CRICKET (BIG 960x540 CANVAS, DUAL PERSPECTIVES, FIELDERS, CAMERA SWITCH)
        ========================================================================= */
     .cricket-stage-flow {
       display: flex;
@@ -1034,14 +1034,14 @@
     </div>
 
     <!-- =========================================================================
-         GAME 3: SUPER CRICKET (BIG CANVAS, DUAL PERSPECTIVES, EXTENDED CREASE)
+         GAME 3: SUPER CRICKET (BIG CANVAS, DUAL PERSPECTIVES, FIELDERS, CAMERA SWITCH)
          ========================================================================= -->
     <div class="viewport-panel" id="panel-cricket">
       <div class="game-arena-card">
         <div class="arena-header-strip">
           <div class="arena-title-area">
             <h2>Super Cricket Stadium</h2>
-            <p>Dual camera perspectives, realistic background stands, and dynamic target chase</p>
+            <p>Dual camera perspectives, dynamic fielders, six camera tracking, and dynamic target chase</p>
           </div>
 
           <!-- Mode Switcher -->
@@ -1346,7 +1346,7 @@
     /* =========================================================================
        USER PROFILE & LEADERBOARD STORE
        ========================================================================= */
-    const STORAGE_KEY = 'aadarsh_arcade_v5_pro';
+    const STORAGE_KEY = 'aadarsh_arcade_v6_pro';
     let userHandle = localStorage.getItem('aadarsh_user_handle') || 'Player_' + Math.floor(100 + Math.random() * 900);
     let userStats = {
       score: 0,
@@ -1776,10 +1776,59 @@
     }
 
     /* =========================================================================
-       GAME 3: SUPER CRICKET (BIG 960x540 CANVAS, DUAL CAMERA PERSPECTIVES)
+       GAME 3: SUPER CRICKET (BIG 960x540 CANVAS, DUAL PERSPECTIVES, FIELDERS, CAMERA SWITCH)
        ========================================================================= */
     const cricketCanvas = document.getElementById('stadium-canvas');
     const cCtx = cricketCanvas.getContext('2d');
+
+    // DYNAMIC FIELDERS UNIT
+    const FIELDERS_POS_BATTING = [
+      { id: 'slip', homeX: 520, homeY: 440, x: 520, y: 440, targetX: 520, targetY: 440, running: false },
+      { id: 'point', homeX: 200, homeY: 375, x: 200, y: 375, targetX: 200, targetY: 375, running: false },
+      { id: 'cover', homeX: 240, homeY: 280, x: 240, y: 280, targetX: 240, targetY: 280, running: false },
+      { id: 'extra_cover', homeX: 280, homeY: 190, x: 280, y: 190, targetX: 280, targetY: 190, running: false },
+      { id: 'mid_off', homeX: 370, homeY: 165, x: 370, y: 165, targetX: 370, targetY: 165, running: false },
+      { id: 'mid_on', homeX: 590, homeY: 165, x: 590, y: 165, targetX: 590, targetY: 165, running: false },
+      { id: 'mid_wicket', homeX: 720, homeY: 270, x: 720, y: 270, targetX: 720, targetY: 270, running: false },
+      { id: 'square_leg', homeX: 760, homeY: 375, x: 760, y: 375, targetX: 760, targetY: 375, running: false },
+      { id: 'deep_long_on', homeX: 660, homeY: 110, x: 660, y: 110, targetX: 660, targetY: 110, running: false }
+    ];
+
+    const FIELDERS_POS_BOWLING = [
+      { id: 'slip', homeX: 510, homeY: 110, x: 510, y: 110, targetX: 510, targetY: 110, running: false },
+      { id: 'point', homeX: 760, homeY: 160, x: 760, y: 160, targetX: 760, targetY: 160, running: false },
+      { id: 'cover', homeX: 720, homeY: 250, x: 720, y: 250, targetX: 720, targetY: 250, running: false },
+      { id: 'mid_off', homeX: 590, homeY: 340, x: 590, y: 340, targetX: 590, targetY: 340, running: false },
+      { id: 'mid_on', homeX: 370, homeY: 340, x: 370, y: 340, targetX: 370, targetY: 340, running: false },
+      { id: 'mid_wicket', homeX: 240, homeY: 250, x: 240, y: 240, targetX: 240, targetY: 250, running: false },
+      { id: 'square_leg', homeX: 200, homeY: 160, x: 200, y: 160, targetX: 200, targetY: 160, running: false },
+      { id: 'fine_leg', homeX: 300, homeY: 110, x: 300, y: 110, targetX: 300, targetY: 110, running: false },
+      { id: 'deep_cover', homeX: 780, homeY: 360, x: 780, y: 360, targetX: 780, targetY: 360, running: false }
+    ];
+
+    let activeFielders = FIELDERS_POS_BATTING;
+
+    function resetFieldersPositions() {
+      activeFielders = cricket.mode === 'batting' ? FIELDERS_POS_BATTING : FIELDERS_POS_BOWLING;
+      activeFielders.forEach(f => {
+        f.x = f.homeX;
+        f.y = f.homeY;
+        f.targetX = f.homeX;
+        f.targetY = f.homeY;
+        f.running = false;
+      });
+    }
+
+    // DYNAMIC CINEMATIC CAMERA SYSTEM
+    let camera = {
+      zoom: 1.0,
+      targetZoom: 1.0,
+      panX: 0,
+      targetPanX: 0,
+      panY: 0,
+      targetPanY: 0,
+      isCinematicSix: false
+    };
 
     let cricket = {
       mode: 'batting', // 'batting' or 'bowling'
@@ -1790,7 +1839,7 @@
       ballsLeft: 6,
       currentBallNumber: 0,
       
-      state: 'COUNTDOWN', // 'COUNTDOWN', 'BOWLER_RUNUP', 'IN_FLIGHT', 'STROKE_EXECUTION', 'DELIVERY_FINISHED', 'MATCH_CONCLUDED'
+      state: 'COUNTDOWN', // 'COUNTDOWN', 'BOWLER_RUNUP', 'IN_FLIGHT', 'STROKE_EXECUTION', 'DELIVERY_FINISHED', 'MATCH_CONCLUDED', 'AWAITING_USER_BOWL'
       countdownTimer: 50,
       deliveryStartMs: 0,
       selectedDeliveryChoice: 'yorker',
@@ -1808,7 +1857,7 @@
         pitched: false
       },
 
-      // Batsman Entity (In Front of Stumps!)
+      // Batsman Entity (Strictly in front of stumps!)
       batter: {
         stancePhase: 0,
         strokeType: 'READY',
@@ -1848,6 +1897,7 @@
       document.getElementById('deck-batting-panel').style.display = mode === 'batting' ? 'grid' : 'none';
       document.getElementById('deck-bowling-panel').style.display = mode === 'bowling' ? 'grid' : 'none';
 
+      resetFieldersPositions();
       resetCricketMatch();
     }
 
@@ -1872,7 +1922,20 @@
       cricket.stumps.broken = false;
       cricket.stumps.bailOffset = 0;
       cricket.ball.isLive = false;
+      cricket.batter.swingActive = false;
+      cricket.batter.swingProgress = 0;
+      cricket.batter.strokeType = 'READY';
       cricket.crowdRoar = false;
+      resetFieldersPositions();
+
+      // Camera reset
+      camera.isCinematicSix = false;
+      camera.zoom = 1.0;
+      camera.targetZoom = 1.0;
+      camera.panX = 0;
+      camera.targetPanX = 0;
+      camera.panY = 0;
+      camera.targetPanY = 0;
 
       updateScoreboardHUD();
 
@@ -1914,8 +1977,10 @@
       cricket.stumps.bailOffset = 0;
       cricket.batter.strokeType = 'READY';
       cricket.batter.swingActive = false;
+      cricket.batter.swingProgress = 0;
       cricket.ball.isLive = false;
       cricket.crowdRoar = false;
+      resetFieldersPositions();
 
       setBroadcastBannerText(message || `BALL ${cricket.currentBallNumber + 1} OF 6 INCOMING...`, '');
     }
@@ -1925,10 +1990,8 @@
 
       cricket.state = 'BOWLER_RUNUP';
       if (cricket.mode === 'batting') {
-        // Bowler at top running down towards crease at y=125
         cricket.bowler.y = 80;
       } else {
-        // Bowler at bottom running up towards crease at y=390
         cricket.bowler.y = 480;
       }
       cricket.bowler.running = true;
@@ -1942,7 +2005,6 @@
       cricket.deliveryStartMs = Date.now();
 
       if (cricket.mode === 'batting') {
-        // Ball travels DOWN from y=125 to y=380
         const speed = customSpeed || (5.2 + Math.random() * 1.4);
         const swing = customSwing !== undefined ? customSwing : ((Math.random() - 0.5) * 1.8);
         cricket.ball = {
@@ -1966,7 +2028,7 @@
           y: 390,
           z: 16,
           vx: swing,
-          vy: -speed, // UPWARDS TRAJECTORY!
+          vy: -speed,
           vz: -0.32,
           radius: 7.5,
           isLive: true,
@@ -1995,6 +2057,7 @@
         b.vy = -8.5;
         b.vx = (type === 'drive' ? -5.5 : (type === 'pull' ? 5.5 : 0));
         b.z = 42;
+        triggerCinematicSixCamera();
         completeDeliveryOutcome(6, 'hit-6', 'SIX - MAXIMUM OVER THE ROPES');
       } else if (distFromCrease < 28) {
         playSoundWillowBat();
@@ -2003,12 +2066,14 @@
         b.vy = -6.8;
         b.vx = (type === 'drive' ? -6.2 : (type === 'pull' ? 6.2 : 1.2));
         b.z = 12;
+        dispatchFieldersToBall(b.x + b.vx * 20, b.y + b.vy * 20);
         completeDeliveryOutcome(4, 'hit-4', 'FOUR - BOUNDARY THROUGH THE GAP');
       } else if (distFromCrease < 46) {
         playSoundWillowBat();
         const runs = type === 'defend' ? 1 : 2;
         b.vy = -4.0;
         b.vx = (Math.random() - 0.5) * 4;
+        dispatchFieldersToBall(b.x + b.vx * 15, b.y + b.vy * 15);
         completeDeliveryOutcome(runs, 'hit-4', `TIMED FOR ${runs} RUNS`);
       } else if (distFromCrease < 70) {
         playSoundWillowBat();
@@ -2022,11 +2087,20 @@
 
     // User Bowling Delivery Choice
     function bowlUserDeliveryChoice(style) {
-      if (cricket.mode !== 'bowling' || cricket.state === 'BOWLER_RUNUP' || cricket.state === 'IN_FLIGHT') return;
+      if (cricket.mode !== 'bowling') return;
+      if (cricket.state === 'BOWLER_RUNUP' || cricket.state === 'IN_FLIGHT') return;
+
+      // Ensure all states are cleanly reset before starting run-up
+      cricket.ball.isLive = false;
+      cricket.batter.swingActive = false;
+      cricket.batter.swingProgress = 0;
+      cricket.stumps.broken = false;
+      cricket.stumps.bailOffset = 0;
+      resetFieldersPositions();
 
       cricket.selectedDeliveryChoice = style;
       cricket.state = 'BOWLER_RUNUP';
-      cricket.bowler.y = 480; // Bottom run-up
+      cricket.bowler.y = 480;
       cricket.bowler.running = true;
       cricket.bowler.armAngle = 0;
       setBroadcastBannerText(`BOWLER CHARGING IN - DELIVERING ${style.toUpperCase()}...`, '');
@@ -2039,7 +2113,6 @@
       const style = cricket.selectedDeliveryChoice || 'yorker';
       const b = cricket.ball;
 
-      // TRIGGER FULL BAT SWING ANIMATION FOR AI BATSMAN!
       cricket.batter.swingActive = true;
       cricket.batter.swingProgress = 0;
 
@@ -2047,7 +2120,6 @@
         cricket.batter.strokeType = 'DEFEND';
         const r = Math.random();
         if (r < 0.45) {
-          // Clean Bowled!
           cricket.stumps.broken = true;
           playSoundStumpCrash();
           cricket.wickets += 1;
@@ -2059,6 +2131,7 @@
         } else {
           playSoundWillowBat();
           b.vy = 4;
+          dispatchFieldersToBall(b.x, b.y + 40);
           completeDeliveryOutcome(1, 'hit-4', 'SQUEEZED FOR 1 RUN');
         }
       } else if (style === 'outswinger') {
@@ -2075,6 +2148,7 @@
           playSoundWillowBat();
           b.vy = 6;
           b.vx = -4;
+          dispatchFieldersToBall(b.x - 40, b.y + 60);
           completeDeliveryOutcome(4, 'hit-4', 'DRIVEN THROUGH COVERS FOR 4');
         }
       } else if (style === 'inswinger') {
@@ -2091,6 +2165,7 @@
         } else {
           playSoundWillowBat();
           b.vy = 3.5;
+          dispatchFieldersToBall(b.x, b.y + 35);
           completeDeliveryOutcome(2, 'hit-4', 'GLANCED FOR 2 RUNS');
         }
       } else if (style === 'slower') {
@@ -2106,6 +2181,7 @@
           playSoundWillowBat();
           b.vy = 6.5;
           b.vx = 4;
+          dispatchFieldersToBall(b.x + 40, b.y + 65);
           completeDeliveryOutcome(4, 'hit-4', 'PULLED OVER MID-WICKET FOR 4');
         }
       } else if (style === 'bouncer') {
@@ -2122,9 +2198,41 @@
           playSoundCrowdCheer(true);
           b.vy = 8;
           b.vx = 5;
+          triggerCinematicSixCamera();
           completeDeliveryOutcome(6, 'hit-6', 'HOOKED FOR SIX');
         }
       }
+    }
+
+    function dispatchFieldersToBall(targetX, targetY) {
+      let closest = null;
+      let minDist = 9999;
+      activeFielders.forEach(f => {
+        const d = Math.hypot(f.x - targetX, f.y - targetY);
+        if (d < minDist) {
+          minDist = d;
+          closest = f;
+        }
+      });
+      if (closest) {
+        closest.targetX = targetX;
+        closest.targetY = targetY;
+        closest.running = true;
+      }
+    }
+
+    function triggerCinematicSixCamera() {
+      camera.isCinematicSix = true;
+      camera.targetZoom = 1.35;
+      camera.targetPanX = (cricket.ball.x - 480) * 0.4;
+      camera.targetPanY = cricket.mode === 'batting' ? -60 : 60;
+
+      setTimeout(() => {
+        camera.isCinematicSix = false;
+        camera.targetZoom = 1.0;
+        camera.targetPanX = 0;
+        camera.targetPanY = 0;
+      }, 2400);
     }
 
     function completeDeliveryOutcome(runs, dotClass, message) {
@@ -2157,7 +2265,16 @@
           if (cricket.mode === 'batting') {
             queueDeliveryCountdown(45, `BALL ${cricket.currentBallNumber + 1} OF 6 INCOMING IN 1s...`);
           } else {
+            // FULL RESET FOR NEXT BOWLING DELIVERY!
             cricket.state = 'AWAITING_USER_BOWL';
+            cricket.batter.swingActive = false;
+            cricket.batter.swingProgress = 0;
+            cricket.batter.strokeType = 'READY';
+            cricket.ball.isLive = false;
+            cricket.stumps.broken = false;
+            cricket.stumps.bailOffset = 0;
+            cricket.bowler.running = false;
+            resetFieldersPositions();
             setBroadcastBannerText(`SELECT NEXT DELIVERY (BALL ${cricket.currentBallNumber + 1} OF 6)`, '');
           }
         }
@@ -2190,7 +2307,7 @@
       b.className = 'stadium-headline-ribbon ' + (glowCls ? glowCls + '-glow' : '');
     }
 
-    // 60FPS WIDESCREEN STADIUM CANVAS RENDER LOOP
+    // 60FPS WIDESCREEN STADIUM CANVAS RENDER LOOP WITH CAMERA TRANSFORMS
     let cricketLoopActive = false;
     function startCricketLoop() {
       if (!cricketLoopActive) {
@@ -2201,6 +2318,17 @@
 
     function cricketLoopTick() {
       cCtx.clearRect(0, 0, cricketCanvas.width, cricketCanvas.height);
+
+      // Smooth camera interpolation
+      camera.zoom += (camera.targetZoom - camera.zoom) * 0.08;
+      camera.panX += (camera.targetPanX - camera.panX) * 0.08;
+      camera.panY += (camera.targetPanY - camera.panY) * 0.08;
+
+      cCtx.save();
+      // Apply Camera Center & Transform
+      cCtx.translate(cricketCanvas.width / 2, cricketCanvas.height / 2);
+      cCtx.scale(camera.zoom, camera.zoom);
+      cCtx.translate(-cricketCanvas.width / 2 - camera.panX, -cricketCanvas.height / 2 - camera.panY);
 
       // 1. NIGHT SKY
       const skyGrad = cCtx.createLinearGradient(0, 0, 0, 90);
@@ -2255,7 +2383,10 @@
       cCtx.ellipse(480, 360, 420, 190, 0, 0, Math.PI * 2);
       cCtx.stroke();
 
-      // 4. PERSPECTIVE 22-YARD TURF WICKET
+      // 4. FIELDERS SCATTERED ON OUTFIELD (RUNNING & FIELDING)
+      renderDynamicFielders();
+
+      // 5. PERSPECTIVE 22-YARD TURF WICKET
       cCtx.fillStyle = '#c8a463';
       cCtx.beginPath();
       cCtx.moveTo(410, 95);
@@ -2265,15 +2396,25 @@
       cCtx.closePath();
       cCtx.fill();
 
-      // =======================================================================
-      // PERSPECTIVE RENDERING: BATTING MODE VS BOWLING MODE
-      // =======================================================================
+      // 6. PERSPECTIVE RENDERING: BATTING MODE VS BOWLING MODE
       if (cricket.mode === 'batting') {
-        // BATTING MODE (Camera behind batsman looking at bowler)
         renderBattingModeArena();
       } else {
-        // BOWLING MODE (Camera from bowler side looking down at batsman!)
         renderBowlingModeArena();
+      }
+
+      cCtx.restore();
+
+      // CINEMATIC REPLAY BANNER (DURING 6s)
+      if (camera.isCinematicSix) {
+        cCtx.fillStyle = 'rgba(0, 0, 0, 0.65)';
+        cCtx.fillRect(0, 0, cricketCanvas.width, 36);
+        cCtx.fillRect(0, cricketCanvas.height - 36, cricketCanvas.width, 36);
+
+        cCtx.fillStyle = '#f59e0b';
+        cCtx.font = '800 13px Space Grotesk';
+        cCtx.textAlign = 'center';
+        cCtx.fillText('★ CINEMATIC BROADCAST // MAXIMUM SIX OVER THE ROPES ★', cricketCanvas.width / 2, 24);
       }
 
       requestAnimationFrame(cricketLoopTick);
@@ -2294,9 +2435,37 @@
       cCtx.fill();
     }
 
+    // RENDER ACTIVE DYNAMIC FIELDERS
+    function renderDynamicFielders() {
+      activeFielders.forEach(f => {
+        if (f.running) {
+          f.x += (f.targetX - f.x) * 0.08;
+          f.y += (f.targetY - f.y) * 0.08;
+        }
+
+        // Fielder Shadow
+        cCtx.fillStyle = 'rgba(0, 0, 0, 0.35)';
+        cCtx.beginPath();
+        cCtx.ellipse(f.x, f.y + 12, 6, 3, 0, 0, Math.PI * 2);
+        cCtx.fill();
+
+        // Fielder Head (White cap)
+        cCtx.fillStyle = '#ffffff';
+        cCtx.beginPath(); cCtx.arc(f.x, f.y - 8, 4.5, 0, Math.PI * 2); cCtx.fill();
+
+        // Jersey (Team White & Blue)
+        cCtx.fillStyle = '#1e3a8a';
+        cCtx.fillRect(f.x - 4, f.y - 3, 8, 10);
+
+        // Pants (White)
+        cCtx.fillStyle = '#f8fafc';
+        cCtx.fillRect(f.x - 3.5, f.y + 7, 7, 9);
+      });
+    }
+
     /* -------------------------------------------------------------------------
        PERSPECTIVE A: BATTING MODE
-       Batsman is IN FRONT OF STUMPS defending them at popping crease y=385!
+       Batsman is IN FRONT OF STUMPS defending them at popping crease y=380!
        ------------------------------------------------------------------------- */
     function renderBattingModeArena() {
       cCtx.strokeStyle = '#ffffff';
@@ -2309,7 +2478,6 @@
 
       // Extended Batting Popping Crease (Bottom, y=385)
       cCtx.beginPath(); cCtx.moveTo(240, 385); cCtx.lineTo(720, 385); cCtx.stroke();
-      // Return creases
       cCtx.beginPath(); cCtx.moveTo(275, 385); cCtx.lineTo(275, 435); cCtx.stroke();
       cCtx.beginPath(); cCtx.moveTo(685, 385); cCtx.lineTo(685, 435); cCtx.stroke();
 
@@ -2342,7 +2510,6 @@
         cCtx.fillStyle = '#0f172a';
         cCtx.fillRect(475, bw.y + 3, 10, 12);
 
-        // Windmill bowling arm
         cCtx.save();
         cCtx.translate(484, bw.y - 8);
         cCtx.rotate(bw.armAngle);
@@ -2574,7 +2741,7 @@
       cCtx.beginPath(); cCtx.moveTo(459, 143); cCtx.lineTo(465, 146); cCtx.stroke();
 
       // Jersey
-      cCtx.fillStyle = '#f59e0b'; // Opponent Gold Jersey
+      cCtx.fillStyle = '#f59e0b';
       cCtx.fillRect(456, 148, 12, 18);
 
       // Pads facing the user
@@ -2608,7 +2775,7 @@
       const bw = cricket.bowler;
       if (cricket.state === 'BOWLER_RUNUP' || cricket.state === 'IN_FLIGHT') {
         if (bw.running) {
-          bw.y -= 2.2; // Moving UP!
+          bw.y -= 2.2;
           bw.runStep += 0.28;
           bw.armAngle += 0.24;
           if (bw.y <= 390) {
@@ -2663,15 +2830,15 @@
         // Red Cricket Ball
         cCtx.fillStyle = '#dc2626';
         cCtx.beginPath();
-        cCtx.arc(b.x, b.y, b.radius, 0, Math.PI * 2);
+        cCtx.arc(b.x, b.y - b.z, b.radius, 0, Math.PI * 2);
         cCtx.fill();
         cCtx.strokeStyle = '#ffffff';
         cCtx.lineWidth = 1;
         cCtx.beginPath();
-        cCtx.arc(b.x, b.y, b.radius - 1, 0.2, 2.8);
+        cCtx.arc(b.x, b.y - b.z, b.radius - 1, 0.2, 2.8);
         cCtx.stroke();
 
-        // Pass batsman to keeper (y < 110)
+        // Pass batsman to keeper (y < 100)
         if (b.y < 100) {
           b.isLive = false;
         }
