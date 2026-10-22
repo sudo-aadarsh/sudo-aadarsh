@@ -1,28 +1,36 @@
-<svg width="130" height="110" viewBox="0 0 130 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="135" height="135" viewBox="0 0 135 135" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="chessBg" x1="0" y1="0" x2="130" y2="110" gradientUnits="userSpaceOnUse">
+    <linearGradient id="chessBg" x1="0" y1="0" x2="135" y2="135" gradientUnits="userSpaceOnUse">
       <stop offset="0%" stop-color="#141926"/>
       <stop offset="100%" stop-color="#0a0d16"/>
     </linearGradient>
-    <linearGradient id="chessBorder" x1="0" y1="0" x2="130" y2="110" gradientUnits="userSpaceOnUse">
+    <linearGradient id="chessBorder" x1="0" y1="0" x2="135" y2="135" gradientUnits="userSpaceOnUse">
       <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.6"/>
-      <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.15"/>
     </linearGradient>
   </defs>
 
-  <rect x="1" y="1" width="128" height="108" rx="14" fill="url(#chessBg)"/>
-  <rect x="1" y="1" width="128" height="108" rx="14" stroke="url(#chessBorder)" stroke-width="1.5"/>
+  <rect x="1" y="1" width="133" height="133" rx="14" fill="url(#chessBg)"/>
+  <rect x="1" y="1" width="133" height="133" rx="14" stroke="url(#chessBorder)" stroke-width="1.5"/>
 
   <!-- Top Accent Glow -->
-  <path d="M20 2 H110" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+  <path d="M24 2 H111" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round" opacity="0.85"/>
+
+  <!-- Top Category Tag -->
+  <text x="67.5" y="19" font-family="'JetBrains Mono', -apple-system, monospace" font-size="8" font-weight="700" fill="#f59e0b" text-anchor="middle" letter-spacing="1.5" opacity="0.85">AI GRANDMASTER</text>
 
   <!-- Staunton Knight Favicon -->
-  <g transform="translate(45, 18) scale(0.9)">
+  <g transform="translate(52, 26) scale(0.85)">
     <path d="M22 6 C18 6, 12 10, 10 16 C8 22, 10 26, 8 30 C7 32, 5 33, 3 34 L3 38 L25 38 L24 35 C24 35, 27 33, 29 27 C31 21, 31 16, 28 12 C26 9, 24 6, 22 6 Z" fill="#f59e0b"/>
     <circle cx="12" cy="15" r="1.8" fill="#0d1117"/>
     <path d="M1 38 L27 38 L27 42 L1 42 Z" fill="#ffffff" opacity="0.9"/>
   </g>
 
-  <!-- Label -->
-  <text x="65" y="94" font-family="'Outfit', -apple-system, sans-serif" font-size="11" font-weight="800" fill="#f8fafc" text-anchor="middle" letter-spacing="0.8">CHESS</text>
+  <!-- Title -->
+  <text x="67.5" y="85" font-family="'Outfit', -apple-system, sans-serif" font-size="12" font-weight="800" fill="#f8fafc" text-anchor="middle" letter-spacing="1">CHESS</text>
+
+  <!-- Interactive Action Button Pill -->
+  <rect x="22" y="98" width="91" height="24" rx="12" fill="rgba(245, 158, 11, 0.15)" stroke="#f59e0b" stroke-width="1.2"/>
+  <polygon points="45,105 45,115 54,110" fill="#f59e0b"/>
+  <text x="73" y="113.5" font-family="'Outfit', -apple-system, sans-serif" font-size="10.5" font-weight="800" fill="#f59e0b" text-anchor="middle" letter-spacing="1.2">PLAY</text>
 </svg>
