@@ -1,0 +1,34 @@
+{
+  "players": {
+    "sudo-aadarsh": {
+      "score": 120,
+      "wins": {
+        "connect4": 2,
+        "tictactoe": 2,
+        "chess": 1,
+        "wordle": 2
+      },
+      "games_played": 7,
+      "streak": 3,
+      "favorite_game": "chess",
+      "last_active": "2026-10-22",
+      "badges": [
+        "👑 Grandmaster",
+        "⚡ Wordle Wizard",
+        "🎯 Tactician",
+        "🤖 AI Slayer",
+        "🔥 On Fire",
+        "💎 Century Club"
+      ]
+    }
+  },
+  "total_moves": 7,
+  "recent_activity": [
+    {
+      "user": "sudo-aadarsh",
+      "action": "won chess match",
+      "pts": 50,
+      "time": "Oct 22, 12:00 UTC"
+    }
+  ]
+}

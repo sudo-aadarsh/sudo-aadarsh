@@ -1,0 +1,23 @@
+{
+  "board": [
+    [
+      " ",
+      " ",
+      " "
+    ],
+    [
+      " ",
+      " ",
+      " "
+    ],
+    [
+      " ",
+      " ",
+      " "
+    ]
+  ],
+  "status": "in_progress",
+  "last_player": null,
+  "winner": null,
+  "last_move": "Waiting for challenger's first move!"
+}

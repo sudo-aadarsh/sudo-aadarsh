@@ -1,0 +1,59 @@
+name: Arcade Game Engine
+
+on:
+  issues:
+    types: [opened]
+
+# Ensure only one game move executes at a time to prevent git push race conditions
+concurrency:
+  group: arcade-turn
+  cancel-in-progress: false
+
+jobs:
+  play-turn:
+    runs-on: ubuntu-latest
+    if: startsWith(github.event.issue.title, 'arcade:')
+    permissions:
+      contents: write
+      issues: write
+
+    steps:
+      - name: Checkout Codebase
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install Python Dependencies
+        run: |
+          pip install python-chess
+
+      - name: Execute Game Move
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python games/engine.py "${{ github.event.issue.title }}" "${{ github.event.issue.user.login }}" "${{ github.event.issue.number }}"
+
+      - name: Commit and Push Game State
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add README.md games/data/ assets/chess_board.svg
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "🎮 Arcade turn by @${{ github.event.issue.user.login }}: ${{ github.event.issue.title }} [skip ci]"
+            git push
+          fi
+
+      - name: Ensure Issue Closed
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue close "${{ github.event.issue.number }}" --reason "completed" || true

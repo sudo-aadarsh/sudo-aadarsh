@@ -1,0 +1,9 @@
+{
+  "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+  "status": "in_progress",
+  "last_player": null,
+  "winner": null,
+  "last_move_uci": null,
+  "last_move_san": null,
+  "move_history": []
+}
