@@ -1443,7 +1443,7 @@
     /* =========================================================================
        USER PROFILE & LEADERBOARD STORE
        ========================================================================= */
-    const STORAGE_KEY = 'aadarsh_arcade_v10_pro';
+    const STORAGE_KEY = 'aadarsh_arcade_v11_pro';
     let userHandle = localStorage.getItem('aadarsh_user_handle') || 'Player_' + Math.floor(100 + Math.random() * 900);
     let userStats = {
       score: 0,
@@ -1555,6 +1555,7 @@
       if (tabId === 'cricket') {
         resizeCricketCanvas();
         startCricketLoop();
+        updateCricketControlsVisibility();
       }
     }
 
@@ -2208,30 +2209,41 @@
       cricketCanvas.style.height = `${targetHeight}px`;
     }
 
-    // PERSPECTIVE SWITCHER: BATTING VS BOWLING MODE (Guaranteed instant switch)
-    function switchCricketPerspective(mode) {
-      cricket.mode = mode;
-
-      const pillBat = document.getElementById('mode-pill-batting') || document.getElementById('mode-btn-batting');
-      const pillBowl = document.getElementById('mode-pill-bowling') || document.getElementById('mode-btn-bowling');
-      if (pillBat) pillBat.classList.toggle('active', mode === 'batting');
-      if (pillBowl) pillBowl.classList.toggle('active', mode === 'bowling');
-
+    // CONTROLS VISIBILITY SYNC: GUARANTEES CORRECT DECK SHOWN ALWAYS
+    function updateCricketControlsVisibility() {
       const deckBatting = document.getElementById('deck-batting-panel');
       const deckBowling = document.getElementById('deck-bowling-panel');
-      const equationLabel = document.getElementById('cricket-target-equation');
+      const pillBat = document.getElementById('mode-pill-batting') || document.getElementById('mode-btn-batting');
+      const pillBowl = document.getElementById('mode-pill-bowling') || document.getElementById('mode-btn-bowling');
+      const eqTxt = document.getElementById('cricket-target-equation');
 
-      if (mode === 'batting') {
-        if (deckBatting) deckBatting.style.display = 'grid';
-        if (deckBowling) deckBowling.style.display = 'none';
-        if (equationLabel) equationLabel.textContent = `TARGET: ${cricket.target} (NEED ${cricket.target} OFF 6 BALLS)`;
+      if (cricket.mode === 'batting') {
+        if (deckBatting) deckBatting.style.setProperty('display', 'grid', 'important');
+        if (deckBowling) deckBowling.style.setProperty('display', 'none', 'important');
+        if (pillBat) pillBat.classList.add('active');
+        if (pillBowl) pillBowl.classList.remove('active');
+        if (eqTxt) {
+          const need = Math.max(0, cricket.target - cricket.runs);
+          eqTxt.textContent = `TARGET: ${cricket.target} (NEED ${need} OFF ${cricket.ballsLeft} BALLS)`;
+        }
       } else {
-        if (deckBatting) deckBatting.style.display = 'none';
-        if (deckBowling) deckBowling.style.display = 'grid';
-        if (equationLabel) equationLabel.textContent = `DEFENDING ${cricket.target} (AI NEEDS ${cricket.target} OFF 6 BALLS)`;
+        if (deckBatting) deckBatting.style.setProperty('display', 'none', 'important');
+        if (deckBowling) deckBowling.style.setProperty('display', 'grid', 'important');
+        if (pillBat) pillBat.classList.remove('active');
+        if (pillBowl) pillBowl.classList.add('active');
+        if (eqTxt) {
+          const need = Math.max(0, cricket.target - cricket.runs);
+          eqTxt.textContent = `DEFENDING ${cricket.target} (AI NEEDS ${need} OFF ${cricket.ballsLeft} BALLS)`;
+        }
       }
+    }
 
+    // PERSPECTIVE SWITCHER: BATTING VS BOWLING MODE (Instant switch + Controls sync)
+    function switchCricketPerspective(mode) {
+      cricket.mode = mode;
+      updateCricketControlsVisibility();
       resetCricketMatch();
+      updateCricketControlsVisibility();
     }
 
     function setTargetPresetChoice(val) {
@@ -2279,6 +2291,7 @@
       cricket.bowler.running = false;
 
       resetFieldersPositions();
+      updateCricketControlsVisibility();
       updateScoreboardHUD();
 
       for (let i = 1; i <= 6; i++) {
@@ -2341,6 +2354,7 @@
       camera.trackingBall = false;
       camera.boundaryType = null;
       resetFieldersPositions();
+      updateCricketControlsVisibility();
 
       setBroadcastBannerText(message || `BALL ${cricket.currentBallNumber + 1} OF 6 INCOMING...`, '');
     }
@@ -2494,6 +2508,7 @@
       camera.trackingBall = false;
       camera.boundaryType = null;
       resetFieldersPositions();
+      updateCricketControlsVisibility();
 
       cricket.selectedDeliveryChoice = style;
       cricket.state = 'BOWLER_RUNUP';
@@ -2711,6 +2726,7 @@
             camera.targetPanY = 0;
             camera.boundaryType = null;
             resetFieldersPositions();
+      updateCricketControlsVisibility();
             updateScoreboardHUD();
             setBroadcastBannerText(`SELECT DELIVERY (BALL ${cricket.currentBallNumber + 1} OF 6)`, '');
           }
@@ -3548,25 +3564,7 @@
       createWordleLayoutDOM();
       resetWordlePuzzle();
 
-      
-        // Canvas Click / Tap: Batting (Strike) or Bowling (Delivery)
-    cricketCanvas.addEventListener('pointerdown', (e) => {
-      if (cricket.mode === 'batting') {
-        triggerBatStroke('straight');
-      } else {
-        if (cricket.state === 'AWAITING_USER_BOWL' || cricket.state === 'COUNTDOWN') {
-          bowlUserDeliveryChoice(cricket.selectedDeliveryChoice || 'yorker');
-        }
-      }
-    });
-
-    // Mode Switch Button Listeners Fallback
-    const pBat = document.getElementById('mode-pill-batting');
-    const pBowl = document.getElementById('mode-pill-bowling');
-    if (pBat) pBat.addEventListener('click', () => switchCricketPerspective('batting'));
-    if (pBowl) pBowl.addEventListener('click', () => switchCricketPerspective('bowling'));
-
-    window.addEventListener('keydown', (e) => {
+      window.addEventListener('keydown', (e) => {
         if (!document.getElementById('panel-wordle').classList.contains('active')) return;
         if (e.key === 'Enter') processWordleKey('ENTER');
         else if (e.key === 'Backspace') processWordleKey('BACKSPACE');
