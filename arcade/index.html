@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Aadarsh's Cyber Arcade ⚡ 5-in-1 Championship Hub</title>
+  <title>Aadarsh Cyber Arcade - Championship Gaming Hub</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;700&family=Outfit:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
@@ -11,26 +11,23 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
   <style>
     :root {
-      /* High-Impact Cyber Esports Palette */
-      --bg-void: #07090e;
-      --bg-card: rgba(13, 17, 27, 0.88);
-      --bg-surface: #121826;
+      --bg-base: #07090e;
+      --bg-surface: #0e1320;
+      --bg-card: rgba(14, 20, 32, 0.92);
       --border-subtle: rgba(255, 255, 255, 0.08);
-      --border-bright: rgba(255, 46, 91, 0.35);
+      --border-focus: rgba(0, 245, 212, 0.4);
 
       --crimson: #ff2e5b;
-      --crimson-glow: rgba(255, 46, 91, 0.45);
+      --crimson-glow: rgba(255, 46, 91, 0.35);
       --cyan: #00f5d4;
-      --cyan-glow: rgba(0, 245, 212, 0.4);
-      --blue: #00b4d8;
+      --cyan-glow: rgba(0, 245, 212, 0.35);
       --gold: #ffd166;
-      --gold-glow: rgba(255, 209, 102, 0.4);
-      --purple: #8b5cf6;
-      --dark-green: #10b981;
+      --gold-glow: rgba(255, 209, 102, 0.35);
+      --blue: #38bdf8;
 
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --font-ui: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --font-body: 'Outfit', sans-serif;
       --font-display: 'Space Grotesk', sans-serif;
       --font-mono: 'Fira Code', monospace;
     }
@@ -43,63 +40,66 @@
     }
 
     body {
-      background-color: var(--bg-void);
-      color: var(--text-main);
-      font-family: var(--font-ui);
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      font-family: var(--font-body);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       overflow-x: hidden;
       background-image: 
-        radial-gradient(circle at 15% 15%, rgba(255, 46, 91, 0.09) 0%, transparent 45%),
-        radial-gradient(circle at 85% 25%, rgba(0, 245, 212, 0.08) 0%, transparent 45%),
-        radial-gradient(circle at 50% 85%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
-        linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-      background-size: 100% 100%, 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+        radial-gradient(circle at 15% 15%, rgba(255, 46, 91, 0.08) 0%, transparent 45%),
+        radial-gradient(circle at 85% 20%, rgba(0, 245, 212, 0.08) 0%, transparent 45%),
+        radial-gradient(circle at 50% 85%, rgba(56, 189, 248, 0.07) 0%, transparent 50%),
+        linear-gradient(rgba(255, 255, 255, 0.012) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.012) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 100% 100%, 36px 36px, 36px 36px;
     }
 
-    /* TOP LIVE NAVIGATION BAR */
+    /* HEADER */
     header {
-      background: rgba(9, 12, 19, 0.92);
+      background: rgba(10, 14, 23, 0.94);
       backdrop-filter: blur(24px);
       border-bottom: 1px solid var(--border-subtle);
       position: sticky;
       top: 0;
       z-index: 1000;
-      padding: 12px 28px;
+      padding: 14px 28px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 16px;
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 4px 25px rgba(0, 0, 0, 0.7);
     }
 
-    .brand-block {
+    .brand-section {
       display: flex;
       align-items: center;
       gap: 12px;
-      text-decoration: none;
       cursor: pointer;
     }
 
-    .brand-icon {
-      font-size: 1.7rem;
-      filter: drop-shadow(0 0 10px var(--crimson));
-      animation: pulseBrand 2s infinite ease-in-out;
+    .brand-logo-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--crimson), var(--cyan));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: #07090e;
+      box-shadow: 0 0 15px var(--cyan-glow);
     }
 
-    @keyframes pulseBrand {
-      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 8px var(--crimson)); }
-      50% { transform: scale(1.1); filter: drop-shadow(0 0 16px var(--cyan)); }
-    }
-
-    .brand-text h1 {
+    .brand-title-wrap h1 {
       font-family: var(--font-display);
       font-weight: 800;
       font-size: 1.35rem;
-      letter-spacing: 1.5px;
+      letter-spacing: 2px;
       background: linear-gradient(90deg, #ff2e5b, #00f5d4, #ffd166);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -107,147 +107,137 @@
       line-height: 1.2;
     }
 
-    .brand-text span {
+    .brand-title-wrap span {
       font-size: 0.72rem;
       font-family: var(--font-mono);
-      color: var(--text-muted);
-      letter-spacing: 1px;
+      color: var(--text-secondary);
+      letter-spacing: 1.5px;
     }
 
-    .header-controls {
+    .top-controls {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
       flex-wrap: wrap;
     }
 
-    .gamer-profile-pill {
+    .player-tag-pill {
       display: flex;
       align-items: center;
       gap: 10px;
-      background: rgba(18, 24, 38, 0.95);
+      background: #0d121f;
       border: 1px solid var(--border-subtle);
       padding: 6px 14px;
       border-radius: 999px;
       font-size: 0.88rem;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.4);
     }
 
-    .gamer-profile-pill:hover {
-      border-color: var(--cyan);
-    }
-
-    .tag-name {
+    .player-tag-name {
       font-weight: 700;
       color: var(--cyan);
-      display: flex;
-      align-items: center;
-      gap: 6px;
       cursor: pointer;
     }
 
-    .tag-name:hover {
+    .player-tag-name:hover {
       text-decoration: underline;
     }
 
-    .score-badge {
+    .points-badge {
       font-family: var(--font-mono);
-      background: rgba(255, 209, 102, 0.15);
+      background: rgba(255, 209, 102, 0.12);
       color: var(--gold);
-      padding: 3px 10px;
+      padding: 2px 10px;
       border-radius: 999px;
       font-weight: 700;
-      border: 1px solid rgba(255, 209, 102, 0.3);
+      border: 1px solid rgba(255, 209, 102, 0.25);
     }
 
-    .btn-icon {
-      background: rgba(255, 255, 255, 0.05);
+    .action-btn {
+      background: #111726;
       border: 1px solid var(--border-subtle);
-      color: var(--text-main);
-      padding: 8px 12px;
-      border-radius: 12px;
-      font-size: 0.9rem;
+      color: var(--text-primary);
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-family: var(--font-body);
+      font-size: 0.88rem;
       font-weight: 600;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
       transition: all 0.2s ease;
+      text-decoration: none;
     }
 
-    .btn-icon:hover {
-      background: rgba(255, 46, 91, 0.15);
-      border-color: var(--crimson);
+    .action-btn:hover {
+      background: #1a233a;
+      border-color: var(--cyan);
       transform: translateY(-1px);
     }
 
-    /* GAME NAVIGATION TABS */
-    .nav-bar-container {
+    /* TABS */
+    .tab-bar-container {
       max-width: 1080px;
-      margin: 22px auto 8px auto;
+      margin: 20px auto 8px auto;
       padding: 0 16px;
       width: 100%;
     }
 
-    .nav-tabs {
+    .tab-bar {
       display: flex;
       align-items: center;
-      gap: 10px;
-      background: rgba(13, 17, 27, 0.9);
-      padding: 8px;
-      border-radius: 18px;
+      gap: 8px;
+      background: rgba(14, 20, 32, 0.85);
+      padding: 6px;
+      border-radius: 16px;
       border: 1px solid var(--border-subtle);
       overflow-x: auto;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
       scrollbar-width: none;
     }
 
-    .nav-tabs::-webkit-scrollbar {
+    .tab-bar::-webkit-scrollbar {
       display: none;
     }
 
-    .tab-item {
+    .tab-link {
       flex: 1;
-      min-width: 140px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
+      min-width: 130px;
       padding: 12px 16px;
-      border-radius: 12px;
+      border-radius: 10px;
       background: transparent;
       border: none;
-      color: var(--text-muted);
+      color: var(--text-secondary);
       font-family: var(--font-display);
       font-weight: 700;
       font-size: 0.95rem;
       cursor: pointer;
-      transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+      transition: all 0.2s ease;
+      text-align: center;
       white-space: nowrap;
     }
 
-    .tab-item:hover {
-      color: var(--text-main);
+    .tab-link:hover {
+      color: var(--text-primary);
       background: rgba(255, 255, 255, 0.04);
     }
 
-    .tab-item.active {
+    .tab-link.active {
       color: #07090e;
       background: linear-gradient(135deg, var(--crimson), #ff5e36);
-      box-shadow: 0 4px 20px var(--crimson-glow);
+      box-shadow: 0 4px 18px var(--crimson-glow);
     }
 
-    .tab-item.active.cyan-active {
+    .tab-link.active.cyan-active {
       background: linear-gradient(135deg, var(--cyan), #00b4d8);
-      box-shadow: 0 4px 20px var(--cyan-glow);
+      box-shadow: 0 4px 18px var(--cyan-glow);
     }
 
-    .tab-item.active.gold-active {
+    .tab-link.active.gold-active {
       background: linear-gradient(135deg, var(--gold), #f59e0b);
-      box-shadow: 0 4px 20px var(--gold-glow);
+      box-shadow: 0 4px 18px var(--gold-glow);
     }
 
-    /* MAIN CONTENT VIEWPORTS */
+    /* MAIN CONTAINER */
     main {
       flex: 1;
       max-width: 1080px;
@@ -256,31 +246,31 @@
       padding: 12px 16px 40px 16px;
     }
 
-    .game-pane {
+    .game-section {
       display: none;
-      animation: fadeInPane 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      animation: fadeInSection 0.25s ease-out;
     }
 
-    .game-pane.active {
+    .game-section.active {
       display: block;
     }
 
-    @keyframes fadeInPane {
-      from { opacity: 0; transform: translateY(8px); }
+    @keyframes fadeInSection {
+      from { opacity: 0; transform: translateY(6px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .arcade-card {
+    .main-card {
       background: var(--bg-card);
       border: 1px solid var(--border-subtle);
-      border-radius: 24px;
+      border-radius: 20px;
       padding: 24px;
       backdrop-filter: blur(20px);
       box-shadow: 0 16px 45px rgba(0, 0, 0, 0.6);
       position: relative;
     }
 
-    .pane-header {
+    .card-topbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -291,101 +281,82 @@
       padding-bottom: 16px;
     }
 
-    .pane-title-group h2 {
+    .card-title-box h2 {
       font-family: var(--font-display);
       font-size: 1.45rem;
       font-weight: 800;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      letter-spacing: 0.5px;
     }
 
-    .pane-title-group p {
-      color: var(--text-muted);
+    .card-title-box p {
+      color: var(--text-secondary);
       font-size: 0.88rem;
       margin-top: 4px;
     }
 
-    .live-status-pill {
+    .status-badge {
       font-family: var(--font-mono);
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 700;
-      padding: 6px 16px;
+      padding: 6px 14px;
       border-radius: 999px;
       background: rgba(255, 46, 91, 0.12);
       border: 1px solid var(--crimson);
       color: var(--crimson);
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      letter-spacing: 0.5px;
     }
 
-    .live-status-pill::before {
-      content: '';
-      width: 8px;
-      height: 8px;
-      background: currentColor;
-      border-radius: 50%;
-      animation: blinkDot 1.2s infinite;
-    }
-
-    @keyframes blinkDot {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.3; transform: scale(0.7); }
-    }
-
-    /* ==========================================================================
-       GAME 1: CHESS VS AADARSH-AI (ANIMATED SLIDE & SMART AI)
-       ========================================================================== */
-    .chess-layout {
+    /* =========================================================================
+       GAME 1: CHESS (STAUNTON VECTOR SVGS & COORDINATES)
+       ========================================================================= */
+    .chess-container {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 20px;
+      gap: 18px;
     }
 
-    .chess-board-frame {
-      background: #111726;
-      border: 2px solid #1e293b;
-      padding: 10px;
-      border-radius: 18px;
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 245, 212, 0.1);
+    .chess-board-outer {
+      background: #101625;
+      padding: 12px;
+      border-radius: 16px;
+      border: 1px solid var(--border-subtle);
+      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.8);
       position: relative;
     }
 
     .chess-board-grid {
       display: grid;
-      grid-template-columns: repeat(8, 48px);
-      grid-template-rows: repeat(8, 48px);
-      border-radius: 10px;
+      grid-template-columns: repeat(8, 52px);
+      grid-template-rows: repeat(8, 52px);
+      border-radius: 8px;
       overflow: hidden;
       user-select: none;
     }
 
-    @media (max-width: 500px) {
+    @media (max-width: 520px) {
       .chess-board-grid {
         grid-template-columns: repeat(8, 38px);
         grid-template-rows: repeat(8, 38px);
       }
     }
 
-    .chess-sq {
+    .c-sq {
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
       position: relative;
-      font-size: 2.1rem;
+      cursor: pointer;
       transition: background-color 0.15s ease;
     }
 
-    .chess-sq.light { background: #e2e8f0; }
-    .chess-sq.dark { background: #475569; }
-    .chess-sq.selected { background: #fbbf24 !important; }
-    .chess-sq.last-from { background: rgba(0, 245, 212, 0.35) !important; }
-    .chess-sq.last-to { background: rgba(0, 245, 212, 0.6) !important; }
+    .c-sq.light { background: #dee3ea; }
+    .c-sq.dark { background: #55657e; }
+    .c-sq.selected { background: #f59e0b !important; }
+    .c-sq.last-from { background: rgba(0, 245, 212, 0.35) !important; }
+    .c-sq.last-to { background: rgba(0, 245, 212, 0.6) !important; }
 
-    .chess-sq.highlight::after {
+    .c-sq.legal-target::after {
       content: '';
       width: 14px;
       height: 14px;
@@ -396,45 +367,44 @@
       pointer-events: none;
     }
 
-    .chess-piece {
+    .piece-svg-wrap {
+      width: 86%;
+      height: 86%;
       display: flex;
       align-items: center;
       justify-content: center;
-      line-height: 1;
       transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
       z-index: 2;
     }
 
-    .chess-piece.white {
-      color: #ffffff;
-      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8));
+    .piece-svg-wrap svg {
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.45));
     }
 
-    .chess-piece.black {
-      color: #0b0f19;
-      filter: drop-shadow(0 2px 4px rgba(255, 255, 255, 0.3));
-    }
-
-    .chess-meta-bar {
+    .chess-meta-panel {
       display: flex;
       justify-content: space-between;
       width: 100%;
-      max-width: 410px;
+      max-width: 440px;
       font-size: 0.9rem;
-      color: var(--text-muted);
+      font-weight: 700;
+      color: var(--text-secondary);
     }
 
-    /* ==========================================================================
-       GAME 2: TIC-TAC-TOE (NEON FAST DUEL)
-       ========================================================================== */
-    .ttt-container {
+    /* =========================================================================
+       GAME 2: TIC-TAC-TOE (NO EMOJIS, CLEAN VECTOR X & O)
+       ========================================================================= */
+    .ttt-wrap {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 20px;
     }
 
-    .ttt-matrix {
+    .ttt-grid {
       display: grid;
       grid-template-columns: repeat(3, 100px);
       grid-template-rows: repeat(3, 100px);
@@ -446,50 +416,44 @@
       box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7);
     }
 
-    .ttt-cell {
+    .ttt-box {
       width: 100px;
       height: 100px;
       background: #090c14;
       border: 2px solid #1e293b;
       border-radius: 14px;
-      font-size: 2.8rem;
+      font-family: var(--font-display);
+      font-size: 3rem;
       font-weight: 900;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+      user-select: none;
     }
 
-    .ttt-cell:hover:empty {
+    .ttt-box:hover:empty {
       background: #182236;
       border-color: var(--cyan);
       box-shadow: 0 0 15px var(--cyan-glow);
       transform: scale(1.04);
     }
 
-    .ttt-cell.x {
+    .ttt-box.mark-x {
       color: var(--crimson);
-      text-shadow: 0 0 18px var(--crimson-glow);
-      animation: popMark 0.2s ease-out;
+      text-shadow: 0 0 20px var(--crimson-glow);
     }
 
-    .ttt-cell.o {
+    .ttt-box.mark-o {
       color: var(--cyan);
-      text-shadow: 0 0 18px var(--cyan-glow);
-      animation: popMark 0.2s ease-out;
+      text-shadow: 0 0 20px var(--cyan-glow);
     }
 
-    @keyframes popMark {
-      0% { transform: scale(0.3); opacity: 0; }
-      80% { transform: scale(1.15); opacity: 1; }
-      100% { transform: scale(1); }
-    }
-
-    /* ==========================================================================
-       GAME 3: SUPER CRICKET STADIUM (REAL CROWD, BOWLER, REAL BAT PHYSICS)
-       ========================================================================== */
-    .cricket-stage {
+    /* =========================================================================
+       GAME 3: SUPER CRICKET (BATTING & BOWLING MODES, NO EMOJIS, EXTENDED CREASE)
+       ========================================================================= */
+    .cricket-center-col {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -497,53 +461,88 @@
       width: 100%;
     }
 
-    /* TV BROADCAST SCORE STRIP */
-    .tv-scoreboard {
+    /* MODE TOGGLE STRIP */
+    .cricket-mode-selector {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #0c101c;
+      padding: 4px;
+      border-radius: 12px;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .mode-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .mode-btn.active {
+      background: var(--cyan);
+      color: #07090e;
+      box-shadow: 0 0 14px var(--cyan-glow);
+    }
+
+    .mode-btn.active.crimson {
+      background: var(--crimson);
+      color: #ffffff;
+      box-shadow: 0 0 14px var(--crimson-glow);
+    }
+
+    /* TV SCOREBOARD */
+    .cricket-broadcast-strip {
       display: flex;
       justify-content: space-between;
       align-items: center;
       width: 100%;
       max-width: 720px;
       background: linear-gradient(135deg, rgba(16, 22, 36, 0.98), rgba(9, 13, 22, 0.98));
-      border: 1px solid rgba(255, 46, 91, 0.35);
-      border-left: 5px solid var(--crimson);
-      padding: 12px 22px;
+      border: 1px solid rgba(0, 245, 212, 0.35);
+      border-left: 5px solid var(--cyan);
+      padding: 12px 20px;
       border-radius: 16px;
       box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
-      font-family: var(--font-display);
       flex-wrap: wrap;
       gap: 12px;
     }
 
-    .score-unit {
+    .broadcast-stat-block {
       display: flex;
       flex-direction: column;
     }
 
-    .score-unit .runs {
-      font-size: 2.1rem;
+    .stat-main-num {
+      font-family: var(--font-display);
+      font-size: 2rem;
       font-weight: 800;
       color: var(--gold);
-      text-shadow: 0 0 16px var(--gold-glow);
       line-height: 1;
     }
 
-    .score-unit .label {
-      font-size: 0.75rem;
+    .stat-sub-label {
       font-family: var(--font-mono);
-      color: var(--text-muted);
-      letter-spacing: 1.5px;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      letter-spacing: 1px;
       text-transform: uppercase;
       margin-top: 3px;
     }
 
-    .over-dots {
+    .cricket-over-dots {
       display: flex;
       align-items: center;
       gap: 6px;
     }
 
-    .ball-dot {
+    .dot-circle {
       width: 28px;
       height: 28px;
       border-radius: 50%;
@@ -555,38 +554,16 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--text-muted);
-      transition: all 0.25s ease;
+      color: var(--text-secondary);
     }
 
-    .ball-dot.four {
-      background: var(--cyan);
-      color: #07090e;
-      border-color: #fff;
-      box-shadow: 0 0 10px var(--cyan-glow);
-    }
-
-    .ball-dot.six {
-      background: var(--gold);
-      color: #07090e;
-      border-color: #fff;
-      box-shadow: 0 0 14px var(--gold-glow);
-    }
-
-    .ball-dot.wicket {
-      background: var(--crimson);
-      color: #fff;
-      border-color: #fff;
-      box-shadow: 0 0 12px var(--crimson-glow);
-    }
-
-    .ball-dot.dot {
-      background: #1f2937;
-      color: #94a3b8;
-    }
+    .dot-circle.hit-4 { background: var(--cyan); color: #07090e; border-color: #fff; }
+    .dot-circle.hit-6 { background: var(--gold); color: #07090e; border-color: #fff; }
+    .dot-circle.wicket { background: var(--crimson); color: #fff; border-color: #fff; }
+    .dot-circle.dot { background: #1e293b; color: #94a3b8; }
 
     /* CRICKET CANVAS VIEWPORT */
-    .stadium-viewport {
+    .stadium-viewport-box {
       position: relative;
       width: 100%;
       max-width: 720px;
@@ -597,86 +574,54 @@
       background: #070a12;
     }
 
-    #cricket-arena-canvas {
+    #canvas-cricket {
       display: block;
       width: 100%;
       height: auto;
-      cursor: crosshair;
     }
 
-    /* BROADCAST BANNER NOTIFICATION */
-    .stadium-alert {
-      position: absolute;
-      top: 45%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(0.6);
-      font-family: var(--font-display);
-      font-size: 2.2rem;
-      font-weight: 900;
-      padding: 14px 34px;
-      border-radius: 16px;
-      pointer-events: none;
-      opacity: 0;
-      transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      z-index: 50;
-      white-space: nowrap;
-      text-align: center;
-      letter-spacing: 1px;
-    }
-
-    .stadium-alert.show {
-      opacity: 1;
-      transform: translate(-50%, -50%) scale(1.05);
-    }
-
-    .stadium-alert.four {
-      background: rgba(0, 245, 212, 0.96);
-      color: #07090e;
-      box-shadow: 0 0 45px var(--cyan);
-      border: 2px solid #fff;
-    }
-
-    .stadium-alert.six {
-      background: rgba(255, 209, 102, 0.98);
-      color: #07090e;
-      box-shadow: 0 0 50px var(--gold);
-      border: 2px solid #fff;
-    }
-
-    .stadium-alert.wicket {
-      background: rgba(255, 46, 91, 0.96);
-      color: #fff;
-      box-shadow: 0 0 45px var(--crimson);
-      border: 2px solid #fff;
-    }
-
-    .stadium-alert.dot {
-      background: rgba(30, 41, 59, 0.96);
-      color: #e2e8f0;
-      border: 1px solid #475569;
-    }
-
-    /* DELIVERY STATUS / COUNTDOWN OVERLAY */
-    .delivery-countdown-overlay {
+    /* NON-OBSTRUCTIVE BROADCAST ALERT (TOP OF CANVAS) */
+    .broadcast-headline-alert {
       position: absolute;
       top: 14px;
       left: 50%;
       transform: translateX(-50%);
-      background: rgba(10, 14, 24, 0.9);
-      border: 1px solid var(--border-bright);
-      padding: 6px 20px;
+      background: rgba(9, 13, 22, 0.94);
+      border: 1px solid var(--border-subtle);
       border-radius: 999px;
-      font-family: var(--font-mono);
-      font-size: 0.85rem;
-      font-weight: 700;
+      padding: 8px 24px;
+      font-family: var(--font-display);
+      font-size: 0.92rem;
+      font-weight: 800;
       color: var(--cyan);
-      box-shadow: 0 0 20px rgba(0, 245, 212, 0.25);
-      z-index: 20;
       letter-spacing: 1px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+      z-index: 50;
+      white-space: nowrap;
+      text-transform: uppercase;
+      transition: all 0.2s ease;
     }
 
-    /* BATTING CONTROLS DECK */
-    .batting-controls-deck {
+    .broadcast-headline-alert.highlight-four {
+      border-color: var(--cyan);
+      color: var(--cyan);
+      box-shadow: 0 0 20px var(--cyan-glow);
+    }
+
+    .broadcast-headline-alert.highlight-six {
+      border-color: var(--gold);
+      color: var(--gold);
+      box-shadow: 0 0 25px var(--gold-glow);
+    }
+
+    .broadcast-headline-alert.highlight-wicket {
+      border-color: var(--crimson);
+      color: var(--crimson);
+      box-shadow: 0 0 25px var(--crimson-glow);
+    }
+
+    /* CONTROLS (BATTING OR BOWLING) */
+    .cricket-controls-wrap {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -685,168 +630,96 @@
       max-width: 720px;
     }
 
-    .timing-assist-bar {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
-
-    .timing-meter {
-      width: 160px;
-      height: 6px;
-      background: #1e293b;
-      border-radius: 999px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .timing-sweetspot {
-      position: absolute;
-      left: 45%;
-      width: 25%;
-      height: 100%;
-      background: var(--gold);
-      box-shadow: 0 0 8px var(--gold);
-    }
-
-    .shot-buttons-grid {
+    .action-grid-buttons {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
+      gap: 10px;
       width: 100%;
     }
 
     @media (max-width: 580px) {
-      .shot-buttons-grid {
+      .action-grid-buttons {
         grid-template-columns: repeat(2, 1fr);
       }
     }
 
-    .shot-btn {
+    .play-btn {
       background: linear-gradient(180deg, #161f33, #0d1322);
       border: 1px solid #1e293b;
-      color: var(--text-main);
-      padding: 14px 10px;
-      border-radius: 14px;
+      color: var(--text-primary);
+      padding: 12px 10px;
+      border-radius: 12px;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 4px;
       cursor: pointer;
-      transition: all 0.18s cubic-bezier(0.2, 0.8, 0.2, 1);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+      transition: all 0.15s ease;
+      user-select: none;
     }
 
-    .shot-btn:hover {
-      background: linear-gradient(180deg, #202d49, #141c2e);
-      border-color: var(--crimson);
+    .play-btn:hover {
+      background: #1e2a44;
+      border-color: var(--cyan);
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px var(--crimson-glow);
     }
 
-    .shot-btn:active {
+    .play-btn:active {
       transform: translateY(1px);
     }
 
-    .shot-btn .shot-title {
+    .play-btn-title {
       font-family: var(--font-display);
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       font-weight: 700;
       color: #fff;
     }
 
-    .shot-btn .shot-key {
+    .play-btn-sub {
       font-family: var(--font-mono);
       font-size: 0.72rem;
       color: var(--cyan);
-      background: rgba(0, 245, 212, 0.1);
-      padding: 2px 8px;
-      border-radius: 6px;
-      border: 1px solid rgba(0, 245, 212, 0.25);
     }
 
-    /* ==========================================================================
-       GAME 4: DEVELOPER WORDLE (3 PROGRESSIVE TECH HINTS)
-       ========================================================================== */
-    .wordle-stage {
+    /* =========================================================================
+       GAME 4: DEVELOPER WORDLE (HINT SENTENCE BESIDE EACH GUESS ROW)
+       ========================================================================= */
+    .wordle-layout-grid {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 18px;
+      justify-content: center;
+      gap: 24px;
       width: 100%;
-    }
-
-    .wordle-hint-card {
-      width: 100%;
-      max-width: 480px;
-      background: rgba(18, 24, 38, 0.9);
-      border: 1px solid var(--border-subtle);
-      border-left: 4px solid var(--gold);
-      padding: 12px 18px;
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
       flex-wrap: wrap;
     }
 
-    .hint-text-area {
-      font-size: 0.9rem;
-      color: var(--text-main);
-      flex: 1;
-      min-width: 220px;
-    }
-
-    .hint-action-btn {
-      background: rgba(255, 209, 102, 0.15);
-      border: 1px solid var(--gold);
-      color: var(--gold);
-      padding: 8px 14px;
-      border-radius: 10px;
-      font-family: var(--font-mono);
-      font-size: 0.82rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .hint-action-btn:hover:not(:disabled) {
-      background: var(--gold);
-      color: #07090e;
-      box-shadow: 0 0 15px var(--gold-glow);
-    }
-
-    .hint-action-btn:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-    }
-
-    .wordle-grid {
+    .wordle-rows-col {
       display: flex;
       flex-direction: column;
       gap: 8px;
     }
 
-    .wordle-row {
+    .wordle-hints-col {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+      min-width: 280px;
+      max-width: 440px;
+    }
+
+    .w-row {
       display: flex;
       gap: 8px;
     }
 
-    .wordle-tile {
-      width: 58px;
-      height: 58px;
+    .w-box {
+      width: 52px;
+      height: 52px;
       background: #0d1322;
       border: 2px solid #1e293b;
-      border-radius: 12px;
+      border-radius: 10px;
       font-family: var(--font-display);
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       font-weight: 800;
       display: flex;
       align-items: center;
@@ -856,61 +729,84 @@
       transition: all 0.2s ease;
     }
 
-    @media (max-width: 450px) {
-      .wordle-tile {
-        width: 46px;
-        height: 46px;
-        font-size: 1.5rem;
+    @media (max-width: 480px) {
+      .w-box {
+        width: 44px;
+        height: 44px;
+        font-size: 1.4rem;
       }
     }
 
-    .wordle-tile.filled {
+    .w-box.has-char {
       border-color: #475569;
-      animation: tilePop 0.1s ease;
     }
 
-    .wordle-tile.green {
+    .w-box.correct {
       background: #059669 !important;
       border-color: #10b981 !important;
       color: #fff;
     }
 
-    .wordle-tile.yellow {
+    .w-box.present {
       background: #d97706 !important;
       border-color: #f59e0b !important;
       color: #fff;
     }
 
-    .wordle-tile.grey {
+    .w-box.absent {
       background: #1e293b !important;
       border-color: #334155 !important;
       color: #94a3b8;
     }
 
-    @keyframes tilePop {
-      50% { transform: scale(1.1); }
+    .hint-sentence-card {
+      height: 52px;
+      background: #0d121f;
+      border: 1px solid var(--border-subtle);
+      border-left: 3px solid #334155;
+      padding: 6px 14px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.3;
+      transition: all 0.25s ease;
     }
 
-    .wordle-keyboard {
+    .hint-sentence-card.active-hint {
+      border-left-color: var(--cyan);
+      background: rgba(0, 245, 212, 0.08);
+      color: #f8fafc;
+      box-shadow: 0 0 15px rgba(0, 245, 212, 0.15);
+    }
+
+    .hint-sentence-card.revealed {
+      border-left-color: var(--gold);
+      color: #e2e8f0;
+    }
+
+    .wordle-keyboard-wrap {
       display: flex;
       flex-direction: column;
       gap: 6px;
       width: 100%;
-      max-width: 500px;
+      max-width: 520px;
+      margin: 18px auto 0 auto;
     }
 
-    .kb-row {
+    .k-row {
       display: flex;
       justify-content: center;
       gap: 6px;
     }
 
-    .kb-key {
+    .k-btn {
       background: #161f33;
       border: 1px solid #1e293b;
       color: #fff;
       font-family: var(--font-display);
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       font-weight: 700;
       padding: 12px 0;
       flex: 1;
@@ -924,64 +820,64 @@
       transition: all 0.15s ease;
     }
 
-    .kb-key.wide {
-      flex: 1.6;
-      max-width: 68px;
-      font-size: 0.8rem;
+    .k-btn.wide {
+      flex: 1.8;
+      max-width: 80px;
+      font-size: 0.78rem;
     }
 
-    .kb-key:hover {
+    .k-btn:hover {
       background: #253352;
       border-color: var(--cyan);
     }
 
-    .kb-key.green { background: #059669; border-color: #10b981; }
-    .kb-key.yellow { background: #d97706; border-color: #f59e0b; }
-    .kb-key.grey { background: #111827; border-color: #1f2937; color: #475569; }
+    .k-btn.correct { background: #059669; border-color: #10b981; }
+    .k-btn.present { background: #d97706; border-color: #f59e0b; }
+    .k-btn.absent { background: #111827; border-color: #1f2937; color: #475569; }
 
-    /* ==========================================================================
-       GAME 5: LIVE HALL OF FAME & LEADERBOARD
-       ========================================================================== */
-    .leaderboard-table-wrap {
+    /* =========================================================================
+       GAME 5: LEADERBOARD (NO EMOJIS, CLEAN TABLE)
+       ========================================================================= */
+    .table-responsive-box {
       width: 100%;
       overflow-x: auto;
-      border-radius: 18px;
+      border-radius: 14px;
       border: 1px solid var(--border-subtle);
     }
 
-    .leaderboard-table {
+    .standings-table {
       width: 100%;
       border-collapse: collapse;
       text-align: left;
       font-size: 0.95rem;
     }
 
-    .leaderboard-table th {
+    .standings-table th {
       background: #0c101c;
-      padding: 16px 20px;
-      color: var(--text-muted);
+      padding: 14px 18px;
+      color: var(--text-secondary);
       font-family: var(--font-mono);
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       letter-spacing: 1px;
       text-transform: uppercase;
       border-bottom: 1px solid var(--border-subtle);
     }
 
-    .leaderboard-table td {
-      padding: 16px 20px;
+    .standings-table td {
+      padding: 14px 18px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.04);
       background: rgba(14, 18, 29, 0.6);
     }
 
-    .leaderboard-table tr:hover td {
-      background: rgba(255, 46, 91, 0.06);
+    .standings-table tr:hover td {
+      background: rgba(0, 245, 212, 0.06);
     }
 
-    .leaderboard-table tr.champion td {
-      background: rgba(255, 209, 102, 0.07);
+    .standings-table tr.champion td {
+      background: rgba(255, 209, 102, 0.08);
     }
 
-    .badge-pill {
+    .badge-chip {
       display: inline-block;
       background: rgba(0, 245, 212, 0.12);
       border: 1px solid rgba(0, 245, 212, 0.3);
@@ -991,28 +887,10 @@
       font-size: 0.75rem;
       font-family: var(--font-mono);
       margin-right: 4px;
-      margin-bottom: 4px;
     }
 
-    /* FOOTER */
-    footer {
-      text-align: center;
-      padding: 26px;
-      border-top: 1px solid var(--border-subtle);
-      color: var(--text-muted);
-      font-size: 0.88rem;
-      background: rgba(7, 9, 14, 0.9);
-      margin-top: auto;
-    }
-
-    footer a {
-      color: var(--cyan);
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    /* USERNAME MODAL */
-    .modal-overlay {
+    /* MODAL */
+    .modal-backdrop {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(0, 0, 0, 0.85);
@@ -1027,472 +905,486 @@
       padding: 16px;
     }
 
-    .modal-overlay.open {
+    .modal-backdrop.show {
       opacity: 1;
       pointer-events: auto;
     }
 
-    .modal-box {
+    .modal-card {
       background: #0f1422;
-      border: 1px solid var(--border-bright);
-      padding: 28px;
-      border-radius: 20px;
-      max-width: 400px;
+      border: 1px solid var(--border-focus);
+      padding: 26px;
+      border-radius: 18px;
+      max-width: 380px;
       width: 100%;
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
     }
 
-    .modal-box h3 {
+    .modal-card h3 {
       font-family: var(--font-display);
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       margin-bottom: 8px;
     }
 
-    .modal-box p {
-      color: var(--text-muted);
-      font-size: 0.88rem;
-      margin-bottom: 20px;
+    .modal-card p {
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      margin-bottom: 16px;
     }
 
-    .modal-box input {
+    .modal-card input {
       width: 100%;
-      padding: 12px 16px;
+      padding: 10px 14px;
       background: #07090e;
       border: 1px solid #1e293b;
-      border-radius: 12px;
+      border-radius: 10px;
       color: #fff;
       font-family: var(--font-mono);
-      font-size: 1rem;
+      font-size: 0.95rem;
       outline: none;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
-    .modal-box input:focus {
+    .modal-card input:focus {
       border-color: var(--cyan);
-      box-shadow: 0 0 15px var(--cyan-glow);
     }
 
-    .modal-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 12px;
+    footer {
+      text-align: center;
+      padding: 24px;
+      border-top: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      background: #07090e;
+      margin-top: auto;
+    }
+
+    footer a {
+      color: var(--cyan);
+      text-decoration: none;
+      font-weight: 600;
     }
   </style>
 </head>
 <body>
 
-  <!-- TOP LIVE HEADER BAR -->
+  <!-- TOP HEADER -->
   <header>
-    <div class="brand-block" onclick="activateTab('chess')">
-      <div class="brand-icon">⚡</div>
-      <div class="brand-text">
-        <h1>AADARSH ARCADE</h1>
-        <span>INSTANT PLAY CHAMPIONSHIP HUB</span>
+    <div class="brand-section" onclick="navigateToTab('chess')">
+      <div class="brand-logo-mark">A</div>
+      <div class="brand-title-wrap">
+        <h1>Aadarsh Arcade</h1>
+        <span>CHAMPIONSHIP GAMING HUB</span>
       </div>
     </div>
 
-    <div class="header-controls">
-      <div class="gamer-profile-pill">
+    <div class="top-controls">
+      <div class="player-tag-pill">
         <span>PLAYER:</span>
-        <span class="tag-name" onclick="openNameModal()" title="Click to change your gamer tag">
-          <span id="label-gamer-tag">@Guest</span> ✏️
-        </span>
-        <span class="score-badge" id="label-score-points">0 PTS</span>
+        <span class="player-tag-name" onclick="showNameModal()" id="header-user-tag" title="Edit gamer handle">@Guest</span>
+        <span class="points-badge" id="header-user-score">0 PTS</span>
       </div>
 
-      <button class="btn-icon" id="btn-sound-toggle" onclick="toggleAudioEngine()">
-        <span id="sound-icon">🔊</span> SOUND ON
+      <button class="action-btn" id="btn-sound-mode" onclick="toggleAudioMute()">
+        <span id="sound-state-label">SOUND: ON</span>
       </button>
 
-      <a href="https://github.com/sudo-aadarsh/sudo-aadarsh" target="_blank" class="btn-icon">
-        ⭐ REPO
+      <a href="https://github.com/sudo-aadarsh/sudo-aadarsh" target="_blank" class="action-btn">
+        REPOSITORY
       </a>
     </div>
   </header>
 
   <!-- NAVIGATION TABS -->
-  <div class="nav-bar-container">
-    <div class="nav-tabs">
-      <button class="tab-item active" id="tab-btn-chess" onclick="activateTab('chess')">
-        <span>♟️</span> Chess vs AI
+  <div class="tab-bar-container">
+    <div class="tab-bar">
+      <button class="tab-link active" id="btn-tab-chess" onclick="navigateToTab('chess')">
+        Chess vs AI
       </button>
-      <button class="tab-item" id="tab-btn-ttt" onclick="activateTab('ttt')">
-        <span>❌</span> Tic-Tac-Toe
+      <button class="tab-link" id="btn-tab-ttt" onclick="navigateToTab('ttt')">
+        Tic-Tac-Toe
       </button>
-      <button class="tab-item cyan-active" id="tab-btn-cricket" onclick="activateTab('cricket')">
-        <span>🏏</span> Super Cricket
+      <button class="tab-link cyan-active" id="btn-tab-cricket" onclick="navigateToTab('cricket')">
+        Super Cricket
       </button>
-      <button class="tab-item gold-active" id="tab-btn-wordle" onclick="activateTab('wordle')">
-        <span>🟩</span> Dev Wordle
+      <button class="tab-link gold-active" id="btn-tab-wordle" onclick="navigateToTab('wordle')">
+        Developer Wordle
       </button>
-      <button class="tab-item" id="tab-btn-leaderboard" onclick="activateTab('leaderboard')">
-        <span>🏆</span> Hall of Fame
+      <button class="tab-link" id="btn-tab-leaderboard" onclick="navigateToTab('leaderboard')">
+        Leaderboard
       </button>
     </div>
   </div>
 
-  <!-- MAIN VIEWPORT -->
   <main>
-
-    <!-- ====================================================================
-         SECTION 1: CHESS VS AADARSH-AI
-         ==================================================================== -->
-    <div class="game-pane active" id="pane-chess">
-      <div class="arcade-card">
-        <div class="pane-header">
-          <div class="pane-title-group">
-            <h2>♟️ Grandmaster Chess vs Aadarsh-AI</h2>
-            <p>Animated piece transitions, deep positional evaluation, and legal move indicators</p>
+    <!-- =========================================================================
+         GAME 1: CHESS VS AI
+         ========================================================================= -->
+    <div class="game-section active" id="pane-chess">
+      <div class="main-card">
+        <div class="card-topbar">
+          <div class="card-title-box">
+            <h2>Chess vs Aadarsh-AI</h2>
+            <p>Official Staunton vector pieces, coordinate board, legal move highlights, and AI engine</p>
           </div>
-          <div class="live-status-pill" id="chess-status-badge">WHITE TO MOVE</div>
+          <div class="status-badge" id="chess-status-text">WHITE TO MOVE</div>
         </div>
 
-        <div class="chess-layout">
-          <div class="chess-board-frame">
-            <div class="chess-board-grid" id="chess-board"></div>
+        <div class="chess-container">
+          <div class="chess-board-outer">
+            <div class="chess-board-grid" id="dom-chess-board"></div>
           </div>
 
-          <div class="chess-meta-bar">
-            <span>YOU: <b>WHITE (⚪)</b></span>
-            <span>AI: <b>AADARSH-AI (⚫)</b></span>
+          <div class="chess-meta-panel">
+            <span>YOU: <b>WHITE</b></span>
+            <span>AI: <b>AADARSH-AI (BLACK)</b></span>
           </div>
 
-          <div style="display:flex; gap:12px; margin-top:6px;">
-            <button class="btn-icon" onclick="resetChessGame()">🔄 RESTART GAME</button>
-          </div>
+          <button class="action-btn" onclick="restartChess()">RESTART MATCH</button>
         </div>
       </div>
     </div>
 
-    <!-- ====================================================================
-         SECTION 2: TIC-TAC-TOE
-         ==================================================================== -->
-    <div class="game-pane" id="pane-ttt">
-      <div class="arcade-card">
-        <div class="pane-header">
-          <div class="pane-title-group">
-            <h2>❌ Cyber Tic-Tac-Toe</h2>
-            <p>Fast 3×3 grid duel powered by recursive Minimax algorithm</p>
+    <!-- =========================================================================
+         GAME 2: TIC-TAC-TOE
+         ========================================================================= -->
+    <div class="game-section" id="pane-ttt">
+      <div class="main-card">
+        <div class="card-topbar">
+          <div class="card-title-box">
+            <h2>Cyber Tic-Tac-Toe</h2>
+            <p>Tactical 3x3 duel powered by Minimax search algorithm</p>
           </div>
-          <div class="live-status-pill" id="ttt-status-badge">YOUR TURN (❌)</div>
+          <div class="status-badge" id="ttt-status-text">YOUR TURN (X)</div>
         </div>
 
-        <div class="ttt-container">
-          <div class="ttt-matrix" id="ttt-matrix"></div>
-          <button class="btn-icon" onclick="resetTTTGame()">🔄 PLAY AGAIN</button>
+        <div class="ttt-wrap">
+          <div class="ttt-grid" id="dom-ttt-grid"></div>
+          <button class="action-btn" onclick="restartTTT()">PLAY AGAIN</button>
         </div>
       </div>
     </div>
 
-    <!-- ====================================================================
-         SECTION 3: SUPER CRICKET STADIUM
-         ==================================================================== -->
-    <div class="game-pane" id="pane-cricket">
-      <div class="arcade-card">
-        <div class="pane-header">
-          <div class="pane-title-group">
-            <h2>🏏 Super Cricket Stadium</h2>
-            <p>Panoramic stands, animated running bowler, crouched wicketkeeper, and realistic batting physics</p>
+    <!-- =========================================================================
+         GAME 3: SUPER CRICKET (BATTING & BOWLING MODES)
+         ========================================================================= -->
+    <div class="game-section" id="pane-cricket">
+      <div class="main-card">
+        <div class="card-topbar">
+          <div class="card-title-box">
+            <h2>Super Cricket Stadium</h2>
+            <p>Full Batting & Bowling modes, extended pitch creases, realistic stands, and dynamic target chase</p>
           </div>
-          <div class="live-status-pill" id="cricket-status-badge">MATCH READY</div>
+
+          <!-- Batting / Bowling Mode Switcher -->
+          <div class="cricket-mode-selector">
+            <button class="mode-btn active" id="btn-mode-batting" onclick="switchCricketMode('batting')">BATTING MODE</button>
+            <button class="mode-btn crimson" id="btn-mode-bowling" onclick="switchCricketMode('bowling')">BOWLING MODE</button>
+          </div>
         </div>
 
-        <div class="cricket-stage">
-          <!-- Broadcast TV Score Strip -->
-          <div class="tv-scoreboard">
-            <div class="score-unit">
-              <span class="runs" id="cricket-score-txt">0 / 0</span>
-              <span class="label">RUNS / WICKETS (TARGET 24)</span>
+        <div class="cricket-center-col">
+          <!-- TV Broadcast Score Strip -->
+          <div class="cricket-broadcast-strip">
+            <div class="broadcast-stat-block">
+              <span class="stat-main-num" id="cricket-score-digits">0 / 0</span>
+              <span class="stat-sub-label" id="cricket-score-caption">RUNS / WICKETS (TARGET: 22)</span>
             </div>
 
-            <div class="score-unit">
-              <div class="over-dots">
-                <div class="ball-dot" id="b-dot-1">-</div>
-                <div class="ball-dot" id="b-dot-2">-</div>
-                <div class="ball-dot" id="b-dot-3">-</div>
-                <div class="ball-dot" id="b-dot-4">-</div>
-                <div class="ball-dot" id="b-dot-5">-</div>
-                <div class="ball-dot" id="b-dot-6">-</div>
+            <div class="broadcast-stat-block">
+              <div class="cricket-over-dots">
+                <div class="dot-circle" id="c-dot-1">-</div>
+                <div class="dot-circle" id="c-dot-2">-</div>
+                <div class="dot-circle" id="c-dot-3">-</div>
+                <div class="dot-circle" id="c-dot-4">-</div>
+                <div class="dot-circle" id="c-dot-5">-</div>
+                <div class="dot-circle" id="c-dot-6">-</div>
               </div>
-              <span class="label" id="cricket-over-info">BALLS REMAINING: 6</span>
+              <span class="stat-sub-label" id="cricket-balls-caption">BALLS REMAINING: 6</span>
             </div>
 
-            <button class="btn-icon" onclick="resetCricketMatch()">🔄 NEW OVER</button>
+            <div style="display:flex; gap:8px;">
+              <button class="action-btn" onclick="startNewCricketMatch()">NEW MATCH</button>
+            </div>
           </div>
 
-          <!-- Stadium Canvas -->
-          <div class="stadium-viewport">
-            <canvas id="cricket-arena-canvas" width="700" height="420"></canvas>
+          <!-- Stadium Canvas Viewport -->
+          <div class="stadium-viewport-box">
+            <canvas id="canvas-cricket" width="720" height="420"></canvas>
             
-            <div class="delivery-countdown-overlay" id="cricket-auto-alert">
-              ⚡ READY FOR OVER
+            <!-- Non-obstructive alert positioned cleanly at top -->
+            <div class="broadcast-headline-alert" id="cricket-top-banner">
+              MATCH READY - FIRST DELIVERY INCOMING
             </div>
-
-            <div class="stadium-alert" id="stadium-banner">SIX!</div>
           </div>
 
-          <!-- Batting Controls -->
-          <div class="batting-controls-deck">
-            <div class="timing-assist-bar">
-              <span>BAT TIMING SWEET SPOT:</span>
-              <div class="timing-meter">
-                <div class="timing-sweetspot"></div>
-              </div>
-              <span id="timing-feedback-txt">AWAITING DELIVERY</span>
+          <!-- Interactive Controls Deck -->
+          <div class="cricket-controls-wrap">
+            <!-- Batting Controls Deck -->
+            <div class="action-grid-buttons" id="deck-batting-controls">
+              <button class="play-btn" onclick="performBatStroke('drive')">
+                <span class="play-btn-title">Cover Drive</span>
+                <span class="play-btn-sub">[ Key A / Left ]</span>
+              </button>
+
+              <button class="play-btn" onclick="performBatStroke('straight')">
+                <span class="play-btn-title">Lofted Straight</span>
+                <span class="play-btn-sub">[ Key W / Up ]</span>
+              </button>
+
+              <button class="play-btn" onclick="performBatStroke('pull')">
+                <span class="play-btn-title">Pull Shot</span>
+                <span class="play-btn-sub">[ Key D / Right ]</span>
+              </button>
+
+              <button class="play-btn" onclick="performBatStroke('defend')">
+                <span class="play-btn-title">Forward Defense</span>
+                <span class="play-btn-sub">[ Key S / Down ]</span>
+              </button>
             </div>
 
-            <div class="shot-buttons-grid">
-              <button class="shot-btn" onclick="executeBatStroke('drive')">
-                <span style="font-size:1.4rem;">🏏</span>
-                <span class="shot-title">Cover Drive</span>
-                <span class="shot-key">[ ← / A ]</span>
+            <!-- Bowling Controls Deck (Shown in Bowling Mode) -->
+            <div class="action-grid-buttons" id="deck-bowling-controls" style="display:none; grid-template-columns: repeat(5, 1fr);">
+              <button class="play-btn" onclick="bowlUserDelivery('yorker')">
+                <span class="play-btn-title">Fast Yorker</span>
+                <span class="play-btn-sub">[ 145 km/h ]</span>
               </button>
 
-              <button class="shot-btn" onclick="executeBatStroke('straight')">
-                <span style="font-size:1.4rem;">🚀</span>
-                <span class="shot-title">Lofted Straight</span>
-                <span class="shot-key">[ ↑ / W ]</span>
+              <button class="play-btn" onclick="bowlUserDelivery('outswinger')">
+                <span class="play-btn-title">Outswinger</span>
+                <span class="play-btn-sub">[ Away Seam ]</span>
               </button>
 
-              <button class="shot-btn" onclick="executeBatStroke('pull')">
-                <span style="font-size:1.4rem;">⚡</span>
-                <span class="shot-title">Pull / Hook</span>
-                <span class="shot-key">[ → / D ]</span>
+              <button class="play-btn" onclick="bowlUserDelivery('inswinger')">
+                <span class="play-btn-title">Inswinger</span>
+                <span class="play-btn-sub">[ In Seam ]</span>
               </button>
 
-              <button class="shot-btn" onclick="executeBatStroke('defend')">
-                <span style="font-size:1.4rem;">🛡️</span>
-                <span class="shot-title">Defensive Block</span>
-                <span class="shot-key">[ ↓ / S ]</span>
+              <button class="play-btn" onclick="bowlUserDelivery('slower')">
+                <span class="play-btn-title">Slower Ball</span>
+                <span class="play-btn-sub">[ 112 km/h Cutter ]</span>
               </button>
+
+              <button class="play-btn" onclick="bowlUserDelivery('bouncer')">
+                <span class="play-btn-title">Bouncer</span>
+                <span class="play-btn-sub">[ Short Rising ]</span>
+              </button>
+            </div>
+
+            <!-- Target Selection Presets -->
+            <div style="display:flex; align-items:center; gap:8px; font-size:0.8rem; color:var(--text-secondary); margin-top:4px;">
+              <span>TARGET PRESET:</span>
+              <button class="action-btn" style="padding:4px 10px; font-size:0.75rem;" onclick="setTargetPreset('random')">Random</button>
+              <button class="action-btn" style="padding:4px 10px; font-size:0.75rem;" onclick="setTargetPreset(18)">18 Runs</button>
+              <button class="action-btn" style="padding:4px 10px; font-size:0.75rem;" onclick="setTargetPreset(24)">24 Runs</button>
+              <button class="action-btn" style="padding:4px 10px; font-size:0.75rem;" onclick="setTargetPreset(30)">30 Runs</button>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ====================================================================
-         SECTION 4: DEVELOPER WORDLE
-         ==================================================================== -->
-    <div class="game-pane" id="pane-wordle">
-      <div class="arcade-card">
-        <div class="pane-header">
-          <div class="pane-title-group">
-            <h2>🟩 Developer Wordle + 3 Tech Hints</h2>
-            <p>Guess the 5-letter computer science keyword in 6 tries with progressive clues</p>
+    <!-- =========================================================================
+         GAME 4: DEVELOPER WORDLE (HINT SENTENCE BESIDE EACH WORD BOX)
+         ========================================================================= -->
+    <div class="game-section" id="pane-wordle">
+      <div class="main-card">
+        <div class="card-topbar">
+          <div class="card-title-box">
+            <h2>Developer Wordle</h2>
+            <p>Guess the 5-letter software engineering term in 6 attempts with contextual hint sentences beside each row</p>
           </div>
-          <div class="live-status-pill" id="wordle-status-badge">ATTEMPT 1 OF 6</div>
+          <div class="status-badge" id="wordle-status-text">ATTEMPT 1 OF 6</div>
         </div>
 
-        <div class="wordle-stage">
-          <!-- 3-Tier Clue Card -->
-          <div class="wordle-hint-card">
-            <div class="hint-text-area" id="wordle-hint-text">
-              💡 Stuck? Use progressive hints for domain context and letter clues!
-            </div>
-            <button class="hint-action-btn" id="btn-use-hint" onclick="requestWordleClue()">
-              🔍 GET HINT <span id="hint-stock-count">(3 left)</span>
-            </button>
-          </div>
+        <div class="wordle-layout-grid">
+          <!-- 6 Guess Rows -->
+          <div class="wordle-rows-col" id="dom-wordle-rows"></div>
 
-          <div class="wordle-grid" id="wordle-board"></div>
+          <!-- 6 Aligned Hint Sentences (One beside each row) -->
+          <div class="wordle-hints-col" id="dom-wordle-hints"></div>
+        </div>
 
-          <div class="wordle-keyboard" id="wordle-keyboard"></div>
+        <!-- Virtual Keyboard -->
+        <div class="wordle-keyboard-wrap" id="dom-wordle-keyboard"></div>
 
-          <button class="btn-icon" onclick="resetWordleGame()">🔄 NEW PUZZLE</button>
+        <div style="display:flex; justify-content:center; margin-top:20px;">
+          <button class="action-btn" onclick="restartWordle()">NEW WORD PUZZLE</button>
         </div>
       </div>
     </div>
 
-    <!-- ====================================================================
-         SECTION 5: LIVE HALL OF FAME & LEADERBOARD
-         ==================================================================== -->
-    <div class="game-pane" id="pane-leaderboard">
-      <div class="arcade-card">
-        <div class="pane-header">
-          <div class="pane-title-group">
-            <h2>🏆 Global Hall of Fame & Achievements</h2>
-            <p>Compete across Chess, Cricket, Wordle & Tic-Tac-Toe for leaderboard dominance</p>
+    <!-- =========================================================================
+         GAME 5: LEADERBOARD
+         ========================================================================= -->
+    <div class="game-section" id="pane-leaderboard">
+      <div class="main-card">
+        <div class="card-topbar">
+          <div class="card-title-box">
+            <h2>Championship Standings</h2>
+            <p>Hall of Fame rankings across Chess, Super Cricket, Developer Wordle & Tic-Tac-Toe</p>
           </div>
-          <button class="btn-icon" onclick="openNameModal()">✏️ EDIT GAMER TAG</button>
+          <button class="action-btn" onclick="showNameModal()">EDIT GAMER HANDLE</button>
         </div>
 
-        <div class="leaderboard-table-wrap">
-          <table class="leaderboard-table">
+        <div class="table-responsive-box">
+          <table class="standings-table">
             <thead>
               <tr>
                 <th>RANK</th>
                 <th>GAMER TAG</th>
-                <th>CHAMPION POINTS</th>
+                <th>TOTAL POINTS</th>
                 <th>MATCH WINS</th>
-                <th>EARNED BADGES</th>
+                <th>BADGES</th>
               </tr>
             </thead>
-            <tbody id="leaderboard-body"></tbody>
+            <tbody id="dom-leaderboard-body"></tbody>
           </table>
         </div>
       </div>
     </div>
-
   </main>
 
-  <!-- FOOTER -->
   <footer>
-    <p>⚡ Antigravity Cyber Arcade • Designed & Engineered with ❤️ for <a href="https://github.com/sudo-aadarsh" target="_blank">@sudo-aadarsh</a></p>
+    <p>Aadarsh Cyber Arcade • Engineered with Clean Standards for <a href="https://github.com/sudo-aadarsh" target="_blank">@sudo-aadarsh</a></p>
   </footer>
 
   <!-- USERNAME MODAL -->
-  <div class="modal-overlay" id="modal-tag-overlay">
-    <div class="modal-box">
-      <h3>Set Your Gamer Tag</h3>
-      <p>Enter your unique handle to record your high scores and badges on the Hall of Fame.</p>
-      <input type="text" id="input-new-tag" maxlength="18" placeholder="e.g. NeoCoder" />
-      <div class="modal-actions">
-        <button class="btn-icon" onclick="closeNameModal()">Cancel</button>
-        <button class="btn-icon" style="background:var(--crimson);border-color:var(--crimson);" onclick="saveNewGamerTag()">Save Tag</button>
+  <div class="modal-backdrop" id="modal-tag-dialog">
+    <div class="modal-card">
+      <h3>Set Your Gamer Handle</h3>
+      <p>Enter your handle to record match scores and achievements on the global leaderboard.</p>
+      <input type="text" id="input-tag-text" maxlength="18" placeholder="e.g. CodeMaster" />
+      <div style="display:flex; justify-content:flex-end; gap:10px;">
+        <button class="action-btn" onclick="hideNameModal()">Cancel</button>
+        <button class="action-btn" style="background:var(--cyan); color:#07090e; font-weight:700;" onclick="submitGamerTag()">Save Handle</button>
       </div>
     </div>
   </div>
 
-  <!-- JAVASCRIPT GAME ENGINE -->
+  <!-- COMPLETE ENGINE SCRIPT -->
   <script>
-    /* ==========================================================================
-       SYNTHESIZED SOUND EFFECTS ENGINE (WEB AUDIO API)
-       ========================================================================== */
-    let audioContext = null;
-    let audioMuted = false;
+    /* =========================================================================
+       STAUNTON VECTOR SVGS
+       ========================================================================= */
+    const CHESS_SVGS = {"wP": "<svg xmlns=\"http://www.w3.org/2000/svg\" style=\"color-scheme:light only\" width=\"45\" height=\"45\" viewBox=\"0 0 45 45\"><path fill=\"#fff\" stroke=\"#000\" stroke-linecap=\"round\" stroke-width=\"1.5\" d=\"M22.5 9c-2.21 0-4 1.79-4 4 0 .89.29 1.71.78 2.38C17.33 16.5 16 18.59 16 21c0 2.03.94 3.84 2.41 5.03-3 1.06-7.41 5.55-7.41 13.47h23c0-7.92-4.41-12.41-7.41-13.47 1.47-1.19 2.41-3 2.41-5.03 0-2.41-1.33-4.5-3.28-5.62.49-.67.78-1.49.78-2.38 0-2.21-1.79-4-4-4z\"/></svg>", "wR": "<svg xmlns=\"http://www.w3.org/2000/svg\" style=\"color-scheme:light only\" width=\"45\" height=\"45\" viewBox=\"0 0 45 45\"><g fill=\"#fff\" fill-rule=\"evenodd\" stroke=\"#000\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\"><path stroke-linecap=\"butt\" d=\"M9 39h27v-3H9zm3-3v-4h21v4zm-1-22V9h4v2h5V9h5v2h5V9h4v5\"/><path d=\"m34 14-3 3H14l-3-3\"/><path stroke-linecap=\"butt\" stroke-linejoin=\"miter\" d=\"M31 17v12.5H14V17\"/><path d=\"m31 29.5 1.5 2.5h-20l1.5-2.5\"/><path fill=\"none\" stroke-linejoin=\"miter\" d=\"M11 14h23\"/></g></svg>", "wN": "<svg xmlns=\"http://www.w3.org/2000/svg\" style=\"color-scheme:light only\" width=\"45\" height=\"45\" viewBox=\"0 0 45 45\"><g fill=\"none\" fill-rule=\"evenodd\" stroke=\"#000\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\"><path fill=\"#fff\" d=\"M22 10c10.5 1 16.5 8 16 29H15c0-9 10-6.5 8-21\"/><path fill=\"#fff\" d=\"M24 18c.38 2.91-5.55 7.37-8 9-3 2-2.82 4.34-5 4-1.042-.94 1.41-3.04 0-3-1 0 .19 1.23-1 2-1 0-4.003 1-4-4 0-2 6-12 6-12s1.89-1.9 2-3.5c-.73-.994-.5-2-.5-3 1-1 3 2.5 3 2.5h2s.78-1.992 2.5-3c1 0 1 3 1 3\"/><path fill=\"#000\" d=\"M9.5 25.5a.5.5 0 1 1-1 0 .5.5 0 1 1 1 0m5.433-9.75a.5 1.5 30 1 1-.866-.5.5 1.5 30 1 1 .866.5\"/></g></svg>", "wB": "<svg xmlns=\"http://www.w3.org/2000/svg\" style=\"color-scheme:light only\" width=\"45\" height=\"45\" viewBox=\"0 0 45 45\"><g fill=\"none\" fill-rule=\"evenodd\" stroke=\"#000\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\"><g fill=\"#fff\" stroke-linecap=\"butt\"><path d=\"M9 36c3.39-.97 10.11.43 13.5-2 3.39 2.43 10.11 1.03 13.5 2 0 0 1.65.54 3 2-.68.97-1.65.99-3 .5-3.39-.97-10.11.46-13.5-1-3.39 1.46-10.11.03-13.5 1-1.35.49-2.32.47-3-.5 1.35-1.94 3-2 3-2z\"/><path d=\"M15 32c2.5 2.5 12.5 2.5 15 0 .5-1.5 0-2 0-2 0-2.5-2.5-4-2.5-4 5.5-1.5 6-11.5-5-15.5-11 4-10.5 14-5 15.5 0 0-2.5 1.5-2.5 4 0 0-.5.5 0 2z\"/><path d=\"M25 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 1 1 5 0z\"/></g><path stroke-linejoin=\"miter\" d=\"M17.5 26h10M15 30h15m-7.5-14.5v5M20 18h5\"/></g></svg>", "wQ": "<svg xmlns=\"http://www.w3.org/2000/svg\" style=\"color-scheme:light only\" width=\"45\" height=\"45\" viewBox=\"0 0 45 45\"><g fill=\"#fff\" fill-rule=\"evenodd\" stroke=\"#000\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\"><path d=\"M8 12a2 2 0 1 1-4 0 2 2 0 1 1 4 0m16.5-4.5a2 2 0 1 1-4 0 2 2 0 1 1 4 0M41 12a2 2 0 1 1-4 0 2 2 0 1 1 4 0M16 8.5a2 2 0 1 1-4 0 2 2 0 1 1 4 0M33 9a2 2 0 1 1-4 0 2 2 0 1 1 4 0\"/><path stroke-linecap=\"butt\" d=\"M9 26c8.5-1.5 21-1.5 27 0l2-12-7 11V11l-5.5 13.5-3-15-3 15-5.5-14V25L7 14z\"/><path stroke-linecap=\"butt\" d=\"M9 26c0 2 1.5 2 2.5 4 1 1.5 1 1 .5 3.5-1.5 1-1.5 2.5-1.5 2.5-1.5 1.5.5 2.5.5 2.5 6.5 1 16.5 1 23 0 0 0 1.5-1 0-2.5 0 0 .5-1.5-1-2.5-.5-2.5-.5-2 .5-3.5 1-2 2.5-2 2.5-4-8.5-1.5-18.5-1.5-27 0z\"/><path fill=\"none\" d=\"M11.5 30c3.5-1 18.5-1 22 0M12 33.5c6-1 15-1 21 0\"/></g></svg>", "wK": "<svg xmlns=\"http://www.w3.org/2000/svg\" style=\"color-scheme:light only\" viewBox=\"0 0 45 45\"><g fill=\"none\" fill-rule=\"evenodd\" stroke=\"#000\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\"><path stroke-linejoin=\"miter\" d=\"M22.5 11.63V6M20 8h5\"/><path fill=\"#fff\" stroke-linecap=\"butt\" stroke-linejoin=\"miter\" d=\"M22.5 25s4.5-7.5 3-10.5c0 0-1-2.5-3-2.5s-3 2.5-3 2.5c-1.5 3 3 10.5 3 10.5\"/><path fill=\"#fff\" d=\"M11.5 37c5.5 3.5 15.5 3.5 21 0v-7s9-4.5 6-10.5c-4-6.5-13.5-3.5-16 4V27v-3.5c-3.5-7.5-13-10.5-16-4-3 6 5 10 5 10z\"/><path d=\"M11.5 30c5.5-3 15.5-3 21 0m-21 3.5c5.5-3 15.5-3 21 0m-21 3.5c5.5-3 15.5-3 21 0\"/></g></svg>", "bP": "<svg xmlns=\"http://www.w3.org/2000/svg\" style=\"color-scheme:light only\" width=\"45\" height=\"45\" viewBox=\"0 0 45 45\"><path stroke=\"#000\" stroke-linecap=\"round\" stroke-width=\"1.5\" d=\"M22.5 9a4 4 0 0 0-3.22 6.38 6.48 6.48 0 0 0-.87 10.65c-3 1.06-7.41 5.55-7.41 13.47h23c0-7.92-4.41-12.41-7.41-13.47a6.46 6.46 0 0 0-.87-10.65A4.01 4.01 0 0 0 22.5 9z\"/></svg>", "bR": "<svg xmlns=\"http://www.w3.org/2000/svg\" style=\"color-scheme:light only\" width=\"45\" height=\"45\" viewBox=\"0 0 45 45\"><g fill-rule=\"evenodd\" stroke=\"#000\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\"><path stroke-linecap=\"butt\" d=\"M9 39h27v-3H9zm3.5-7 1.5-2.5h17l1.5 2.5zm-.5 4v-4h21v4z\"/><path stroke-linecap=\"butt\" stroke-linejoin=\"miter\" d=\"M14 29.5v-13h17v13z\"/><path stroke-linecap=\"butt\" d=\"M14 16.5 11 14h23l-3 2.5zM11 14V9h4v2h5V9h5v2h5V9h4v5z\"/><path fill=\"none\" stroke=\"#ececec\" stroke-linejoin=\"miter\" stroke-width=\"1\" d=\"M12 35.5h21m-20-4h19m-18-2h17m-17-13h17M11 14h23\"/></g></svg>", "bN": "<svg xmlns=\"http://www.w3.org/2000/svg\" style=\"color-scheme:light only\" width=\"45\" height=\"45\" viewBox=\"0 0 45 45\"><g fill=\"none\" fill-rule=\"evenodd\" stroke=\"#000\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\"><path fill=\"#000\" d=\"M22 10c10.5 1 16.5 8 16 29H15c0-9 10-6.5 8-21\"/><path fill=\"#000\" d=\"M24 18c.38 2.91-5.55 7.37-8 9-3 2-2.82 4.34-5 4-1.04-.94 1.41-3.04 0-3-1 0 .19 1.23-1 2-1 0-4 1-4-4 0-2 6-12 6-12s1.89-1.9 2-3.5c-.73-1-.5-2-.5-3 1-1 3 2.5 3 2.5h2s.78-2 2.5-3c1 0 1 3 1 3\"/><path fill=\"#ececec\" stroke=\"#ececec\" d=\"M9.5 25.5a.5.5 0 1 1-1 0 .5.5 0 1 1 1 0m5.43-9.75a.5 1.5 30 1 1-.86-.5.5 1.5 30 1 1 .86.5\"/><path fill=\"#ececec\" stroke=\"none\" d=\"m24.55 10.4-.45 1.45.5.15c3.15 1 5.65 2.49 7.9 6.75S35.75 29.06 35.25 39l-.05.5h2.25l.05-.5c.5-10.06-.88-16.85-3.25-21.34s-5.79-6.64-9.19-7.16z\"/></g></svg>", "bB": "<svg xmlns=\"http://www.w3.org/2000/svg\" style=\"color-scheme:light only\" width=\"45\" height=\"45\" viewBox=\"0 0 45 45\"><g fill=\"none\" fill-rule=\"evenodd\" stroke=\"#000\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\"><g fill=\"#000\" stroke-linecap=\"butt\"><path d=\"M9 36c3.4-1 10.1.4 13.5-2 3.4 2.4 10.1 1 13.5 2 0 0 1.6.5 3 2-.7 1-1.6 1-3 .5-3.4-1-10.1.5-13.5-1-3.4 1.5-10.1 0-13.5 1-1.4.5-2.3.5-3-.5 1.4-2 3-2 3-2z\"/><path d=\"M15 32c2.5 2.5 12.5 2.5 15 0 .5-1.5 0-2 0-2 0-2.5-2.5-4-2.5-4 5.5-1.5 6-11.5-5-15.5-11 4-10.5 14-5 15.5 0 0-2.5 1.5-2.5 4 0 0-.5.5 0 2z\"/><path d=\"M25 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 1 1 5 0z\"/></g><path stroke=\"#ececec\" stroke-linejoin=\"miter\" d=\"M17.5 26h10M15 30h15m-7.5-14.5v5M20 18h5\"/></g></svg>", "bQ": "<svg xmlns=\"http://www.w3.org/2000/svg\" style=\"color-scheme:light only\" width=\"45\" height=\"45\" viewBox=\"0 0 45 45\"><g fill-rule=\"evenodd\" stroke=\"#000\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\"><g stroke=\"none\"><circle cx=\"6\" cy=\"12\" r=\"2.75\"/><circle cx=\"14\" cy=\"9\" r=\"2.75\"/><circle cx=\"22.5\" cy=\"8\" r=\"2.75\"/><circle cx=\"31\" cy=\"9\" r=\"2.75\"/><circle cx=\"39\" cy=\"12\" r=\"2.75\"/></g><path stroke-linecap=\"butt\" d=\"M9 26c8.5-1.5 21-1.5 27 0l2.5-12.5L31 25l-.3-14.1-5.2 13.6-3-14.5-3 14.5-5.2-13.6L14 25 6.5 13.5z\"/><path stroke-linecap=\"butt\" d=\"M9 26c0 2 1.5 2 2.5 4 1 1.5 1 1 .5 3.5-1.5 1-1.5 2.5-1.5 2.5-1.5 1.5.5 2.5.5 2.5 6.5 1 16.5 1 23 0 0 0 1.5-1 0-2.5 0 0 .5-1.5-1-2.5-.5-2.5-.5-2 .5-3.5 1-2 2.5-2 2.5-4-8.5-1.5-18.5-1.5-27 0z\"/><path fill=\"none\" stroke-linecap=\"butt\" d=\"M11 38.5a35 35 1 0 0 23 0\"/><path fill=\"none\" stroke=\"#ececec\" d=\"M11 29a35 35 1 0 1 23 0m-21.5 2.5h20m-21 3a35 35 1 0 0 22 0m-23 3a35 35 1 0 0 24 0\"/></g></svg>", "bK": "<svg xmlns=\"http://www.w3.org/2000/svg\" style=\"color-scheme:light only\" viewBox=\"0 0 45 45\"><g fill=\"none\" fill-rule=\"evenodd\" stroke=\"#000\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\"><path stroke-linejoin=\"miter\" d=\"M22.5 11.6V6\"/><path fill=\"#000\" stroke-linecap=\"butt\" stroke-linejoin=\"miter\" d=\"M22.5 25s4.5-7.5 3-10.5c0 0-1-2.5-3-2.5s-3 2.5-3 2.5c-1.5 3 3 10.5 3 10.5\"/><path fill=\"#000\" d=\"M11.5 37a22.3 22.3 0 0 0 21 0v-7s9-4.5 6-10.5c-4-6.5-13.5-3.5-16 4V27v-3.5c-3.5-7.5-13-10.5-16-4-3 6 5 10 5 10z\"/><path stroke-linejoin=\"miter\" d=\"M20 8h5\"/><path stroke=\"#ececec\" d=\"M32 29.5s8.5-4 6-9.7C34.1 14 25 18 22.5 24.6v2.1-2.1C20 18 9.9 14 7 19.9c-2.5 5.6 4.8 9 4.8 9\"/><path stroke=\"#ececec\" d=\"M11.5 30c5.5-3 15.5-3 21 0m-21 3.5c5.5-3 15.5-3 21 0m-21 3.5c5.5-3 15.5-3 21 0\"/></g></svg>"};
 
-    function getAudioCtx() {
-      if (!audioContext) {
-        const AudioCtx = window.AudioContext || window.webkitAudioContext;
-        if (AudioCtx) audioContext = new AudioCtx();
+    /* =========================================================================
+       WEB AUDIO SYNTHESIZER
+       ========================================================================= */
+    let audioCtx = null;
+    let isMuted = false;
+
+    function getAudio() {
+      if (!audioCtx) {
+        const AudioClass = window.AudioContext || window.webkitAudioContext;
+        if (AudioClass) audioCtx = new AudioClass();
       }
-      if (audioContext && audioContext.state === 'suspended') {
-        audioContext.resume();
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
       }
-      return audioContext;
+      return audioCtx;
     }
 
-    function toggleAudioEngine() {
-      audioMuted = !audioMuted;
-      document.getElementById('sound-icon').textContent = audioMuted ? '🔇' : '🔊';
-      document.getElementById('btn-sound-toggle').innerHTML = audioMuted ? '<span>🔇</span> SOUND MUTED' : '<span>🔊</span> SOUND ON';
+    function toggleAudioMute() {
+      isMuted = !isMuted;
+      document.getElementById('sound-state-label').textContent = isMuted ? 'SOUND: MUTED' : 'SOUND: ON';
     }
 
-    function playWillowCrackSound() {
-      if (audioMuted) return;
+    function soundWillowHit() {
+      if (isMuted) return;
       try {
-        const ctx = getAudioCtx();
+        const ctx = getAudio();
         if (!ctx) return;
         const now = ctx.currentTime;
-        // High frequency sharp crack
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
         osc.type = 'triangle';
         osc.frequency.setValueAtTime(680, now);
-        osc.frequency.exponentialRampToValueAtTime(140, now + 0.12);
+        osc.frequency.exponentialRampToValueAtTime(120, now + 0.12);
         gain.gain.setValueAtTime(0.8, now);
         gain.gain.exponentialRampToValueAtTime(0.01, now + 0.12);
         osc.connect(gain);
         gain.connect(ctx.destination);
         osc.start(now);
         osc.stop(now + 0.13);
-
-        // Noise snap
-        const bufferSize = ctx.sampleRate * 0.05;
-        const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-        const data = buffer.getChannelData(0);
-        for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
-        const noise = ctx.createBufferSource();
-        noise.buffer = buffer;
-        const noiseGain = ctx.createGain();
-        noiseGain.gain.setValueAtTime(0.6, now);
-        noiseGain.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
-        noise.connect(noiseGain);
-        noiseGain.connect(ctx.destination);
-        noise.start(now);
       } catch (e) {}
     }
 
-    function playStumpCrashSound() {
-      if (audioMuted) return;
+    function soundStumpsHit() {
+      if (isMuted) return;
       try {
-        const ctx = getAudioCtx();
+        const ctx = getAudio();
         if (!ctx) return;
         const now = ctx.currentTime;
         [180, 240, 320].forEach((freq, idx) => {
           const osc = ctx.createOscillator();
           const gain = ctx.createGain();
           osc.type = 'sawtooth';
-          osc.frequency.setValueAtTime(freq, now + idx * 0.03);
-          osc.frequency.exponentialRampToValueAtTime(60, now + idx * 0.03 + 0.2);
-          gain.gain.setValueAtTime(0.5, now + idx * 0.03);
-          gain.gain.exponentialRampToValueAtTime(0.01, now + idx * 0.03 + 0.2);
+          osc.frequency.setValueAtTime(freq, now + idx * 0.02);
+          osc.frequency.exponentialRampToValueAtTime(50, now + idx * 0.02 + 0.2);
+          gain.gain.setValueAtTime(0.4, now + idx * 0.02);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + idx * 0.02 + 0.2);
           osc.connect(gain);
           gain.connect(ctx.destination);
-          osc.start(now + idx * 0.03);
-          osc.stop(now + idx * 0.03 + 0.22);
+          osc.start(now + idx * 0.02);
+          osc.stop(now + idx * 0.02 + 0.22);
         });
       } catch (e) {}
     }
 
-    function playCrowdCheerSound(isHuge) {
-      if (audioMuted) return;
+    function soundCrowdRoar(isBig) {
+      if (isMuted) return;
       try {
-        const ctx = getAudioCtx();
+        const ctx = getAudio();
         if (!ctx) return;
-        const now = ctx.currentTime;
-        const dur = isHuge ? 1.6 : 0.8;
-        const bufferSize = ctx.sampleRate * dur;
-        const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-        const data = buffer.getChannelData(0);
-        for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
-
-        const noise = ctx.createBufferSource();
-        noise.buffer = buffer;
+        const dur = isBig ? 1.5 : 0.8;
+        const buf = ctx.createBuffer(1, ctx.sampleRate * dur, ctx.sampleRate);
+        const d = buf.getChannelData(0);
+        for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+        const src = ctx.createBufferSource();
+        src.buffer = buf;
         const filter = ctx.createBiquadFilter();
         filter.type = 'bandpass';
-        filter.frequency.setValueAtTime(isHuge ? 900 : 700, now);
-        filter.Q.setValueAtTime(1.5, now);
-
+        filter.frequency.setValueAtTime(isBig ? 850 : 650, ctx.currentTime);
+        filter.Q.setValueAtTime(1.4, ctx.currentTime);
         const gain = ctx.createGain();
-        gain.gain.setValueAtTime(0.01, now);
-        gain.gain.linearRampToValueAtTime(isHuge ? 0.7 : 0.4, now + 0.2);
-        gain.gain.exponentialRampToValueAtTime(0.01, now + dur);
-
-        noise.connect(filter);
+        gain.gain.setValueAtTime(0.01, ctx.currentTime);
+        gain.gain.linearRampToValueAtTime(isBig ? 0.6 : 0.35, ctx.currentTime + 0.15);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + dur);
+        src.connect(filter);
         filter.connect(gain);
         gain.connect(ctx.destination);
-        noise.start(now);
+        src.start(ctx.currentTime);
       } catch (e) {}
     }
 
-    function playMoveClickSound() {
-      if (audioMuted) return;
+    function soundMoveClick() {
+      if (isMuted) return;
       try {
-        const ctx = getAudioCtx();
+        const ctx = getAudio();
         if (!ctx) return;
         const now = ctx.currentTime;
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
         osc.type = 'sine';
         osc.frequency.setValueAtTime(440, now);
-        osc.frequency.exponentialRampToValueAtTime(220, now + 0.08);
+        osc.frequency.exponentialRampToValueAtTime(220, now + 0.07);
         gain.gain.setValueAtTime(0.3, now);
-        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.07);
         osc.connect(gain);
         gain.connect(ctx.destination);
         osc.start(now);
-        osc.stop(now + 0.09);
+        osc.stop(now + 0.08);
       } catch (e) {}
     }
 
-    /* ==========================================================================
-       USER PROFILE, STATS & LEADERBOARD STORE
-       ========================================================================== */
-    const STORAGE_KEY = 'aadarsh_arcade_pro_v3';
-    let gamerTag = localStorage.getItem('aadarsh_gamer_tag') || 'Guest_' + Math.floor(100 + Math.random() * 900);
-    let playerStats = {
+    /* =========================================================================
+       USER STATS & LEADERBOARD
+       ========================================================================= */
+    const STORAGE_KEY = 'aadarsh_arcade_pro_v4';
+    let userHandle = localStorage.getItem('aadarsh_handle') || 'Player_' + Math.floor(100 + Math.random() * 900);
+    let userData = {
       score: 0,
       wins: { chess: 0, ttt: 0, cricket: 0, wordle: 0 },
       badges: []
@@ -1500,109 +1392,102 @@
 
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) playerStats = JSON.parse(saved);
+      if (saved) userData = JSON.parse(saved);
     } catch (e) {}
 
-    function persistUserData() {
+    function saveUserData() {
       try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(playerStats));
-        localStorage.setItem('aadarsh_gamer_tag', gamerTag);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(userData));
+        localStorage.setItem('aadarsh_handle', userHandle);
       } catch (e) {}
-      updateHeaderDisplays();
-      renderLeaderboard();
+      renderHeaderData();
+      renderLeaderboardView();
     }
 
-    function updateHeaderDisplays() {
-      document.getElementById('label-gamer-tag').textContent = '@' + gamerTag;
-      document.getElementById('label-score-points').textContent = playerStats.score + ' PTS';
+    function renderHeaderData() {
+      document.getElementById('header-user-tag').textContent = '@' + userHandle;
+      document.getElementById('header-user-score').textContent = userData.score + ' PTS';
     }
 
-    function awardPoints(pts, gameType, triggerConfetti) {
-      playerStats.score += pts;
-      if (gameType && playerStats.wins[gameType] !== undefined) {
-        playerStats.wins[gameType]++;
-      }
+    function grantScore(points, game, showConfetti) {
+      userData.score += points;
+      if (game && userData.wins[game] !== undefined) userData.wins[game]++;
 
-      // Check badges
-      const bSet = new Set(playerStats.badges);
-      if (playerStats.score >= 50) bSet.add('⚡ Arcade Rookie');
-      if (playerStats.score >= 120) bSet.add('🔥 Cyber Veteran');
-      if (playerStats.wins.cricket >= 1) bSet.add('🏏 Boundary King');
-      if (playerStats.wins.chess >= 1) bSet.add('👑 Chess Tactician');
-      if (playerStats.wins.wordle >= 1) bSet.add('🟩 Dev Lexicon');
-      playerStats.badges = Array.from(bSet);
+      const b = new Set(userData.badges);
+      if (userData.score >= 40) b.add('Arcade Rookie');
+      if (userData.score >= 120) b.add('Veteran Competitor');
+      if (userData.wins.cricket >= 1) b.add('Century Club');
+      if (userData.wins.chess >= 1) b.add('Tactician');
+      if (userData.wins.wordle >= 1) b.add('Lexicon Master');
+      userData.badges = Array.from(b);
 
-      persistUserData();
+      saveUserData();
 
-      if (triggerConfetti && window.confetti) {
-        confetti({
-          particleCount: 60,
-          spread: 70,
-          origin: { y: 0.6 }
-        });
+      if (showConfetti && window.confetti) {
+        confetti({ particleCount: 50, spread: 60, origin: { y: 0.6 } });
       }
     }
 
-    function renderLeaderboard() {
-      const tbody = document.getElementById('leaderboard-body');
+    function renderLeaderboardView() {
+      const tbody = document.getElementById('dom-leaderboard-body');
       tbody.innerHTML = '';
 
-      const list = [
-        { name: 'sudo-aadarsh', score: 260, wins: 14, badges: ['👑 Founder', '🏏 Century Club', '⚡ Grandmaster'] },
-        { name: gamerTag, score: playerStats.score, wins: Object.values(playerStats.wins).reduce((a,b)=>a+b, 0), badges: playerStats.badges }
+      const rows = [
+        { name: 'sudo-aadarsh', score: 280, wins: 15, badges: ['Founder', 'Century Club', 'Grandmaster'] },
+        { name: userHandle, score: userData.score, wins: Object.values(userData.wins).reduce((a,b)=>a+b, 0), badges: userData.badges }
       ];
 
-      list.sort((a, b) => b.score - a.score);
+      rows.sort((a, b) => b.score - a.score);
 
-      list.forEach((item, idx) => {
+      rows.forEach((r, idx) => {
         const tr = document.createElement('tr');
         if (idx === 0) tr.classList.add('champion');
-        const rank = idx === 0 ? '🥇 1st' : (idx === 1 ? '🥈 2nd' : `#${idx + 1}`);
-        const badgeTags = item.badges && item.badges.length 
-          ? item.badges.map(b => `<span class="badge-pill">${b}</span>`).join('') 
-          : '<span style="color:var(--text-muted);font-size:0.8rem;">Active Contender</span>';
+        const rankLabel = idx === 0 ? '1st' : (idx === 1 ? '2nd' : `#${idx+1}`);
+        const badgeList = r.badges && r.badges.length 
+          ? r.badges.map(b => `<span class="badge-chip">${b}</span>`).join('') 
+          : '<span style="color:var(--text-secondary);font-size:0.8rem;">Active Contender</span>';
 
         tr.innerHTML = `
-          <td style="font-weight:800;font-family:var(--font-display);font-size:1.1rem;">${rank}</td>
-          <td><b style="color:var(--cyan);">@${item.name}</b></td>
-          <td><b style="color:var(--gold);font-family:var(--font-mono);">${item.score} pts</b></td>
-          <td>${item.wins} wins</td>
-          <td>${badgeTags}</td>
+          <td style="font-weight:800;font-family:var(--font-display);">${rankLabel}</td>
+          <td><b style="color:var(--cyan);">@${r.name}</b></td>
+          <td><b style="color:var(--gold);font-family:var(--font-mono);">${r.score} pts</b></td>
+          <td>${r.wins} wins</td>
+          <td>${badgeList}</td>
         `;
         tbody.appendChild(tr);
       });
     }
 
-    function openNameModal() {
-      document.getElementById('input-new-tag').value = gamerTag;
-      document.getElementById('modal-tag-overlay').classList.add('open');
+    function showNameModal() {
+      document.getElementById('input-tag-text').value = userHandle;
+      document.getElementById('modal-tag-dialog').classList.add('show');
     }
 
-    function closeNameModal() {
-      document.getElementById('modal-tag-overlay').classList.remove('open');
+    function hideNameModal() {
+      document.getElementById('modal-tag-dialog').classList.remove('show');
     }
 
-    function saveNewGamerTag() {
-      const val = document.getElementById('input-new-tag').value.trim().replace(/^@/, '');
-      if (val) {
-        gamerTag = val;
-        persistUserData();
+    function submitGamerTag() {
+      const v = document.getElementById('input-tag-text').value.trim().replace(/^@/, '');
+      if (v) {
+        userHandle = v;
+        saveUserData();
       }
-      closeNameModal();
+      hideNameModal();
     }
 
-    /* ==========================================================================
-       TAB ROUTING ENGINE
-       ========================================================================== */
-    function activateTab(tabId) {
-      document.querySelectorAll('.game-pane').forEach(p => p.classList.remove('active'));
-      document.querySelectorAll('.tab-item').forEach(b => b.classList.remove('active'));
+    /* =========================================================================
+       NAVIGATION TABS
+       ========================================================================= */
+    function navigateToTab(tabId) {
+      document.querySelectorAll('.game-section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.tab-link').forEach(b => b.classList.remove('active'));
 
-      const targetPane = document.getElementById('pane-' + tabId);
-      if (targetPane) targetPane.classList.add('active');
+      const pane = document.getElementById('pane-' + tabId);
+      if (pane) pane.classList.add('active');
 
-      const targetBtn = document.getElementById('tab-btn-' + tabId);
-      if (targetBtn) targetBtn.classList.add('active');
+      const btn = document.getElementById('btn-tab-' + tabId);
+      if (btn) btn.classList.add('active');
 
       window.location.hash = tabId;
 
@@ -1612,150 +1497,145 @@
       }
     }
 
-    /* ==========================================================================
-       GAME 1: CHESS ENGINE WITH SLIDE ANIMATION
-       ========================================================================== */
-    let chessInstance = null;
-    let selectedSquare = null;
-    let chessLastFrom = null;
-    let chessLastTo = null;
+    /* =========================================================================
+       GAME 1: CHESS VS AI (STAUNTON VECTOR SVGS)
+       ========================================================================= */
+    let chess = null;
+    let selectedSq = null;
+    let chessFrom = null;
+    let chessTo = null;
 
-    const CHESS_UNICODE = {
-      p: '♟', r: '♜', n: '♞', b: '♝', q: '♛', k: '♚',
-      P: '♙', R: '♖', N: '♘', B: '♗', Q: '♕', K: '♔'
-    };
-
-    function initChessGame() {
-      chessInstance = new Chess();
-      drawChessBoardDOM();
+    function initChess() {
+      chess = new Chess();
+      drawChessDOM();
     }
 
-    function resetChessGame() {
-      chessInstance.reset();
-      selectedSquare = null;
-      chessLastFrom = null;
-      chessLastTo = null;
-      document.getElementById('chess-status-badge').textContent = 'WHITE TO MOVE';
-      document.getElementById('chess-status-badge').style.color = 'var(--cyan)';
-      drawChessBoardDOM();
+    function restartChess() {
+      chess.reset();
+      selectedSq = null;
+      chessFrom = null;
+      chessTo = null;
+      document.getElementById('chess-status-text').textContent = 'WHITE TO MOVE';
+      document.getElementById('chess-status-text').style.color = 'var(--cyan)';
+      drawChessDOM();
     }
 
-    function drawChessBoardDOM() {
-      const boardEl = document.getElementById('chess-board');
-      boardEl.innerHTML = '';
-      const matrix = chessInstance.board();
+    function drawChessDOM() {
+      const board = document.getElementById('dom-chess-board');
+      board.innerHTML = '';
+      const matrix = chess.board();
 
       for (let r = 0; r < 8; r++) {
         for (let c = 0; c < 8; c++) {
           const sqId = String.fromCharCode(97 + c) + (8 - r);
-          const sqDiv = document.createElement('div');
+          const sq = document.createElement('div');
           const isLight = (r + c) % 2 === 0;
-          sqDiv.className = `chess-sq ${isLight ? 'light' : 'dark'}`;
-          sqDiv.id = `sq-${sqId}`;
+          sq.className = `c-sq ${isLight ? 'light' : 'dark'}`;
+          sq.id = `csq-${sqId}`;
 
-          if (sqId === chessLastFrom) sqDiv.classList.add('last-from');
-          if (sqId === chessLastTo) sqDiv.classList.add('last-to');
+          if (sqId === chessFrom) sq.classList.add('last-from');
+          if (sqId === chessTo) sq.classList.add('last-to');
 
           const piece = matrix[r][c];
           if (piece) {
-            const pSpan = document.createElement('span');
-            pSpan.className = `chess-piece ${piece.color === 'w' ? 'white' : 'black'}`;
-            pSpan.textContent = piece.color === 'w' ? CHESS_UNICODE[piece.type.toUpperCase()] : CHESS_UNICODE[piece.type];
-            pSpan.id = `piece-${sqId}`;
-            sqDiv.appendChild(pSpan);
+            const key = piece.color + piece.type.toUpperCase();
+            const svgWrap = document.createElement('div');
+            svgWrap.className = 'piece-svg-wrap';
+            svgWrap.id = `pnode-${sqId}`;
+            svgWrap.innerHTML = CHESS_SVGS[key] || '';
+            sq.appendChild(svgWrap);
           }
 
-          sqDiv.onclick = () => onChessSquareTap(sqId);
-          boardEl.appendChild(sqDiv);
+          sq.onclick = () => onChessTap(sqId);
+          board.appendChild(sq);
         }
       }
     }
 
-    function onChessSquareTap(sqId) {
-      if (chessInstance.game_over()) return;
+    function onChessTap(sqId) {
+      if (chess.game_over()) return;
 
-      if (selectedSquare === sqId) {
-        clearChessHighlights();
-        selectedSquare = null;
+      if (selectedSq === sqId) {
+        clearChessMarks();
+        selectedSq = null;
         return;
       }
 
-      if (selectedSquare) {
-        makeChessMove(selectedSquare, sqId);
+      if (selectedSq) {
+        executeChessMove(selectedSq, sqId);
         return;
       }
 
-      const p = chessInstance.get(sqId);
+      const p = chess.get(sqId);
       if (p && p.color === 'w') {
-        clearChessHighlights();
-        selectedSquare = sqId;
-        document.getElementById(`sq-${sqId}`).classList.add('selected');
+        clearChessMarks();
+        selectedSq = sqId;
+        document.getElementById(`csq-${sqId}`).classList.add('selected');
 
-        const moves = chessInstance.moves({ square: sqId, verbose: true });
+        const moves = chess.moves({ square: sqId, verbose: true });
         moves.forEach(m => {
-          document.getElementById(`sq-${m.to}`).classList.add('highlight');
+          document.getElementById(`csq-${m.to}`).classList.add('legal-target');
         });
       }
     }
 
-    function makeChessMove(from, to) {
-      const move = chessInstance.move({ from, to, promotion: 'q' });
+    function executeChessMove(from, to) {
+      const move = chess.move({ from, to, promotion: 'q' });
       if (!move) {
-        clearChessHighlights();
-        selectedSquare = null;
+        clearChessMarks();
+        selectedSq = null;
         return;
       }
 
-      // Smooth slide transition
-      const fNode = document.getElementById(`sq-${from}`);
-      const tNode = document.getElementById(`sq-${to}`);
-      const piece = document.getElementById(`piece-${from}`);
+      const fEl = document.getElementById(`csq-${from}`);
+      const tEl = document.getElementById(`csq-${to}`);
+      const piece = document.getElementById(`pnode-${from}`);
 
-      if (fNode && tNode && piece) {
-        const fr = fNode.getBoundingClientRect();
-        const tr = tNode.getBoundingClientRect();
+      if (fEl && tEl && piece) {
+        const fr = fEl.getBoundingClientRect();
+        const tr = tEl.getBoundingClientRect();
         piece.style.transform = `translate(${tr.left - fr.left}px, ${tr.top - fr.top}px)`;
       }
 
-      playMoveClickSound();
-      chessLastFrom = from;
-      chessLastTo = to;
-      clearChessHighlights();
-      selectedSquare = null;
+      soundMoveClick();
+      chessFrom = from;
+      chessTo = to;
+      clearChessMarks();
+      selectedSq = null;
 
       setTimeout(() => {
-        drawChessBoardDOM();
+        drawChessDOM();
 
-        if (chessInstance.in_checkmate()) {
-          document.getElementById('chess-status-badge').textContent = '👑 CHECKMATE! VICTORY (+50 PTS)';
-          document.getElementById('chess-status-badge').style.color = 'var(--gold)';
-          awardPoints(50, 'chess', true);
+        if (chess.in_checkmate()) {
+          document.getElementById('chess-status-text').textContent = 'CHECKMATE - WHITE VICTORY (+50 PTS)';
+          document.getElementById('chess-status-text').style.color = 'var(--gold)';
+          grantScore(50, 'chess', true);
           return;
         }
 
-        document.getElementById('chess-status-badge').textContent = 'AI THINKING... (⚫)';
-        setTimeout(executeChessAIMove, 300);
+        document.getElementById('chess-status-text').textContent = 'AI THINKING (BLACK)...';
+        setTimeout(executeAIMove, 280);
       }, 230);
     }
 
-    function clearChessHighlights() {
-      document.querySelectorAll('.chess-sq').forEach(el => {
-        el.classList.remove('selected', 'highlight');
+    function clearChessMarks() {
+      document.querySelectorAll('.c-sq').forEach(el => {
+        el.classList.remove('selected', 'legal-target');
       });
     }
 
-    function executeChessAIMove() {
-      if (chessInstance.game_over()) return;
+    function executeAIMove() {
+      if (chess.game_over()) return;
 
-      const moves = chessInstance.moves({ verbose: true });
+      const moves = chess.moves({ verbose: true });
       if (!moves.length) return;
 
-      const scores = { p: 1, n: 3, b: 3, r: 5, q: 9, k: 0 };
+      const pieceValues = { p: 1, n: 3, b: 3, r: 5, q: 9, k: 0 };
       let bestMove = moves[0];
       let bestVal = -999;
 
       for (let m of moves) {
-        let v = m.captured ? scores[m.captured] * 10 : 0;
+        let v = m.captured ? pieceValues[m.captured] * 10 : 0;
         if (m.san.includes('+')) v += 4;
         if (v > bestVal) {
           bestVal = v;
@@ -1763,108 +1643,108 @@
         }
       }
 
-      const fNode = document.getElementById(`sq-${bestMove.from}`);
-      const tNode = document.getElementById(`sq-${bestMove.to}`);
-      const piece = document.getElementById(`piece-${bestMove.from}`);
+      const fEl = document.getElementById(`csq-${bestMove.from}`);
+      const tEl = document.getElementById(`csq-${bestMove.to}`);
+      const piece = document.getElementById(`pnode-${bestMove.from}`);
 
-      if (fNode && tNode && piece) {
-        const fr = fNode.getBoundingClientRect();
-        const tr = tNode.getBoundingClientRect();
+      if (fEl && tEl && piece) {
+        const fr = fEl.getBoundingClientRect();
+        const tr = tEl.getBoundingClientRect();
         piece.style.transform = `translate(${tr.left - fr.left}px, ${tr.top - fr.top}px)`;
       }
 
-      chessInstance.move(bestMove);
-      chessLastFrom = bestMove.from;
-      chessLastTo = bestMove.to;
-      playMoveClickSound();
+      chess.move(bestMove);
+      chessFrom = bestMove.from;
+      chessTo = bestMove.to;
+      soundMoveClick();
 
       setTimeout(() => {
-        drawChessBoardDOM();
+        drawChessDOM();
 
-        if (chessInstance.in_checkmate()) {
-          document.getElementById('chess-status-badge').textContent = '🤖 AADARSH-AI DELIVERED CHECKMATE!';
-          document.getElementById('chess-status-badge').style.color = 'var(--crimson)';
+        if (chess.in_checkmate()) {
+          document.getElementById('chess-status-text').textContent = 'CHECKMATE BY AADARSH-AI';
+          document.getElementById('chess-status-text').style.color = 'var(--crimson)';
           return;
         }
 
-        if (chessInstance.in_check()) {
-          document.getElementById('chess-status-badge').textContent = '⚠️ CHECK! WHITE KING UNDER FIRE';
-          document.getElementById('chess-status-badge').style.color = 'var(--gold)';
+        if (chess.in_check()) {
+          document.getElementById('chess-status-text').textContent = 'CHECK - WHITE KING UNDER ATTACK';
+          document.getElementById('chess-status-text').style.color = 'var(--gold)';
         } else {
-          document.getElementById('chess-status-badge').textContent = 'WHITE TO MOVE';
+          document.getElementById('chess-status-text').textContent = 'WHITE TO MOVE';
         }
       }, 230);
     }
 
-    /* ==========================================================================
-       GAME 2: TIC-TAC-TOE ENGINE
-       ========================================================================== */
+    /* =========================================================================
+       GAME 2: TIC-TAC-TOE (MINIMAX AI, NO EMOJIS)
+       ========================================================================= */
     let tttBoard = Array(9).fill('');
-    let tttPlayerTurn = true;
+    let tttUserActive = true;
 
-    function initTTTGame() {
-      const grid = document.getElementById('ttt-matrix');
+    function initTTT() {
+      const grid = document.getElementById('dom-ttt-grid');
       grid.innerHTML = '';
       for (let i = 0; i < 9; i++) {
-        const cell = document.createElement('div');
-        cell.className = 'ttt-cell';
-        cell.onclick = () => onTTTCellTap(i);
-        grid.appendChild(cell);
+        const box = document.createElement('div');
+        box.className = 'ttt-box';
+        box.onclick = () => onTTTClick(i);
+        grid.appendChild(box);
       }
-      resetTTTGame();
+      restartTTT();
     }
 
-    function resetTTTGame() {
+    function restartTTT() {
       tttBoard = Array(9).fill('');
-      tttPlayerTurn = true;
-      document.getElementById('ttt-status-badge').textContent = 'YOUR TURN (❌)';
-      document.getElementById('ttt-status-badge').style.color = 'var(--crimson)';
-      document.querySelectorAll('.ttt-cell').forEach(c => {
-        c.textContent = '';
-        c.className = 'ttt-cell';
+      tttUserActive = true;
+      document.getElementById('ttt-status-text').textContent = 'YOUR TURN (X)';
+      document.getElementById('ttt-status-text').style.color = 'var(--crimson)';
+      document.querySelectorAll('.ttt-box').forEach(b => {
+        b.textContent = '';
+        b.className = 'ttt-box';
       });
     }
 
-    function onTTTCellTap(idx) {
-      if (!tttPlayerTurn || tttBoard[idx] !== '') return;
+    function onTTTClick(idx) {
+      if (!tttUserActive || tttBoard[idx] !== '') return;
 
       tttBoard[idx] = 'X';
-      const cell = document.querySelectorAll('.ttt-cell')[idx];
-      cell.textContent = '❌';
-      cell.classList.add('x');
-      playMoveClickSound();
+      const box = document.querySelectorAll('.ttt-box')[idx];
+      box.textContent = 'X';
+      box.classList.add('mark-x');
+      soundMoveClick();
 
-      if (checkTTTWinner('X')) {
-        tttPlayerTurn = false;
-        document.getElementById('ttt-status-badge').textContent = '🎉 VICTORY! (+20 PTS)';
-        document.getElementById('ttt-status-badge').style.color = 'var(--gold)';
-        awardPoints(20, 'ttt', true);
+      if (evaluateTTTWin('X')) {
+        tttUserActive = false;
+        document.getElementById('ttt-status-text').textContent = 'VICTORY (+20 PTS)';
+        document.getElementById('ttt-status-text').style.color = 'var(--gold)';
+        grantScore(20, 'ttt', true);
         return;
       }
 
       if (tttBoard.every(c => c !== '')) {
-        tttPlayerTurn = false;
-        document.getElementById('ttt-status-badge').textContent = '🤝 STALEMATE DRAW!';
-        document.getElementById('ttt-status-badge').style.color = 'var(--text-muted)';
+        tttUserActive = false;
+        document.getElementById('ttt-status-text').textContent = 'STALEMATE DRAW';
+        document.getElementById('ttt-status-text').style.color = 'var(--text-secondary)';
         return;
       }
 
-      tttPlayerTurn = false;
-      document.getElementById('ttt-status-badge').textContent = 'AI CALCULATING (⭕)...';
-      setTimeout(executeTTTAIMove, 280);
+      tttUserActive = false;
+      document.getElementById('ttt-status-text').textContent = 'AI CALCULATING (O)...';
+      setTimeout(executeTTTAI, 260);
     }
 
-    function executeTTTAIMove() {
+    function executeTTTAI() {
       let bestMove = -1;
-      let bestScore = -999;
+      let bestVal = -999;
 
       for (let i = 0; i < 9; i++) {
         if (tttBoard[i] === '') {
           tttBoard[i] = 'O';
-          let score = minimaxTTT(0, false);
+          let val = minimax(0, false);
           tttBoard[i] = '';
-          if (score > bestScore) {
-            bestScore = score;
+          if (val > bestVal) {
+            bestVal = val;
             bestMove = i;
           }
         }
@@ -1872,31 +1752,31 @@
 
       if (bestMove !== -1) {
         tttBoard[bestMove] = 'O';
-        const cell = document.querySelectorAll('.ttt-cell')[bestMove];
-        cell.textContent = '⭕';
-        cell.classList.add('o');
-        playMoveClickSound();
+        const box = document.querySelectorAll('.ttt-box')[bestMove];
+        box.textContent = 'O';
+        box.classList.add('mark-o');
+        soundMoveClick();
 
-        if (checkTTTWinner('O')) {
-          document.getElementById('ttt-status-badge').textContent = '🤖 AI CLAIMS THE MATCH!';
-          document.getElementById('ttt-status-badge').style.color = 'var(--cyan)';
+        if (evaluateTTTWin('O')) {
+          document.getElementById('ttt-status-text').textContent = 'AI CLAIMS MATCH';
+          document.getElementById('ttt-status-text').style.color = 'var(--cyan)';
           return;
         }
 
         if (tttBoard.every(c => c !== '')) {
-          document.getElementById('ttt-status-badge').textContent = '🤝 STALEMATE DRAW!';
-          document.getElementById('ttt-status-badge').style.color = 'var(--text-muted)';
+          document.getElementById('ttt-status-text').textContent = 'STALEMATE DRAW';
+          document.getElementById('ttt-status-text').style.color = 'var(--text-secondary)';
           return;
         }
       }
 
-      tttPlayerTurn = true;
-      document.getElementById('ttt-status-badge').textContent = 'YOUR TURN (❌)';
+      tttUserActive = true;
+      document.getElementById('ttt-status-text').textContent = 'YOUR TURN (X)';
     }
 
-    function minimaxTTT(depth, isMax) {
-      if (checkTTTWinner('O')) return 10 - depth;
-      if (checkTTTWinner('X')) return depth - 10;
+    function minimax(depth, isMax) {
+      if (evaluateTTTWin('O')) return 10 - depth;
+      if (evaluateTTTWin('X')) return depth - 10;
       if (tttBoard.every(c => c !== '')) return 0;
 
       if (isMax) {
@@ -1904,7 +1784,7 @@
         for (let i = 0; i < 9; i++) {
           if (tttBoard[i] === '') {
             tttBoard[i] = 'O';
-            best = Math.max(best, minimaxTTT(depth + 1, false));
+            best = Math.max(best, minimax(depth + 1, false));
             tttBoard[i] = '';
           }
         }
@@ -1914,7 +1794,7 @@
         for (let i = 0; i < 9; i++) {
           if (tttBoard[i] === '') {
             tttBoard[i] = 'X';
-            best = Math.min(best, minimaxTTT(depth + 1, true));
+            best = Math.min(best, minimax(depth + 1, true));
             tttBoard[i] = '';
           }
         }
@@ -1922,37 +1802,37 @@
       }
     }
 
-    function checkTTTWinner(sym) {
-      const wins = [
+    function evaluateTTTWin(sym) {
+      const lines = [
         [0,1,2],[3,4,5],[6,7,8],
         [0,3,6],[1,4,7],[2,5,8],
         [0,4,8],[2,4,6]
       ];
-      return wins.some(([a, b, c]) => tttBoard[a] === sym && tttBoard[b] === sym && tttBoard[c] === sym);
+      return lines.some(([a, b, c]) => tttBoard[a] === sym && tttBoard[b] === sym && tttBoard[c] === sym);
     }
 
-    /* ==========================================================================
-       GAME 3: SUPER CRICKET STADIUM ENGINE
-       ========================================================================== */
-    const cricketCanvas = document.getElementById('cricket-arena-canvas');
+    /* =========================================================================
+       GAME 3: SUPER CRICKET (BATTING & BOWLING MODES, EXTENDED CREASE, NO EMOJIS)
+       ========================================================================= */
+    const cricketCanvas = document.getElementById('canvas-cricket');
     const cCtx = cricketCanvas.getContext('2d');
 
     let cricket = {
+      mode: 'batting', // 'batting' or 'bowling'
       runs: 0,
       wickets: 0,
       target: 24,
+      targetPreset: 'random',
       ballsLeft: 6,
       currentBallNumber: 0,
       
-      // Strict Finite State Machine:
-      // 'IDLE', 'COUNTDOWN', 'BOWLER_RUNUP', 'IN_FLIGHT', 'STROKE_EXECUTION', 'DELIVERY_FINISHED'
-      state: 'COUNTDOWN',
-      countdownTimer: 60, // Frames
-      overCompleted: false,
+      state: 'COUNTDOWN', // 'COUNTDOWN', 'BOWLER_RUNUP', 'IN_FLIGHT', 'STROKE_EXECUTION', 'DELIVERY_FINISHED', 'MATCH_CONCLUDED'
+      countdownTimer: 50,
+      deliveryStartMs: 0,
 
-      // Bowler Entity (Runs in from top of pitch)
+      // Bowler
       bowler: {
-        x: 350,
+        x: 360,
         y: 85,
         startY: 85,
         strideY: 145,
@@ -1961,9 +1841,9 @@
         running: false
       },
 
-      // Ball Entity
+      // Ball
       ball: {
-        x: 350,
+        x: 360,
         y: 148,
         z: 0,
         vx: 0,
@@ -1974,17 +1854,17 @@
         pitched: false
       },
 
-      // Batter Entity (Professional Athlete Stance & Swing Arc)
+      // Batsman
       batter: {
-        x: 350,
+        x: 360,
         y: 352,
         stancePhase: 0,
-        strokeType: 'READY', // 'DRIVE', 'STRAIGHT', 'PULL', 'DEFEND'
-        swingProgress: 0,   // 0 to 1 during swing
+        strokeType: 'READY',
+        swingProgress: 0,
         swingActive: false
       },
 
-      // Wickets & Stumps
+      // Stumps
       stumps: {
         broken: false,
         bailOffset: 0,
@@ -1992,48 +1872,85 @@
       },
 
       crowdWavePhase: 0,
-      crowdRoar: false,
-      flashLamps: 0
+      crowdRoar: false
     };
 
     function resizeCricketCanvas() {
-      cricketCanvas.width = 700;
+      cricketCanvas.width = 720;
       cricketCanvas.height = 420;
     }
 
-    function resetCricketMatch() {
+    function switchCricketMode(mode) {
+      cricket.mode = mode;
+      document.getElementById('btn-mode-batting').className = mode === 'batting' ? 'mode-btn active' : 'mode-btn';
+      document.getElementById('btn-mode-bowling').className = mode === 'bowling' ? 'mode-btn active crimson' : 'mode-btn crimson';
+
+      document.getElementById('deck-batting-controls').style.display = mode === 'batting' ? 'grid' : 'none';
+      document.getElementById('deck-bowling-controls').style.display = mode === 'bowling' ? 'grid' : 'none';
+
+      startNewCricketMatch();
+    }
+
+    function setTargetPreset(val) {
+      cricket.targetPreset = val;
+      startNewCricketMatch();
+    }
+
+    function computeTarget() {
+      if (typeof cricket.targetPreset === 'number') {
+        return cricket.targetPreset;
+      }
+      // Random target between 18 and 34
+      return Math.floor(Math.random() * (34 - 18 + 1)) + 18;
+    }
+
+    function startNewCricketMatch() {
+      cricket.target = computeTarget();
       cricket.runs = 0;
       cricket.wickets = 0;
       cricket.ballsLeft = 6;
       cricket.currentBallNumber = 0;
-      cricket.overCompleted = false;
       cricket.stumps.broken = false;
       cricket.stumps.bailOffset = 0;
       cricket.ball.isLive = false;
       cricket.crowdRoar = false;
 
-      document.getElementById('cricket-score-txt').textContent = '0 / 0';
-      document.getElementById('cricket-over-info').textContent = 'BALLS REMAINING: 6';
-      document.getElementById('timing-feedback-txt').textContent = 'READY FOR OVER';
+      updateScoreboardDisplays();
 
       for (let i = 1; i <= 6; i++) {
-        const dot = document.getElementById(`b-dot-${i}`);
+        const dot = document.getElementById(`c-dot-${i}`);
         dot.textContent = '-';
-        dot.className = 'ball-dot';
+        dot.className = 'dot-circle';
       }
 
-      hideStadiumBanner();
-      scheduleNextDelivery(40, 'BALL 1 INCOMING IN 1s...');
+      if (cricket.mode === 'batting') {
+        queueNextDelivery(40, `MATCH READY - TARGET: ${cricket.target} RUNS`);
+      } else {
+        cricket.state = 'AWAITING_USER_BOWL';
+        setTopAlertBanner(`SELECT YOUR DELIVERY TO BOWL (DEFEND ${cricket.target} RUNS)`, '');
+      }
     }
 
-    function scheduleNextDelivery(delayFrames, message) {
+    function updateScoreboardDisplays() {
+      document.getElementById('cricket-score-digits').textContent = `${cricket.runs} / ${cricket.wickets}`;
+      if (cricket.mode === 'batting') {
+        const need = Math.max(0, cricket.target - cricket.runs);
+        document.getElementById('cricket-score-caption').textContent = `TARGET: ${cricket.target} RUNS (NEED ${need} OFF ${cricket.ballsLeft} BALLS)`;
+      } else {
+        const need = Math.max(0, cricket.target - cricket.runs);
+        document.getElementById('cricket-score-caption').textContent = `DEFENDING ${cricket.target} RUNS (AI NEEDS ${need} OFF ${cricket.ballsLeft} BALLS)`;
+      }
+      document.getElementById('cricket-balls-caption').textContent = `BALLS REMAINING: ${cricket.ballsLeft}`;
+    }
+
+    function queueNextDelivery(delayFrames, message) {
       if (cricket.ballsLeft <= 0 || cricket.wickets >= 2) {
-        concludeInnings();
+        endCricketInnings();
         return;
       }
 
       cricket.state = 'COUNTDOWN';
-      cricket.countdownTimer = delayFrames || 55;
+      cricket.countdownTimer = delayFrames || 50;
       cricket.stumps.broken = false;
       cricket.stumps.bailOffset = 0;
       cricket.batter.strokeType = 'READY';
@@ -2041,55 +1958,51 @@
       cricket.ball.isLive = false;
       cricket.crowdRoar = false;
 
-      const overlay = document.getElementById('cricket-auto-alert');
-      overlay.textContent = message || `BALL ${cricket.currentBallNumber + 1} OF 6 INCOMING...`;
-      overlay.style.display = 'block';
+      setTopAlertBanner(message || `BALL ${cricket.currentBallNumber + 1} OF 6 INCOMING...`, '');
     }
 
-    function startBowlerDeliveryRunup() {
+    function triggerBowlerSprint() {
       if (cricket.ballsLeft <= 0 || cricket.wickets >= 2) return;
 
-      hideStadiumBanner();
       cricket.state = 'BOWLER_RUNUP';
       cricket.bowler.y = cricket.bowler.startY;
       cricket.bowler.running = true;
       cricket.bowler.armAngle = 0;
-
-      const overlay = document.getElementById('cricket-auto-alert');
-      overlay.textContent = `BOWLER SPRINTING IN TO BOWL (BALL ${cricket.currentBallNumber + 1})...`;
-      document.getElementById('timing-feedback-txt').textContent = 'WATCH THE RELEASE!';
+      setTopAlertBanner(`BOWLER SPRINTING IN TO DELIVER (BALL ${cricket.currentBallNumber + 1})...`, '');
     }
 
-    function releaseBallFromBowlerArm() {
+    function deliverBallFromCrease(customSpeed, customSwing) {
       cricket.bowler.running = false;
       cricket.state = 'IN_FLIGHT';
       cricket.deliveryStartMs = Date.now();
 
-      // Ball Dynamics
-      const speeds = [4.8, 5.3, 5.8, 6.2];
-      const vy = speeds[Math.floor(Math.random() * speeds.length)];
-      const swingX = (Math.random() - 0.5) * 1.8;
+      const speed = customSpeed || (4.8 + Math.random() * 1.4);
+      const swing = customSwing !== undefined ? customSwing : ((Math.random() - 0.5) * 1.8);
 
       cricket.ball = {
-        x: 350,
+        x: 360,
         y: 148,
         z: 16,
-        vx: swingX,
-        vy: vy,
+        vx: swing,
+        vy: speed,
         vz: -0.35,
         radius: 6,
         isLive: true,
         pitched: false
       };
 
-      const overlay = document.getElementById('cricket-auto-alert');
-      overlay.textContent = 'BALL DELIVERED! TIME YOUR SHOT!';
-      document.getElementById('timing-feedback-txt').textContent = 'TIME YOUR SHOT!';
+      if (cricket.mode === 'batting') {
+        setTopAlertBanner('BALL DELIVERED - TIME YOUR SHOT', '');
+      } else {
+        setTopAlertBanner('DELIVERY IN FLIGHT - AI BATSMAN REACTING', '');
+        // Trigger AI batsman stroke
+        setTimeout(executeAIBatsmanShot, 420);
+      }
     }
 
-    // Shot triggers
-    function executeBatStroke(type) {
-      if (cricket.state !== 'IN_FLIGHT') return;
+    // User Batting Shot
+    function performBatStroke(type) {
+      if (cricket.mode !== 'batting' || cricket.state !== 'IN_FLIGHT') return;
 
       cricket.batter.strokeType = type.toUpperCase();
       cricket.batter.swingProgress = 0;
@@ -2098,128 +2011,218 @@
       const b = cricket.ball;
       const distFromCrease = Math.abs(b.y - 345);
 
-      // Sweet Spot Window: 325 to 358
       if (distFromCrease < 14) {
-        // SIX / MAXIMUM
-        playWillowCrackSound();
-        playCrowdCheerSound(true);
+        // Six
+        soundWillowHit();
+        soundCrowdRoar(true);
         cricket.crowdRoar = true;
-        cricket.flashLamps = 40;
         b.vy = -8.2;
         b.vx = (type === 'drive' ? -5.2 : (type === 'pull' ? 5.2 : 0));
         b.z = 40;
-        document.getElementById('timing-feedback-txt').textContent = '🚀 PERFECT TIMING! 6 RUNS!';
-        finishDeliveryOutcome(6, 'six', '🚀 MAXIMUM! HUGE SIX! 🚀');
+        resolveDelivery(6, 'hit-6', 'SIX - MAXIMUM OVER THE ROPES');
       } else if (distFromCrease < 28) {
-        // FOUR / BOUNDARY
-        playWillowCrackSound();
-        playCrowdCheerSound(false);
+        // Four
+        soundWillowHit();
+        soundCrowdRoar(false);
         cricket.crowdRoar = true;
         b.vy = -6.5;
         b.vx = (type === 'drive' ? -6.0 : (type === 'pull' ? 6.0 : 1.2));
         b.z = 10;
-        document.getElementById('timing-feedback-txt').textContent = '⚡ GREAT TIMING! 4 RUNS!';
-        finishDeliveryOutcome(4, 'four', '⚡ CRACKING 4 RUNS! ⚡');
+        resolveDelivery(4, 'hit-4', 'FOUR - BOUNDARY THROUGH THE GAP');
       } else if (distFromCrease < 45) {
-        // 1 or 2 Runs
-        playWillowCrackSound();
+        // 1 or 2 runs
+        soundWillowHit();
         const runs = type === 'defend' ? 1 : 2;
         b.vy = -3.8;
         b.vx = (Math.random() - 0.5) * 4;
-        document.getElementById('timing-feedback-txt').textContent = `⚡ SOLID CONTACT (${runs} RUNS)`;
-        finishDeliveryOutcome(runs, 'four', `⚡ GOOD SHOT! ${runs} RUNS`);
+        resolveDelivery(runs, 'hit-4', `TIMED FOR ${runs} RUNS`);
       } else if (distFromCrease < 70) {
-        // Edged and Caught Out
-        playWillowCrackSound();
-        playStumpCrashSound();
+        // Edged and caught
+        soundWillowHit();
+        soundStumpsHit();
         cricket.wickets += 1;
         b.vy = -2.2;
         b.vx = (Math.random() - 0.5) * 6;
-        document.getElementById('timing-feedback-txt').textContent = '🧤 EDGED & CAUGHT!';
-        finishDeliveryOutcome(0, 'wicket', '🧤 EDGED & CAUGHT OUT!');
-      } else {
-        // Missed early / late
-        document.getElementById('timing-feedback-txt').textContent = '⚠️ BEATEN BY THE PACE!';
+        resolveDelivery(0, 'wicket', 'CAUGHT BEHIND - OUT');
       }
     }
 
-    function finishDeliveryOutcome(runs, typeClass, message) {
+    // User Bowling Execution
+    function bowlUserDelivery(style) {
+      if (cricket.mode !== 'bowling' || cricket.state === 'BOWLER_RUNUP' || cricket.state === 'IN_FLIGHT') return;
+
+      cricket.selectedDeliveryStyle = style;
+      cricket.state = 'BOWLER_RUNUP';
+      cricket.bowler.y = cricket.bowler.startY;
+      cricket.bowler.running = true;
+      cricket.bowler.armAngle = 0;
+      setTopAlertBanner(`BOWLER RUNNING IN - DELIVERING ${style.toUpperCase()}...`, '');
+    }
+
+    function executeAIBatsmanShot() {
+      if (cricket.mode !== 'bowling' || cricket.state !== 'IN_FLIGHT') return;
+
+      const style = cricket.selectedDeliveryStyle || 'yorker';
+      const b = cricket.ball;
+
+      // Realistic AI batting outcome based on bowler delivery
+      if (style === 'yorker') {
+        // Fast yorker: high chance of bowled or dot defense!
+        const r = Math.random();
+        if (r < 0.45) {
+          // Clean Bowled!
+          cricket.stumps.broken = true;
+          soundStumpsHit();
+          cricket.wickets += 1;
+          resolveDelivery(0, 'wicket', 'CLEAN BOWLED - PERFECT YORKER');
+        } else if (r < 0.8) {
+          // Dug out for dot
+          soundWillowHit();
+          b.vy = -2;
+          resolveDelivery(0, 'dot', 'DUG OUT FOR A DOT BALL');
+        } else {
+          soundWillowHit();
+          b.vy = -3.5;
+          resolveDelivery(1, 'hit-4', 'SQUEEZED FOR 1 RUN');
+        }
+      } else if (style === 'outswinger') {
+        // Chance of edge to keeper
+        const r = Math.random();
+        if (r < 0.45) {
+          soundWillowHit();
+          soundStumpsHit();
+          cricket.wickets += 1;
+          resolveDelivery(0, 'wicket', 'EDGED AND CAUGHT BEHIND');
+        } else if (r < 0.75) {
+          resolveDelivery(0, 'dot', 'BEATEN OUTSIDE OFF STUMP - DOT');
+        } else {
+          soundWillowHit();
+          b.vy = -5;
+          resolveDelivery(4, 'hit-4', 'DRIVEN THROUGH OFF-SIDE FOR 4');
+        }
+      } else if (style === 'inswinger') {
+        const r = Math.random();
+        if (r < 0.45) {
+          cricket.stumps.broken = true;
+          soundStumpsHit();
+          cricket.wickets += 1;
+          resolveDelivery(0, 'wicket', 'SHARP INSWING - BOWLED');
+        } else if (r < 0.8) {
+          soundWillowHit();
+          resolveDelivery(0, 'dot', 'PADS STRUCK - DOT BALL');
+        } else {
+          soundWillowHit();
+          resolveDelivery(2, 'hit-4', 'GLANCED FOR 2 RUNS');
+        }
+      } else if (style === 'slower') {
+        const r = Math.random();
+        if (r < 0.4) {
+          soundWillowHit();
+          cricket.wickets += 1;
+          resolveDelivery(0, 'wicket', 'MISTIMED SLOWER BALL - CAUGHT');
+        } else if (r < 0.7) {
+          resolveDelivery(0, 'dot', 'DECEIVED BY CHANGE OF PACE - DOT');
+        } else {
+          soundWillowHit();
+          resolveDelivery(4, 'hit-4', 'PULLED OVER MID-WICKET FOR 4');
+        }
+      } else if (style === 'bouncer') {
+        const r = Math.random();
+        if (r < 0.35) {
+          soundWillowHit();
+          cricket.wickets += 1;
+          resolveDelivery(0, 'wicket', 'TOP EDGE HOOK - CAUGHT AT DEEP');
+        } else if (r < 0.65) {
+          resolveDelivery(0, 'dot', 'DUCKED UNDER BOUNCER - DOT');
+        } else {
+          soundWillowHit();
+          soundCrowdRoar(true);
+          resolveDelivery(6, 'hit-6', 'HOOKED FOR SIX');
+        }
+      }
+    }
+
+    function resolveDelivery(runs, dotClass, message) {
       cricket.state = 'DELIVERY_FINISHED';
       cricket.runs += runs;
       cricket.ballsLeft -= 1;
       cricket.currentBallNumber += 1;
 
-      // Update dot
-      const dot = document.getElementById(`b-dot-${cricket.currentBallNumber}`);
+      const dot = document.getElementById(`c-dot-${cricket.currentBallNumber}`);
       if (dot) {
-        dot.textContent = typeClass === 'wicket' ? 'W' : runs;
-        dot.className = `ball-dot ${typeClass}`;
+        dot.textContent = dotClass === 'wicket' ? 'W' : (runs === 0 ? '.' : runs);
+        dot.className = `dot-circle ${dotClass}`;
       }
 
-      document.getElementById('cricket-score-txt').textContent = `${cricket.runs} / ${cricket.wickets}`;
-      document.getElementById('cricket-over-info').textContent = `BALLS REMAINING: ${cricket.ballsLeft}`;
+      updateScoreboardDisplays();
+      setTopAlertBanner(message, dotClass);
 
-      showStadiumBanner(message, typeClass);
-
-      if (runs > 0) {
-        awardPoints(runs * 3, 'cricket', runs === 6);
+      if (cricket.mode === 'batting' && runs > 0) {
+        grantScore(runs * 3, 'cricket', runs === 6);
+      } else if (cricket.mode === 'bowling' && dotClass === 'wicket') {
+        grantScore(25, 'cricket', true);
       }
 
-      // Schedule next delivery with 1.4s breather
       setTimeout(() => {
         if (cricket.runs >= cricket.target) {
-          showStadiumBanner('🏆 VICTORY! TARGET CHASED!', 'six');
-          awardPoints(50, 'cricket', true);
-          document.getElementById('cricket-auto-alert').textContent = '🎉 TARGET CHASED! INNINGS WON!';
+          endCricketInnings();
         } else if (cricket.ballsLeft <= 0 || cricket.wickets >= 2) {
-          concludeInnings();
+          endCricketInnings();
         } else {
-          scheduleNextDelivery(50, `BALL ${cricket.currentBallNumber + 1} OF 6 INCOMING IN 1s...`);
+          if (cricket.mode === 'batting') {
+            queueNextDelivery(45, `BALL ${cricket.currentBallNumber + 1} OF 6 INCOMING IN 1s...`);
+          } else {
+            cricket.state = 'AWAITING_USER_BOWL';
+            setTopAlertBanner(`SELECT NEXT DELIVERY (BALL ${cricket.currentBallNumber + 1} OF 6)`, '');
+          }
         }
-      }, 1500);
+      }, 1400);
     }
 
-    function concludeInnings() {
-      cricket.overCompleted = true;
-      cricket.state = 'IDLE';
-      const won = cricket.runs >= cricket.target;
-      const msg = won ? '🏆 TARGET CHASED! VICTORY!' : `🏁 OVER COMPLETE! SCORE: ${cricket.runs}/${cricket.wickets}`;
-      showStadiumBanner(msg, won ? 'six' : 'four');
-      document.getElementById('cricket-auto-alert').textContent = `OVER COMPLETE: ${cricket.runs} RUNS. CLICK 'NEW OVER'`;
+    function endCricketInnings() {
+      cricket.state = 'MATCH_CONCLUDED';
+      let msg = '';
+      if (cricket.mode === 'batting') {
+        const won = cricket.runs >= cricket.target;
+        msg = won 
+          ? `MATCH CONCLUDED - TARGET CHASED IN ${6 - cricket.ballsLeft} BALLS (VICTORY)` 
+          : `MATCH CONCLUDED - FELL SHORT (SCORE: ${cricket.runs}/${cricket.wickets})`;
+        setTopAlertBanner(msg, won ? 'highlight-six' : 'highlight-wicket');
+        if (won) grantScore(40, 'cricket', true);
+      } else {
+        const defended = cricket.runs < cricket.target;
+        msg = defended 
+          ? `MATCH CONCLUDED - DEFENDED TOTAL (CHAMPION BOWLER VICTORY)` 
+          : `MATCH CONCLUDED - AI REACHED TARGET (${cricket.runs}/${cricket.wickets})`;
+        setTopAlertBanner(msg, defended ? 'highlight-six' : 'highlight-wicket');
+        if (defended) grantScore(50, 'cricket', true);
+      }
     }
 
-    function showStadiumBanner(text, cls) {
-      const b = document.getElementById('stadium-banner');
+    function setTopAlertBanner(text, highlightCls) {
+      const b = document.getElementById('cricket-top-banner');
       b.textContent = text;
-      b.className = `stadium-alert ${cls} show`;
+      b.className = 'broadcast-headline-alert ' + highlightCls;
     }
 
-    function hideStadiumBanner() {
-      const b = document.getElementById('stadium-banner');
-      b.className = 'stadium-alert';
-    }
-
-    // Interactive canvas click for batting shot
-    cricketCanvas.addEventListener('mousedown', (e) => {
-      if (cricket.state !== 'IN_FLIGHT') return;
-      const rect = cricketCanvas.getBoundingClientRect();
-      const clickX = e.clientX - rect.left;
-      const ratio = clickX / rect.width;
-      if (ratio < 0.35) executeBatStroke('drive');
-      else if (ratio > 0.65) executeBatStroke('pull');
-      else executeBatStroke('straight');
-    });
-
-    // Keyboard support
+    // Keyboard support for Cricket
     window.addEventListener('keydown', (e) => {
       if (!document.getElementById('pane-cricket').classList.contains('active')) return;
-      if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') executeBatStroke('drive');
-      else if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') executeBatStroke('straight');
-      else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') executeBatStroke('pull');
-      else if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') executeBatStroke('defend');
+      if (cricket.mode === 'batting') {
+        if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') performBatStroke('drive');
+        else if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') performBatStroke('straight');
+        else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') performBatStroke('pull');
+        else if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') performBatStroke('defend');
+      } else {
+        if (e.key === '1') bowlUserDelivery('yorker');
+        else if (e.key === '2') bowlUserDelivery('outswinger');
+        else if (e.key === '3') bowlUserDelivery('inswinger');
+        else if (e.key === '4') bowlUserDelivery('slower');
+        else if (e.key === '5') bowlUserDelivery('bouncer');
+      }
     });
 
-    // 60FPS STADIUM & REALISTIC PHYSICS CANVAS RENDERER
+    // 60FPS STADIUM CANVAS RENDER LOOP
     let cricketLoopActive = false;
     function startCricketLoop() {
       if (!cricketLoopActive) {
@@ -2231,141 +2234,112 @@
     function cricketLoopTick() {
       cCtx.clearRect(0, 0, cricketCanvas.width, cricketCanvas.height);
 
-      // 1. NIGHT SKY & FLOODLIGHT ATMOSPHERE
+      // 1. NIGHT SKY
       const skyGrad = cCtx.createLinearGradient(0, 0, 0, 140);
-      skyGrad.addColorStop(0, '#05070e');
-      skyGrad.addColorStop(1, '#0c1322');
+      skyGrad.addColorStop(0, '#04060d');
+      skyGrad.addColorStop(1, '#0b1122');
       cCtx.fillStyle = skyGrad;
       cCtx.fillRect(0, 0, cricketCanvas.width, 140);
 
-      // 2. REALISTIC STADIUM GRANDSTAND ARCHITECTURE & PACKED BACKGROUND CROWD
+      // 2. REALISTIC STADIUM GRANDSTANDS & CHEERING CROWD
       cricket.crowdWavePhase += 0.08;
       const cheerBounce = cricket.crowdRoar ? Math.sin(cricket.crowdWavePhase * 3.5) * 6 : 0;
 
-      // Upper Stand Canopy Structure
-      cCtx.fillStyle = '#0b1120';
+      // Upper Stand Canopy
+      cCtx.fillStyle = '#0f172a';
       cCtx.fillRect(0, 30, cricketCanvas.width, 36);
 
-      // Upper Tier Crowd
-      const spectatorColors = ['#ff2e5b', '#00f5d4', '#ffd166', '#ffffff', '#38bdf8', '#8b5cf6', '#cbd5e1'];
+      // Upper Stand Crowd
+      const fanColors = ['#ff2e5b', '#00f5d4', '#ffd166', '#ffffff', '#38bdf8', '#8b5cf6', '#cbd5e1'];
       for (let x = 10; x < cricketCanvas.width; x += 11) {
-        const bob = Math.sin(cricket.crowdWavePhase + x * 0.3) * (cricket.crowdRoar ? 4 : 1.2) + cheerBounce;
-        cCtx.fillStyle = spectatorColors[(x * 7) % spectatorColors.length];
-        cCtx.beginPath(); cCtx.arc(x, 38 + bob, 3.2, 0, Math.PI * 2); cCtx.fill();
-        cCtx.fillRect(x - 2.5, 41 + bob, 5, 8);
+        const b = Math.sin(cricket.crowdWavePhase + x * 0.3) * (cricket.crowdRoar ? 4 : 1.2) + cheerBounce;
+        cCtx.fillStyle = fanColors[(x * 7) % fanColors.length];
+        cCtx.beginPath(); cCtx.arc(x, 38 + b, 3.2, 0, Math.PI * 2); cCtx.fill();
+        cCtx.fillRect(x - 2.5, 41 + b, 5, 8);
       }
 
       // Lower Tier Grandstand
-      cCtx.fillStyle = '#172033';
+      cCtx.fillStyle = '#1e293b';
       cCtx.fillRect(0, 66, cricketCanvas.width, 46);
 
-      // Lower Tier Crowd with Waving Banners on 4s/6s
+      // Lower Tier Crowd
       for (let x = 8; x < cricketCanvas.width; x += 13) {
-        const bob = Math.sin(cricket.crowdWavePhase + x * 0.5) * (cricket.crowdRoar ? 6 : 1.6) + cheerBounce;
-        cCtx.fillStyle = spectatorColors[(x * 3) % spectatorColors.length];
-        cCtx.beginPath(); cCtx.arc(x, 76 + bob, 4, 0, Math.PI * 2); cCtx.fill();
-        cCtx.fillRect(x - 3.5, 80 + bob, 7, 10);
-
-        if (cricket.crowdRoar) {
-          // Cheering Arms
-          cCtx.strokeStyle = '#ffffff';
-          cCtx.lineWidth = 1.5;
-          cCtx.beginPath();
-          cCtx.moveTo(x - 3, 82 + bob); cCtx.lineTo(x - 8, 70 + bob);
-          cCtx.moveTo(x + 3, 82 + bob); cCtx.lineTo(x + 8, 70 + bob);
-          cCtx.stroke();
-        }
+        const b = Math.sin(cricket.crowdWavePhase + x * 0.5) * (cricket.crowdRoar ? 6 : 1.6) + cheerBounce;
+        cCtx.fillStyle = fanColors[(x * 3) % fanColors.length];
+        cCtx.beginPath(); cCtx.arc(x, 76 + b, 4, 0, Math.PI * 2); cCtx.fill();
+        cCtx.fillRect(x - 3.5, 80 + b, 7, 10);
       }
 
-      // Digital Jumbotron Stadium Scoreboard in Stand
-      cCtx.fillStyle = '#070a12';
-      cCtx.fillRect(280, 20, 140, 36);
-      cCtx.strokeStyle = '#ff2e5b';
-      cCtx.lineWidth = 1.5;
-      cCtx.strokeRect(280, 20, 140, 36);
-      cCtx.fillStyle = '#ffd166';
-      cCtx.font = '700 11px Fira Code';
-      cCtx.textAlign = 'center';
-      cCtx.fillText(`AADARSH ARENA`, 350, 34);
-      cCtx.fillStyle = '#00f5d4';
-      cCtx.font = '700 12px Space Grotesk';
-      cCtx.fillText(`${cricket.runs}/${cricket.wickets} • OVERS: ${(6 - cricket.ballsLeft)}/6`, 350, 48);
+      // Floodlight Towers
+      renderFloodlightTower(50, 32);
+      renderFloodlightTower(670, 32);
 
-      // Giant Floodlight Towers
-      drawStadiumFloodlight(50, 32);
-      drawStadiumFloodlight(650, 32);
-
-      // LED Perimeter Boundary Boards
-      cCtx.fillStyle = '#ff2e5b';
+      // Clean boundary line (NO cyber premier league text!)
+      cCtx.fillStyle = '#334155';
       cCtx.fillRect(0, 112, cricketCanvas.width, 10);
-      cCtx.fillStyle = '#ffffff';
-      cCtx.font = '800 8px Space Grotesk';
-      for (let x = 15; x < cricketCanvas.width; x += 140) {
-        cCtx.fillText(`★ CYBER CRICKET LEAGUE ★`, x + 60, 120);
-      }
 
-      // 3. LUSH CRICKET OUTFIELD TURF
+      // 3. GREEN TURF OUTFIELD
       const turfGrad = cCtx.createLinearGradient(0, 122, 0, cricketCanvas.height);
       turfGrad.addColorStop(0, '#15803d');
       turfGrad.addColorStop(1, '#0f5127');
       cCtx.fillStyle = turfGrad;
       cCtx.fillRect(0, 122, cricketCanvas.width, cricketCanvas.height - 122);
 
-      // Outfield Mower Rings
-      cCtx.strokeStyle = 'rgba(255, 255, 255, 0.035)';
-      cCtx.lineWidth = 26;
-      cCtx.beginPath();
-      cCtx.ellipse(350, 320, 300, 150, 0, 0, Math.PI * 2);
-      cCtx.stroke();
-
-      // 4. PERSPECTIVE 22-YARD TURF WICKET
-      cCtx.fillStyle = '#c8a463'; // English clay pitch
+      // 4. PERSPECTIVE CRICKET PITCH (22-YARD STRIP)
+      cCtx.fillStyle = '#c8a463';
       cCtx.beginPath();
       cCtx.moveTo(290, 130);
-      cCtx.lineTo(410, 130);
-      cCtx.lineTo(465, 395);
+      cCtx.lineTo(430, 130);
+      cCtx.lineTo(485, 395);
       cCtx.lineTo(235, 395);
       cCtx.closePath();
       cCtx.fill();
 
-      // Creases
+      // 5. EXTENDED & AUTHENTIC CREASE MARKINGS
       cCtx.strokeStyle = '#ffffff';
-      cCtx.lineWidth = 2;
-      // Bowling Crease
-      cCtx.beginPath(); cCtx.moveTo(295, 146); cCtx.lineTo(405, 146); cCtx.stroke();
-      // Batting Popping Crease
-      cCtx.beginPath(); cCtx.moveTo(246, 345); cCtx.lineTo(454, 345); cCtx.stroke();
+      cCtx.lineWidth = 2.5;
 
-      // 5. STUMPS & BAILS (BATTING END)
+      // Extended Bowling Crease (Bowler end)
+      cCtx.beginPath(); cCtx.moveTo(250, 146); cCtx.lineTo(470, 146); cCtx.stroke();
+      // Return creases
+      cCtx.beginPath(); cCtx.moveTo(265, 146); cCtx.lineTo(265, 126); cCtx.stroke();
+      cCtx.beginPath(); cCtx.moveTo(455, 146); cCtx.lineTo(455, 126); cCtx.stroke();
+
+      // Extended Batting Popping Crease (Batsman end)
+      cCtx.beginPath(); cCtx.moveTo(180, 345); cCtx.lineTo(540, 345); cCtx.stroke();
+      // Return creases
+      cCtx.beginPath(); cCtx.moveTo(205, 345); cCtx.lineTo(205, 385); cCtx.stroke();
+      cCtx.beginPath(); cCtx.moveTo(515, 345); cCtx.lineTo(515, 385); cCtx.stroke();
+
+      // 6. STUMPS & BAILS
       const st = cricket.stumps;
       cCtx.strokeStyle = '#d97706';
       cCtx.lineWidth = 3;
 
       if (!st.broken) {
-        cCtx.beginPath(); cCtx.moveTo(344, 356); cCtx.lineTo(344, 332); cCtx.stroke();
-        cCtx.beginPath(); cCtx.moveTo(350, 356); cCtx.lineTo(350, 332); cCtx.stroke();
-        cCtx.beginPath(); cCtx.moveTo(356, 356); cCtx.lineTo(356, 332); cCtx.stroke();
+        cCtx.beginPath(); cCtx.moveTo(354, 356); cCtx.lineTo(354, 332); cCtx.stroke();
+        cCtx.beginPath(); cCtx.moveTo(360, 356); cCtx.lineTo(360, 332); cCtx.stroke();
+        cCtx.beginPath(); cCtx.moveTo(366, 356); cCtx.lineTo(366, 332); cCtx.stroke();
         // Bails
         cCtx.strokeStyle = '#fef08a';
         cCtx.lineWidth = 2;
-        cCtx.beginPath(); cCtx.moveTo(342, 331); cCtx.lineTo(358, 331); cCtx.stroke();
+        cCtx.beginPath(); cCtx.moveTo(352, 331); cCtx.lineTo(368, 331); cCtx.stroke();
       } else {
-        // Shattered flying stumps!
+        // Flying shattered stumps
         cCtx.save();
-        cCtx.translate(350, 345);
+        cCtx.translate(360, 345);
         cCtx.rotate(st.splinterAngle);
         cCtx.beginPath(); cCtx.moveTo(-6, 0); cCtx.lineTo(-14, -26); cCtx.stroke();
         cCtx.beginPath(); cCtx.moveTo(6, 0); cCtx.lineTo(16, -24); cCtx.stroke();
         cCtx.restore();
-        // Bails flying high
         cCtx.fillStyle = '#fef08a';
-        cCtx.fillRect(338, 331 - st.bailOffset, 6, 2.5);
-        cCtx.fillRect(356, 331 - st.bailOffset * 1.3, 6, 2.5);
+        cCtx.fillRect(348, 331 - st.bailOffset, 6, 2.5);
+        cCtx.fillRect(366, 331 - st.bailOffset * 1.3, 6, 2.5);
         st.bailOffset += 2;
         st.splinterAngle += 0.08;
       }
 
-      // 6. ANIMATED RUNNING BOWLER AT TOP OF CREASE
+      // 7. BOWLER AT CREASE
       const bw = cricket.bowler;
       if (cricket.state === 'BOWLER_RUNUP' || cricket.state === 'IN_FLIGHT') {
         if (bw.running) {
@@ -2373,20 +2347,26 @@
           bw.step += 0.28;
           bw.armAngle += 0.24;
           if (bw.y >= bw.strideY) {
-            releaseBallFromBowlerArm();
+            if (cricket.mode === 'batting') {
+              deliverBallFromCrease();
+            } else {
+              const speed = cricket.selectedDeliveryStyle === 'slower' ? 3.8 : 5.8;
+              const swing = cricket.selectedDeliveryStyle === 'outswinger' ? 1.6 : (cricket.selectedDeliveryStyle === 'inswinger' ? -1.6 : 0);
+              deliverBallFromCrease(speed, swing);
+            }
           }
         }
 
-        // Bowler Head (Navy cap)
+        // Bowler Head
         cCtx.fillStyle = '#1e3a8a';
         cCtx.beginPath(); cCtx.arc(bw.x, bw.y - 20, 7, 0, Math.PI * 2); cCtx.fill();
-        // Jersey & Trousers
+        // Jersey & Pants
         cCtx.fillStyle = '#ff2e5b';
-        cCtx.fillRect(bw.x - 5.5, bw.y - 13, 11, 14); // Crimson Jersey
+        cCtx.fillRect(bw.x - 5.5, bw.y - 13, 11, 14);
         cCtx.fillStyle = '#0f172a';
-        cCtx.fillRect(bw.x - 5, bw.y + 1, 10, 12);   // Navy Pants
+        cCtx.fillRect(bw.x - 5, bw.y + 1, 10, 12);
 
-        // Over-arm bowling delivery action
+        // Windmill Arm
         cCtx.save();
         cCtx.translate(bw.x + 4, bw.y - 10);
         cCtx.rotate(bw.armAngle);
@@ -2396,99 +2376,81 @@
         cCtx.restore();
       }
 
-      // 7. UMPIRE BEHIND BOWLER STUMPS
+      // 8. UMPIRE
       cCtx.fillStyle = '#ffffff';
-      cCtx.beginPath(); cCtx.arc(320, 136, 6, 0, Math.PI * 2); cCtx.fill(); // Umpire Hat
+      cCtx.beginPath(); cCtx.arc(330, 136, 6, 0, Math.PI * 2); cCtx.fill();
       cCtx.fillStyle = '#1e293b';
-      cCtx.fillRect(315, 142, 10, 14); // Coat
+      cCtx.fillRect(325, 142, 10, 14);
 
-      // 8. WICKETKEEPER CROUCHED BEHIND BATSMAN
-      cCtx.fillStyle = '#0284c7'; // Blue helmet
-      cCtx.beginPath(); cCtx.arc(350, 382, 8, 0, Math.PI * 2); cCtx.fill();
+      // 9. WICKETKEEPER CROUCHED
+      cCtx.fillStyle = '#0284c7';
+      cCtx.beginPath(); cCtx.arc(360, 382, 8, 0, Math.PI * 2); cCtx.fill();
       cCtx.fillStyle = '#f8fafc';
-      cCtx.fillRect(343, 388, 14, 16); // Keeper torso
-      // Keeper gloves
+      cCtx.fillRect(353, 388, 14, 16);
       cCtx.fillStyle = '#ffd166';
-      cCtx.beginPath(); cCtx.arc(339, 394, 4, 0, Math.PI*2); cCtx.fill();
-      cCtx.beginPath(); cCtx.arc(361, 394, 4, 0, Math.PI*2); cCtx.fill();
+      cCtx.beginPath(); cCtx.arc(349, 394, 4, 0, Math.PI*2); cCtx.fill();
+      cCtx.beginPath(); cCtx.arc(371, 394, 4, 0, Math.PI*2); cCtx.fill();
 
-      // 9. PROFESSIONAL CRICKET BATSMAN WITH REALISTIC BAT HOLDING & SWING
+      // 10. BATTER WITH TWO-HANDED BAT GRIP & DYNAMIC ROTATIONAL SWING
       const bat = cricket.batter;
       bat.stancePhase += 0.06;
       const batTap = Math.sin(bat.stancePhase) * 2;
 
-      // Batsman Head with Helmet & Visor
-      cCtx.fillStyle = '#0284c7'; // Team Blue Helmet
+      // Helmet
+      cCtx.fillStyle = '#0284c7';
       cCtx.beginPath(); cCtx.arc(bat.x - 24, bat.y - 34, 10, 0, Math.PI * 2); cCtx.fill();
-      // Metallic Face Grille
       cCtx.strokeStyle = '#cbd5e1';
       cCtx.lineWidth = 1.5;
       cCtx.beginPath(); cCtx.moveTo(bat.x - 20, bat.y - 32); cCtx.lineTo(bat.x - 12, bat.y - 30); cCtx.stroke();
-      cCtx.beginPath(); cCtx.moveTo(bat.x - 18, bat.y - 28); cCtx.lineTo(bat.x - 13, bat.y - 27); cCtx.stroke();
 
-      // Batter Jersey
-      cCtx.fillStyle = '#00f5d4'; // Cyan Cyber Jersey
+      // Jersey
+      cCtx.fillStyle = '#00f5d4';
       cCtx.fillRect(bat.x - 29, bat.y - 24, 14, 22);
 
-      // Batting Leg Pads (White Cricket Pads with straps)
+      // Leg Pads
       cCtx.fillStyle = '#f8fafc';
-      cCtx.fillRect(bat.x - 28, bat.y - 2, 6, 26); // Back Pad
-      cCtx.fillRect(bat.x - 20, bat.y - 2, 7, 26); // Front Pad
-      cCtx.strokeStyle = '#94a3b8';
-      cCtx.lineWidth = 1;
-      cCtx.strokeRect(bat.x - 28, bat.y - 2, 6, 26);
-      cCtx.strokeRect(bat.x - 20, bat.y - 2, 7, 26);
+      cCtx.fillRect(bat.x - 28, bat.y - 2, 6, 26);
+      cCtx.fillRect(bat.x - 20, bat.y - 2, 7, 26);
 
-      // Batsman Arms & Two-Handed Bat Grip
+      // Two-Handed Bat Grip & Swing Arc
       cCtx.save();
-      cCtx.translate(bat.x - 18, bat.y - 12); // Splice handle origin
+      cCtx.translate(bat.x - 18, bat.y - 12);
 
-      // Compute Dynamic Bat Angle
-      let batAngle = 0.35 + batTap * 0.04; // Resting backlift
+      let batAngle = 0.35 + batTap * 0.04;
       if (bat.swingActive) {
         bat.swingProgress = Math.min(1, bat.swingProgress + 0.16);
         const p = bat.swingProgress;
-        if (bat.strokeType === 'DRIVE') {
-          // Off-drive sweep
-          batAngle = 0.35 - p * 1.8;
-        } else if (bat.strokeType === 'STRAIGHT') {
-          // High-elbow straight punch
-          batAngle = 0.35 - p * 2.3;
-        } else if (bat.strokeType === 'PULL') {
-          // Cross-bat horizontal pull
-          batAngle = 0.35 + p * 1.5;
-        } else if (bat.strokeType === 'DEFEND') {
-          // Solid dead-bat block
-          batAngle = -0.3;
-        }
+        if (bat.strokeType === 'DRIVE') batAngle = 0.35 - p * 1.8;
+        else if (bat.strokeType === 'STRAIGHT') batAngle = 0.35 - p * 2.3;
+        else if (bat.strokeType === 'PULL') batAngle = 0.35 + p * 1.5;
+        else if (bat.strokeType === 'DEFEND') batAngle = -0.3;
       }
 
       cCtx.rotate(batAngle);
 
-      // Bat Willow Blade
-      cCtx.fillStyle = '#b45309'; // English Willow Wood
+      // Bat Blade
+      cCtx.fillStyle = '#b45309';
       cCtx.fillRect(-3, 0, 7, 30);
-      cCtx.fillStyle = '#92400e'; // Back spine
+      cCtx.fillStyle = '#92400e';
       cCtx.fillRect(0, 0, 3, 30);
 
-      // Rubber Colored Grip on Handle
-      cCtx.fillStyle = '#ff2e5b'; // Grip color
+      // Rubber Grip
+      cCtx.fillStyle = '#ff2e5b';
       cCtx.fillRect(-2.5, -12, 6, 12);
 
-      // Padded Batting Gloves (Grip Hands)
+      // Hands Gripping Handle
       cCtx.fillStyle = '#ffd166';
-      cCtx.beginPath(); cCtx.arc(0, -9, 4, 0, Math.PI * 2); cCtx.fill(); // Top hand
-      cCtx.beginPath(); cCtx.arc(0, -3, 4, 0, Math.PI * 2); cCtx.fill(); // Bottom hand
+      cCtx.beginPath(); cCtx.arc(0, -9, 4, 0, Math.PI * 2); cCtx.fill();
+      cCtx.beginPath(); cCtx.arc(0, -3, 4, 0, Math.PI * 2); cCtx.fill();
 
       cCtx.restore();
 
-      // 10. REALISTIC CRICKET BALL PHYSICS & DYNAMICS
+      // 11. CRICKET BALL DYNAMICS
       const b = cricket.ball;
       if (b.isLive) {
         b.x += b.vx;
         b.y += b.vy;
 
-        // Pitch Bounce
         if (b.y > 230 && !b.pitched) {
           b.pitched = true;
           b.vy *= 0.96;
@@ -2496,17 +2458,16 @@
 
         // Clean Bowled Hit Detection
         if (cricket.state === 'IN_FLIGHT' && b.y >= 336 && b.y <= 356) {
-          if (Math.abs(b.x - 350) < 14) {
+          if (Math.abs(b.x - 360) < 14) {
             cricket.ball.isLive = false;
             cricket.stumps.broken = true;
-            playStumpCrashSound();
+            soundStumpsHit();
             cricket.wickets += 1;
-            document.getElementById('timing-feedback-txt').textContent = '💥 TIMBER! CLEAN BOWLED!';
-            finishDeliveryOutcome(0, 'wicket', '💥 CLEAN BOWLED! TIMBER! 💥');
+            resolveDelivery(0, 'wicket', 'CLEAN BOWLED - TIMBER');
           }
         }
 
-        // Ball Shadow on Pitch
+        // Ball Shadow
         cCtx.fillStyle = 'rgba(0, 0, 0, 0.45)';
         cCtx.beginPath();
         cCtx.ellipse(b.x, b.y, b.radius + 1, (b.radius + 1) * 0.5, 0, 0, Math.PI * 2);
@@ -2518,308 +2479,392 @@
         cCtx.arc(b.x, b.y - b.z, b.radius, 0, Math.PI * 2);
         cCtx.fill();
 
-        // White Leather Seam
+        // Seam
         cCtx.strokeStyle = '#ffffff';
         cCtx.lineWidth = 1;
         cCtx.beginPath();
         cCtx.arc(b.x, b.y - b.z, b.radius - 1, 0.2, 2.8);
         cCtx.stroke();
 
-        // Pass batsman to keeper without contact (DOT BALL / MISSED)
+        // Missed ball passed batsman
         if (b.y > 385) {
           b.isLive = false;
           if (cricket.state === 'IN_FLIGHT') {
-            playWillowCrackSound(); // Keeper glove thud
-            finishDeliveryOutcome(0, 'dot', '⚪ DOT BALL! MISSED BY BATSMAN');
+            soundWillowHit();
+            resolveDelivery(0, 'dot', 'DOT BALL - PASSED BATSMAN');
           }
         }
 
-        // Failsafe watchdog: if ball is in flight for more than 3.5s without resolving
-        if (cricket.state === 'IN_FLIGHT' && cricket.deliveryStartMs && (Date.now() - cricket.deliveryStartMs > 3500)) {
-          b.isLive = false;
-          finishDeliveryOutcome(0, 'dot', '⚪ DOT BALL! PASSED CREASE');
-        }
-
-        // Out of bounds / boundary cleared
-        if (b.y < 10 || b.x < 10 || b.x > 690) {
+        // Out of bounds watchdog
+        if (b.y < 10 || b.x < 10 || b.x > 710) {
           b.isLive = false;
         }
       }
 
-      // 11. AUTOMATIC OVER COUNTDOWN SCHEDULER
+      // Countdown loop
       if (cricket.state === 'COUNTDOWN') {
         cricket.countdownTimer--;
         if (cricket.countdownTimer <= 0) {
-          startBowlerDeliveryRunup();
+          triggerBowlerSprint();
         }
       }
 
       requestAnimationFrame(cricketLoopTick);
     }
 
-    function drawStadiumFloodlight(x, y) {
+    function renderFloodlightTower(x, y) {
       cCtx.fillStyle = '#ffffff';
       cCtx.beginPath(); cCtx.arc(x, y, 11, 0, Math.PI * 2); cCtx.fill();
-
-      // Atmospheric cone beam
-      const beam = cCtx.createRadialGradient(x, y, 6, x > 350 ? x - 80 : x + 80, 160, 180);
-      beam.addColorStop(0, 'rgba(0, 245, 212, 0.25)');
+      const beam = cCtx.createRadialGradient(x, y, 6, x > 360 ? x - 80 : x + 80, 160, 180);
+      beam.addColorStop(0, 'rgba(0, 245, 212, 0.22)');
       beam.addColorStop(1, 'transparent');
       cCtx.fillStyle = beam;
       cCtx.beginPath();
       cCtx.moveTo(x - 12, y);
-      cCtx.lineTo(x > 350 ? x - 220 : x + 20, 270);
-      cCtx.lineTo(x > 350 ? x - 20 : x + 220, 270);
+      cCtx.lineTo(x > 360 ? x - 220 : x + 20, 270);
+      cCtx.lineTo(x > 360 ? x - 20 : x + 220, 270);
       cCtx.lineTo(x + 12, y);
       cCtx.fill();
     }
 
-    /* ==========================================================================
-       GAME 4: DEVELOPER WORDLE ENGINE (3 PROGRESSIVE TECH HINTS)
-       ========================================================================== */
-    const DEV_WORDS = [
-      { word: "REACT", domain: "Frontend Framework", clue: "Meta's declarative component-based UI library." },
-      { word: "LINUX", domain: "Operating Systems", clue: "Open source Unix-like kernel founded by Linus Torvalds." },
-      { word: "REDIS", domain: "Databases & Caching", clue: "Ultra-fast in-memory key-value data store." },
-      { word: "ASYNC", domain: "Concurrency", clue: "Keyword paired with 'await' for non-blocking I/O execution." },
-      { word: "PROXY", domain: "Networking & Security", clue: "Server acting as an intermediary between clients and the web." },
-      { word: "STACK", domain: "Data Structures", clue: "LIFO structure fundamental to memory call stacks." },
-      { word: "CLOUD", domain: "Infrastructure & DevOps", clue: "On-demand distributed remote computing resources (AWS, GCP)." },
-      { word: "BYTES", domain: "Computer Architecture", clue: "Fundamental 8-bit digital units of binary memory." },
-      { word: "QUERY", domain: "Databases & SQL", clue: "Structured statement requesting data from tabular schemas." },
-      { word: "CACHE", domain: "Performance Optimization", clue: "High-speed temporary storage hardware/software tier." },
-      { word: "TOKEN", domain: "Authentication & Security", clue: "Encoded JWT payload asserting user identity in headers." },
-      { word: "GRAPH", domain: "Algorithms & Networks", clue: "Non-linear data structure made of vertices connected by edges." },
-      { word: "KAFKA", domain: "Event Streaming", clue: "Apache distributed pub-sub log broker handling billions of events." },
-      { word: "SWIFT", domain: "Mobile Development", clue: "Apple's modern compiled language for iOS and macOS systems." },
-      { word: "SHELL", domain: "Terminal & CLI", clue: "Command interpreter (bash, zsh) interfacing with OS kernel." },
-      { word: "PATCH", domain: "Git & Web APIs", clue: "HTTP method or unified diff applying partial updates." },
-      { word: "INDEX", domain: "Database Optimization", clue: "Data structure (B-tree) drastically speeding up SQL queries." },
-      { word: "PIPES", domain: "Unix Architecture", clue: "Connecting stdout of one process to stdin of the next." },
-      { word: "QUEUE", domain: "Data Structures", clue: "FIFO (First In First Out) structure used in message queues." },
-      { word: "SCALE", domain: "System Design", clue: "Expanding server throughput horizontally or vertically." },
-      { word: "AGILE", domain: "Software Engineering", clue: "Iterative development methodology based on short sprints." }
+    /* =========================================================================
+       GAME 4: DEVELOPER WORDLE (SENTENCE HINT BESIDE EACH GUESS ROW)
+       ========================================================================= */
+    const WORDLE_DICTIONARY = [
+      {
+        word: "REACT",
+        hints: [
+          "Primary Domain: Frontend UI Framework & Web Engineering",
+          "Vowels Clue: Contains 2 vowels (E, A) and 3 consonants",
+          "Boundary Letters: Begins with R and ends with T",
+          "Creator Ecosystem: Developed and maintained open-source by Meta",
+          "Core Architecture: Employs a Virtual DOM and JSX component hierarchy",
+          "Exact Definition: Declarative JavaScript library for single-page web apps"
+        ]
+      },
+      {
+        word: "LINUX",
+        hints: [
+          "Primary Domain: Operating Systems & Kernel Engineering",
+          "Vowels Clue: Contains 2 vowels (I, U) and 3 consonants",
+          "Boundary Letters: Begins with L and ends with X",
+          "Creator Ecosystem: Created originally in 1991 by Linus Torvalds",
+          "Core Architecture: Monolithic Unix-like open source operating system kernel",
+          "Exact Definition: The world-dominating OS powering servers, Android and cloud"
+        ]
+      },
+      {
+        word: "REDIS",
+        hints: [
+          "Primary Domain: Databases, Caching & In-Memory Storage",
+          "Vowels Clue: Contains 2 vowels (E, I) and 3 consonants",
+          "Boundary Letters: Begins with R and ends with S",
+          "Creator Ecosystem: Open-source project created by Salvatore Sanfilippo",
+          "Core Architecture: High-throughput single-threaded event loop in RAM",
+          "Exact Definition: Blazing-fast in-memory key-value data structure store"
+        ]
+      },
+      {
+        word: "ASYNC",
+        hints: [
+          "Primary Domain: Concurrency & Asynchronous Programming",
+          "Vowels Clue: Contains 1 vowel (A) and 4 consonants",
+          "Boundary Letters: Begins with A and ends with C",
+          "Language Usage: Syntactic keyword universally paired with 'await'",
+          "Core Architecture: Non-blocking I/O execution driven by the event loop",
+          "Exact Definition: Keyword declaring a function that returns a Promise"
+        ]
+      },
+      {
+        word: "PROXY",
+        hints: [
+          "Primary Domain: Computer Networking & Web Security",
+          "Vowels Clue: Contains 1 vowel (O) and 4 consonants",
+          "Boundary Letters: Begins with P and ends with Y",
+          "Network Role: Positioned as an intermediary between clients and destination",
+          "Core Architecture: Forwards client requests and caches responses securely",
+          "Exact Definition: Server application acting as a gateway for web traffic"
+        ]
+      },
+      {
+        word: "STACK",
+        hints: [
+          "Primary Domain: Fundamental Computer Data Structures",
+          "Vowels Clue: Contains 1 vowel (A) and 4 consonants",
+          "Boundary Letters: Begins with S and ends with K",
+          "Data Structure Role: Follows strict LIFO (Last In First Out) ordering",
+          "Core Operations: Main methods are push to insert and pop to extract",
+          "Exact Definition: Linear data structure governing function call frames in memory"
+        ]
+      },
+      {
+        word: "CLOUD",
+        hints: [
+          "Primary Domain: DevOps, Infrastructure & Distributed Systems",
+          "Vowels Clue: Contains 2 vowels (O, U) and 3 consonants",
+          "Boundary Letters: Begins with C and ends with D",
+          "Major Providers: Dominated globally by AWS, Google Cloud and Microsoft Azure",
+          "Core Architecture: Elastic virtualization, multi-region data centers and serverless",
+          "Exact Definition: On-demand availability of computer system resources over internet"
+        ]
+      },
+      {
+        word: "BYTES",
+        hints: [
+          "Primary Domain: Computer Architecture & Digital Representation",
+          "Vowels Clue: Contains 1 vowel (E) and 4 consonants",
+          "Boundary Letters: Begins with B and ends with S",
+          "Unit Size: Each standard unit is composed of exactly 8 binary bits",
+          "Measurement: Forms the basis of Kilobytes, Megabytes, Gigabytes and Terabytes",
+          "Exact Definition: The fundamental unit of digital data storage and memory addressing"
+        ]
+      },
+      {
+        word: "QUERY",
+        hints: [
+          "Primary Domain: Database Management & SQL Systems",
+          "Vowels Clue: Contains 2 vowels (U, E) and 3 consonants",
+          "Boundary Letters: Begins with Q and ends with Y",
+          "Language Usage: Executed via structured commands like SELECT, INSERT, UPDATE",
+          "Core Architecture: Parsed, planned and optimized by RDBMS query engines",
+          "Exact Definition: Precise declarative request for data retrieval from tables"
+        ]
+      },
+      {
+        word: "KAFKA",
+        hints: [
+          "Primary Domain: Distributed Event Streaming & Messaging",
+          "Vowels Clue: Contains 2 vowels (A, A) and 3 consonants",
+          "Boundary Letters: Begins with K and ends with A",
+          "Creator Ecosystem: Created initially at LinkedIn, graduated as Apache project",
+          "Core Architecture: Distributed append-only partitioned commit logs with consumer groups",
+          "Exact Definition: Ultra-high throughput event streaming platform for real-time pipelines"
+        ]
+      }
     ];
 
-    let currentWordle = DEV_WORDS[0];
+    let currentWordObj = WORDLE_DICTIONARY[0];
     let wordleGuesses = [];
-    let wordleInput = "";
-    let wordleFinished = false;
-    let wordleHintLevel = 0; // 0, 1, 2, 3
+    let currentInput = "";
+    let wordleOver = false;
 
-    function initWordleGame() {
-      drawWordleBoardDOM();
-      drawWordleKeyboardDOM();
-      resetWordleGame();
+    function initWordle() {
+      buildWordleDOM();
+      restartWordle();
 
       window.addEventListener('keydown', (e) => {
         if (!document.getElementById('pane-wordle').classList.contains('active')) return;
         if (e.key === 'Enter') handleWordleKey('ENTER');
-        else if (e.key === 'Backspace') handleWordleKey('⌫');
+        else if (e.key === 'Backspace') handleWordleKey('BACKSPACE');
         else if (/^[a-zA-Z]$/.test(e.key)) handleWordleKey(e.key.toUpperCase());
       });
     }
 
-    function resetWordleGame() {
-      currentWordle = DEV_WORDS[Math.floor(Math.random() * DEV_WORDS.length)];
+    function restartWordle() {
+      currentWordObj = WORDLE_DICTIONARY[Math.floor(Math.random() * WORDLE_DICTIONARY.length)];
       wordleGuesses = [];
-      wordleInput = "";
-      wordleFinished = false;
-      wordleHintLevel = 0;
+      currentInput = "";
+      wordleOver = false;
 
-      document.getElementById('wordle-status-badge').textContent = 'ATTEMPT 1 OF 6';
-      document.getElementById('wordle-status-badge').style.color = 'var(--cyan)';
-      document.getElementById('wordle-hint-text').textContent = "💡 Stuck? Use progressive hints for domain context and letter clues!";
-      document.getElementById('hint-stock-count').textContent = '(3 left)';
-      document.getElementById('btn-use-hint').disabled = false;
+      document.getElementById('wordle-status-text').textContent = 'ATTEMPT 1 OF 6';
+      document.getElementById('wordle-status-text').style.color = 'var(--cyan)';
 
-      document.querySelectorAll('.wordle-tile').forEach(t => {
-        t.textContent = '';
-        t.className = 'wordle-tile';
+      document.querySelectorAll('.w-box').forEach(b => {
+        b.textContent = '';
+        b.className = 'w-box';
       });
 
-      document.querySelectorAll('.kb-key').forEach(k => {
-        k.className = k.classList.contains('wide') ? 'kb-key wide' : 'kb-key';
+      document.querySelectorAll('.k-btn').forEach(k => {
+        k.className = k.classList.contains('wide') ? 'k-btn wide' : 'k-btn';
       });
+
+      updateHintRowsVisibility();
     }
 
-    function requestWordleClue() {
-      if (wordleFinished || wordleHintLevel >= 3) return;
-
-      wordleHintLevel++;
-      const target = currentWordle.word;
-      const textEl = document.getElementById('wordle-hint-text');
-
-      if (wordleHintLevel === 1) {
-        textEl.innerHTML = `💡 <b>Tech Domain:</b> <i>${currentWordle.domain}</i>`;
-        document.getElementById('hint-stock-count').textContent = '(2 left)';
-      } else if (wordleHintLevel === 2) {
-        const vowels = ['A', 'E', 'I', 'O', 'U'];
-        const presentVowels = Array.from(new Set(target.split('').filter(c => vowels.includes(c))));
-        textEl.innerHTML = `💡 <b>Vowel Clue:</b> Contains ${presentVowels.length} vowel(s): <b>${presentVowels.join(', ') || 'None'}</b>`;
-        document.getElementById('hint-stock-count').textContent = '(1 left)';
-      } else if (wordleHintLevel === 3) {
-        textEl.innerHTML = `💡 <b>Definition:</b> Starts with <b>'${target[0]}'</b> • ${currentWordle.clue}`;
-        document.getElementById('hint-stock-count').textContent = '(0 left)';
-        document.getElementById('btn-use-hint').disabled = true;
-      }
-    }
-
-    function drawWordleBoardDOM() {
-      const container = document.getElementById('wordle-board');
-      container.innerHTML = '';
+    function buildWordleDOM() {
+      // Rows Column
+      const rowsCol = document.getElementById('dom-wordle-rows');
+      rowsCol.innerHTML = '';
       for (let r = 0; r < 6; r++) {
         const row = document.createElement('div');
-        row.className = 'wordle-row';
+        row.className = 'w-row';
         for (let c = 0; c < 5; c++) {
-          const tile = document.createElement('div');
-          tile.className = 'wordle-tile';
-          tile.id = `wt-${r}-${c}`;
-          row.appendChild(tile);
+          const box = document.createElement('div');
+          box.className = 'w-box';
+          box.id = `w-box-${r}-${c}`;
+          row.appendChild(box);
         }
-        container.appendChild(row);
+        rowsCol.appendChild(row);
       }
-    }
 
-    function drawWordleKeyboardDOM() {
-      const kb = document.getElementById('wordle-keyboard');
+      // Hints Column (Aligned with each row)
+      const hintsCol = document.getElementById('dom-wordle-hints');
+      hintsCol.innerHTML = '';
+      for (let r = 0; r < 6; r++) {
+        const card = document.createElement('div');
+        card.className = 'hint-sentence-card';
+        card.id = `hint-card-${r}`;
+        hintsCol.appendChild(card);
+      }
+
+      // Keyboard
+      const kb = document.getElementById('dom-wordle-keyboard');
       kb.innerHTML = '';
-      const rows = [
+      const layout = [
         ['Q','W','E','R','T','Y','U','I','O','P'],
         ['A','S','D','F','G','H','J','K','L'],
-        ['ENTER','Z','X','C','V','B','N','M','⌫']
+        ['ENTER','Z','X','C','V','B','N','M','BACKSPACE']
       ];
 
-      rows.forEach(r => {
-        const rowDiv = document.createElement('div');
-        rowDiv.className = 'kb-row';
-        r.forEach(ch => {
+      layout.forEach(rowArr => {
+        const rEl = document.createElement('div');
+        rEl.className = 'k-row';
+        rowArr.forEach(ch => {
           const btn = document.createElement('button');
-          btn.className = `kb-key ${ch.length > 1 ? 'wide' : ''}`;
+          btn.className = `k-btn ${ch.length > 1 ? 'wide' : ''}`;
           btn.textContent = ch;
           btn.id = `kb-${ch}`;
           btn.onclick = () => handleWordleKey(ch);
-          rowDiv.appendChild(btn);
+          rEl.appendChild(btn);
         });
-        kb.appendChild(rowDiv);
+        kb.appendChild(rEl);
       });
     }
 
-    function handleWordleKey(key) {
-      if (wordleFinished) return;
+    function updateHintRowsVisibility() {
+      const currentAttempt = wordleGuesses.length;
+      for (let r = 0; r < 6; r++) {
+        const card = document.getElementById(`hint-card-${r}`);
+        const hintSentence = currentWordObj.hints[r];
+        if (r < currentAttempt) {
+          card.className = 'hint-sentence-card revealed';
+          card.innerHTML = `<b>Row ${r + 1}:</b> &nbsp; ${hintSentence}`;
+        } else if (r === currentAttempt) {
+          card.className = 'hint-sentence-card active-hint';
+          card.innerHTML = `<b>Row ${r + 1} Hint:</b> &nbsp; ${hintSentence}`;
+        } else {
+          card.className = 'hint-sentence-card';
+          card.innerHTML = `<span style="opacity:0.4;">Row ${r + 1} Clue: Unlocks on attempt ${r + 1}</span>`;
+        }
+      }
+    }
 
-      if (key === '⌫') {
-        if (wordleInput.length > 0) {
-          wordleInput = wordleInput.slice(0, -1);
-          updateWordleRowDisplay();
+    function handleWordleKey(key) {
+      if (wordleOver) return;
+
+      if (key === 'BACKSPACE') {
+        if (currentInput.length > 0) {
+          currentInput = currentInput.slice(0, -1);
+          renderWordleTyping();
         }
         return;
       }
 
       if (key === 'ENTER') {
-        if (wordleInput.length === 5) {
-          evaluateWordleGuess();
+        if (currentInput.length === 5) {
+          submitWordleGuess();
         }
         return;
       }
 
-      if (/^[A-Z]$/.test(key) && wordleInput.length < 5) {
-        wordleInput += key;
-        updateWordleRowDisplay();
+      if (/^[A-Z]$/.test(key) && currentInput.length < 5) {
+        currentInput += key;
+        renderWordleTyping();
       }
     }
 
-    function updateWordleRowDisplay() {
+    function renderWordleTyping() {
       const r = wordleGuesses.length;
       for (let c = 0; c < 5; c++) {
-        const tile = document.getElementById(`wt-${r}-${c}`);
-        const char = wordleInput[c] || '';
-        tile.textContent = char;
-        if (char) tile.classList.add('filled');
-        else tile.classList.remove('filled');
+        const box = document.getElementById(`w-box-${r}-${c}`);
+        const ch = currentInput[c] || '';
+        box.textContent = ch;
+        if (ch) box.classList.add('has-char');
+        else box.classList.remove('has-char');
       }
     }
 
-    function evaluateWordleGuess() {
-      const guess = wordleInput;
-      const target = currentWordle.word;
+    function submitWordleGuess() {
+      const guess = currentInput;
+      const target = currentWordObj.word;
       const r = wordleGuesses.length;
 
-      const feedback = Array(5).fill('grey');
+      const feedback = Array(5).fill('absent');
       const targetArr = target.split('');
 
       for (let i = 0; i < 5; i++) {
         if (guess[i] === target[i]) {
-          feedback[i] = 'green';
+          feedback[i] = 'correct';
           targetArr[i] = null;
         }
       }
 
       for (let i = 0; i < 5; i++) {
-        if (feedback[i] !== 'green' && targetArr.includes(guess[i])) {
-          feedback[i] = 'yellow';
+        if (feedback[i] !== 'correct' && targetArr.includes(guess[i])) {
+          feedback[i] = 'present';
           targetArr[targetArr.indexOf(guess[i])] = null;
         }
       }
 
       for (let i = 0; i < 5; i++) {
-        const tile = document.getElementById(`wt-${r}-${i}`);
+        const box = document.getElementById(`w-box-${r}-${i}`);
         setTimeout(() => {
-          tile.classList.add(feedback[i]);
+          box.classList.add(feedback[i]);
         }, i * 80);
 
         const kBtn = document.getElementById(`kb-${guess[i]}`);
         if (kBtn) {
           setTimeout(() => {
-            if (feedback[i] === 'green') kBtn.className = 'kb-key green';
-            else if (feedback[i] === 'yellow' && !kBtn.classList.contains('green')) kBtn.className = 'kb-key yellow';
-            else if (!kBtn.classList.contains('green') && !kBtn.classList.contains('yellow')) kBtn.className = 'kb-key grey';
+            if (feedback[i] === 'correct') kBtn.className = 'k-btn correct';
+            else if (feedback[i] === 'present' && !kBtn.classList.contains('correct')) kBtn.className = 'k-btn present';
+            else if (!kBtn.classList.contains('correct') && !kBtn.classList.contains('present')) kBtn.className = 'k-btn absent';
           }, 450);
         }
       }
 
       wordleGuesses.push(guess);
-      wordleInput = "";
+      currentInput = "";
 
       if (guess === target) {
-        wordleFinished = true;
+        wordleOver = true;
         const tries = wordleGuesses.length;
-        const earned = Math.max(15, 30 + (6 - tries) * 4 - (wordleHintLevel * 3));
-        document.getElementById('wordle-status-badge').textContent = `🎉 SOLVED IN ${tries}/6! (+${earned} PTS)`;
-        document.getElementById('wordle-status-badge').style.color = 'var(--gold)';
-        document.getElementById('wordle-hint-text').innerHTML = `🎉 <b>${target}</b>: ${currentWordle.clue}`;
-        awardPoints(earned, 'wordle', true);
+        const pts = Math.max(15, 30 + (6 - tries) * 4);
+        document.getElementById('wordle-status-text').textContent = `SOLVED IN ${tries}/6 (+${pts} PTS)`;
+        document.getElementById('wordle-status-text').style.color = 'var(--gold)';
+        grantScore(pts, 'wordle', true);
+        updateHintRowsVisibility();
         return;
       }
 
       if (wordleGuesses.length >= 6) {
-        wordleFinished = true;
-        document.getElementById('wordle-status-badge').textContent = `💀 THE WORD WAS: ${target}`;
-        document.getElementById('wordle-status-badge').style.color = 'var(--crimson)';
-        document.getElementById('wordle-hint-text').innerHTML = `💀 <b>${target}</b>: ${currentWordle.clue}`;
+        wordleOver = true;
+        document.getElementById('wordle-status-text').textContent = `THE WORD WAS: ${target}`;
+        document.getElementById('wordle-status-text').style.color = 'var(--crimson)';
+        updateHintRowsVisibility();
         return;
       }
 
-      document.getElementById('wordle-status-badge').textContent = `ATTEMPT ${wordleGuesses.length + 1} OF 6`;
+      document.getElementById('wordle-status-text').textContent = `ATTEMPT ${wordleGuesses.length + 1} OF 6`;
+      updateHintRowsVisibility();
     }
 
-    /* ==========================================================================
-       STARTUP LIFECYCLE
-       ========================================================================== */
+    /* =========================================================================
+       INITIALIZATION
+       ========================================================================= */
     window.onload = () => {
-      updateHeaderDisplays();
-      renderLeaderboard();
-      initChessGame();
-      initTTTGame();
+      renderHeaderData();
+      renderLeaderboardView();
+      initChess();
+      initTTT();
       resizeCricketCanvas();
-      resetCricketMatch();
-      initWordleGame();
+      startNewCricketMatch();
+      initWordle();
 
-      const routeHash = window.location.hash.replace('#', '');
-      if (['chess', 'ttt', 'cricket', 'wordle', 'leaderboard'].includes(routeHash)) {
-        activateTab(routeHash);
+      const route = window.location.hash.replace('#', '');
+      if (['chess', 'ttt', 'cricket', 'wordle', 'leaderboard'].includes(route)) {
+        navigateToTab(route);
       } else {
-        activateTab('chess');
+        navigateToTab('chess');
       }
     };
   </script>
