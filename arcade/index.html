@@ -1,0 +1,1695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Aadarsh's Cyber Arcade ⚡ 4 Playable Games</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600;700&family=Orbitron:wght@600;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <style>
+    :root {
+      --bg: #090d16;
+      --card-bg: #111827;
+      --card-border: #1f293d;
+      --cyan: #00f7ff;
+      --cyan-glow: rgba(0, 247, 255, 0.35);
+      --pink: #ff007f;
+      --purple: #a855f7;
+      --gold: #fbbf24;
+      --green: #10b981;
+      --red: #ef4444;
+      --text: #f3f4f6;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(0, 247, 255, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 85% 85%, rgba(168, 85, 247, 0.08) 0%, transparent 40%);
+    }
+
+    /* Header Nav */
+    header {
+      background: rgba(17, 24, 39, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--card-border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand-title {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      font-size: 1.15rem;
+      letter-spacing: 1px;
+      background: linear-gradient(90deg, var(--cyan), #a855f7, var(--pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .player-stats {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(15, 23, 42, 0.8);
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--card-border);
+      font-size: 0.88rem;
+    }
+
+    .player-name-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      color: var(--cyan);
+      font-weight: 600;
+    }
+
+    .player-name-badge:hover {
+      text-decoration: underline;
+    }
+
+    .score-badge {
+      color: var(--gold);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-icon {
+      background: #1f293d;
+      border: 1px solid #334155;
+      color: var(--text);
+      padding: 7px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+
+    .btn-icon:hover {
+      background: #334155;
+      border-color: var(--cyan);
+    }
+
+    /* Tab Bar */
+    .nav-tabs-container {
+      max-width: 900px;
+      margin: 18px auto 8px;
+      width: 100%;
+      padding: 0 16px;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 8px;
+      background: #111827;
+      padding: 6px;
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .nav-tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tab-btn {
+      flex: 1;
+      min-width: 130px;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .tab-btn:hover {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, rgba(0, 247, 255, 0.15), rgba(168, 85, 247, 0.15));
+      color: var(--cyan);
+      border: 1px solid rgba(0, 247, 255, 0.4);
+      box-shadow: 0 0 12px var(--cyan-glow);
+    }
+
+    /* Main Container */
+    main {
+      flex: 1;
+      max-width: 900px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 12px 16px 40px;
+    }
+
+    .game-section {
+      display: none;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .game-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .game-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .game-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #1f293d;
+      padding-bottom: 16px;
+    }
+
+    .game-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .game-status-badge {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.85rem;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: rgba(0, 247, 255, 0.1);
+      border: 1px solid rgba(0, 247, 255, 0.3);
+      color: var(--cyan);
+    }
+
+    .btn-action {
+      background: linear-gradient(135deg, var(--cyan), #0284c7);
+      color: #0b0f19;
+      font-weight: 700;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.88rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-action:hover {
+      box-shadow: 0 0 15px var(--cyan-glow);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: #1f293d;
+      color: var(--text);
+      border: 1px solid #334155;
+    }
+
+    .btn-secondary:hover {
+      background: #334155;
+      color: var(--cyan);
+    }
+
+    /* =========================================
+       GAME 1: CONNECT FOUR
+       ========================================= */
+    .c4-board-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .c4-col-buttons {
+      display: grid;
+      grid-template-columns: repeat(7, 48px);
+      gap: 8px;
+    }
+
+    .c4-drop-btn {
+      width: 48px;
+      height: 38px;
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      color: var(--cyan);
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    .c4-drop-btn:hover:not(:disabled) {
+      background: var(--cyan);
+      color: #000;
+      box-shadow: 0 0 12px var(--cyan-glow);
+      transform: translateY(-2px);
+    }
+
+    .c4-drop-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .c4-grid {
+      background: #1e293b;
+      padding: 12px;
+      border-radius: 14px;
+      border: 2px solid #334155;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+      display: grid;
+      grid-template-columns: repeat(7, 48px);
+      grid-template-rows: repeat(6, 48px);
+      gap: 8px;
+    }
+
+    .c4-cell {
+      width: 48px;
+      height: 48px;
+      background: #0b0f19;
+      border-radius: 50%;
+      box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.8);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .c4-cell.yellow {
+      background: radial-gradient(circle at 35% 35%, #fef08a, #eab308);
+      box-shadow: 0 0 10px rgba(234, 179, 8, 0.6);
+    }
+
+    .c4-cell.blue {
+      background: radial-gradient(circle at 35% 35%, #93c5fd, #2563eb);
+      box-shadow: 0 0 10px rgba(37, 99, 235, 0.6);
+    }
+
+    .c4-cell.winning {
+      animation: pulseWin 0.7s infinite alternate;
+    }
+
+    @keyframes pulseWin {
+      from { transform: scale(1); filter: brightness(1); }
+      to { transform: scale(1.1); filter: brightness(1.6); box-shadow: 0 0 18px var(--gold); }
+    }
+
+    /* =========================================
+       GAME 2: TIC-TAC-TOE
+       ========================================= */
+    .ttt-board-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .ttt-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 90px);
+      grid-template-rows: repeat(3, 90px);
+      gap: 10px;
+      background: #1e293b;
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid #334155;
+    }
+
+    .ttt-cell {
+      width: 90px;
+      height: 90px;
+      background: #0f172a;
+      border: 2px solid #334155;
+      border-radius: 12px;
+      font-size: 2.4rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .ttt-cell:hover:empty {
+      background: #1e293b;
+      border-color: var(--cyan);
+      box-shadow: 0 0 12px var(--cyan-glow);
+    }
+
+    .ttt-cell.x {
+      color: #ef4444;
+      text-shadow: 0 0 12px rgba(239, 68, 68, 0.6);
+    }
+
+    .ttt-cell.o {
+      color: #38bdf8;
+      text-shadow: 0 0 12px rgba(56, 189, 248, 0.6);
+    }
+
+    /* =========================================
+       GAME 3: CHESS
+       ========================================= */
+    .chess-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    #chess-board {
+      width: 360px;
+      height: 360px;
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      grid-template-rows: repeat(8, 1fr);
+      border: 3px solid #334155;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+      user-select: none;
+    }
+
+    .chess-sq {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.9rem;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .chess-sq.light {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+
+    .chess-sq.dark {
+      background: #475569;
+      color: #0f172a;
+    }
+
+    .chess-sq.selected {
+      background: #facc15 !important;
+    }
+
+    .chess-sq.highlight::after {
+      content: '';
+      width: 14px;
+      height: 14px;
+      background: rgba(16, 185, 129, 0.8);
+      border-radius: 50%;
+      position: absolute;
+    }
+
+    .chess-sq.check {
+      background: #ef4444 !important;
+    }
+
+    .chess-info-bar {
+      display: flex;
+      justify-content: space-between;
+      width: 360px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* =========================================
+       GAME 4: DEVELOPER WORDLE
+       ========================================= */
+    .wordle-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .wordle-grid {
+      display: grid;
+      grid-template-rows: repeat(6, 1fr);
+      gap: 6px;
+    }
+
+    .wordle-row {
+      display: grid;
+      grid-template-columns: repeat(5, 52px);
+      gap: 6px;
+    }
+
+    .wordle-tile {
+      width: 52px;
+      height: 52px;
+      border: 2px solid #334155;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      background: #0f172a;
+      transition: all 0.2s;
+    }
+
+    .wordle-tile.pop {
+      transform: scale(1.1);
+      border-color: var(--cyan);
+    }
+
+    .wordle-tile.green {
+      background: #10b981;
+      border-color: #10b981;
+      color: #fff;
+    }
+
+    .wordle-tile.yellow {
+      background: #eab308;
+      border-color: #eab308;
+      color: #000;
+    }
+
+    .wordle-tile.grey {
+      background: #334155;
+      border-color: #334155;
+      color: #94a3b8;
+    }
+
+    /* Virtual Keyboard */
+    .keyboard {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      width: 100%;
+      max-width: 500px;
+    }
+
+    .keyboard-row {
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .key-btn {
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: var(--text);
+      font-weight: 700;
+      height: 44px;
+      min-width: 32px;
+      padding: 0 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      transition: all 0.15s;
+    }
+
+    .key-btn.wide {
+      min-width: 54px;
+      font-size: 0.75rem;
+    }
+
+    .key-btn:hover {
+      background: #334155;
+    }
+
+    .key-btn.green { background: #10b981; border-color: #10b981; color: #fff; }
+    .key-btn.yellow { background: #eab308; border-color: #eab308; color: #000; }
+    .key-btn.grey { background: #1f242c; border-color: #1f242c; color: #64748b; }
+
+    /* =========================================
+       LEADERBOARD TABLE
+       ========================================= */
+    .leaderboard-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 14px;
+    }
+
+    .leaderboard-table th,
+    .leaderboard-table td {
+      padding: 12px 14px;
+      text-align: left;
+      border-bottom: 1px solid #1f293d;
+    }
+
+    .leaderboard-table th {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .leaderboard-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .leaderboard-table tr.champion td {
+      background: rgba(251, 191, 36, 0.06);
+    }
+
+    .badge-chip {
+      display: inline-block;
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(168, 85, 247, 0.15);
+      border: 1px solid rgba(168, 85, 247, 0.4);
+      color: #c084fc;
+      margin-right: 4px;
+      margin-bottom: 2px;
+    }
+
+    /* Modal for changing username */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+      padding: 20px;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal-card {
+      background: #111827;
+      border: 1px solid var(--cyan);
+      box-shadow: 0 0 30px var(--cyan-glow);
+      border-radius: 16px;
+      padding: 24px;
+      max-width: 400px;
+      width: 100%;
+    }
+
+    .modal-card h3 {
+      font-family: 'Orbitron', sans-serif;
+      margin-bottom: 10px;
+    }
+
+    .modal-input {
+      width: 100%;
+      background: #0f172a;
+      border: 1px solid #334155;
+      padding: 10px 14px;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 1rem;
+      margin: 14px 0;
+    }
+
+    .modal-input:focus {
+      outline: none;
+      border-color: var(--cyan);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 24px;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--card-border);
+    }
+
+    @media (max-width: 480px) {
+      .c4-col-buttons { grid-template-columns: repeat(7, 38px); }
+      .c4-drop-btn { width: 38px; height: 32px; font-size: 0.85rem; }
+      .c4-grid { grid-template-columns: repeat(7, 38px); grid-template-rows: repeat(6, 38px); }
+      .c4-cell { width: 38px; height: 38px; }
+      .ttt-grid { grid-template-columns: repeat(3, 76px); grid-template-rows: repeat(3, 76px); }
+      .ttt-cell { width: 76px; height: 76px; font-size: 2rem; }
+      #chess-board { width: 320px; height: 320px; }
+      .wordle-row { grid-template-columns: repeat(5, 42px); }
+      .wordle-tile { width: 42px; height: 42px; font-size: 1.15rem; }
+      .key-btn { height: 40px; min-width: 26px; padding: 0 6px; font-size: 0.75rem; }
+      .key-btn.wide { min-width: 44px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header>
+    <a href="https://github.com/sudo-aadarsh" class="brand" target="_blank">
+      <span style="font-size: 1.4rem;">🕹️</span>
+      <span class="brand-title">AADARSH'S CYBER ARCADE</span>
+    </a>
+
+    <div class="player-stats">
+      <div class="player-name-badge" onclick="openUsernameModal()" title="Click to change your username">
+        <span>👾</span>
+        <span id="display-username">@Visitor</span>
+        <span style="font-size: 0.75rem; color: var(--text-muted);">(edit)</span>
+      </div>
+      <span>•</span>
+      <div class="score-badge">
+        <span>💎</span>
+        <span id="display-score">0</span> pts
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <button class="btn-icon" id="sound-btn" onclick="toggleSound()">
+        <span id="sound-icon">🔊</span>
+      </button>
+      <a href="https://github.com/sudo-aadarsh" class="btn-icon">
+        <span>GitHub Profile ↗</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Game Selector Tabs -->
+  <div class="nav-tabs-container">
+    <div class="nav-tabs">
+      <button class="tab-btn active" onclick="switchTab('c4')">🟡 Connect Four</button>
+      <button class="tab-btn" onclick="switchTab('ttt')">❌ Tic-Tac-Toe</button>
+      <button class="tab-btn" onclick="switchTab('chess')">♟️ Chess vs AI</button>
+      <button class="tab-btn" onclick="switchTab('wordle')">🟩 Dev Wordle</button>
+      <button class="tab-btn" onclick="switchTab('leaderboard')">🏆 Leaderboard</button>
+    </div>
+  </div>
+
+  <main>
+    <!-- =========================================
+         GAME 1: CONNECT FOUR
+         ========================================= -->
+    <section id="tab-c4" class="game-section active">
+      <div class="game-card">
+        <div class="game-header">
+          <div class="game-title">
+            <span>🟡 Connect Four</span>
+            <span class="game-status-badge" id="c4-status">YOUR TURN (🟡)</span>
+          </div>
+          <button class="btn-action btn-secondary" onclick="resetConnect4()">🔄 Restart Game</button>
+        </div>
+
+        <div class="c4-board-wrapper">
+          <div class="c4-col-buttons" id="c4-buttons">
+            <!-- 7 Drop Buttons -->
+          </div>
+          <div class="c4-grid" id="c4-grid">
+            <!-- 42 Cells -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================
+         GAME 2: TIC-TAC-TOE
+         ========================================= -->
+    <section id="tab-ttt" class="game-section">
+      <div class="game-card">
+        <div class="game-header">
+          <div class="game-title">
+            <span>❌ Tic-Tac-Toe</span>
+            <span class="game-status-badge" id="ttt-status">YOUR TURN (❌)</span>
+          </div>
+          <button class="btn-action btn-secondary" onclick="resetTicTacToe()">🔄 Restart Game</button>
+        </div>
+
+        <div class="ttt-board-wrapper">
+          <div class="ttt-grid" id="ttt-grid">
+            <!-- 9 Cells -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================
+         GAME 3: CHESS
+         ========================================= -->
+    <section id="tab-chess" class="game-section">
+      <div class="game-card">
+        <div class="game-header">
+          <div class="game-title">
+            <span>♟️ Chess vs Aadarsh-AI</span>
+            <span class="game-status-badge" id="chess-status">WHITE TO MOVE</span>
+          </div>
+          <button class="btn-action btn-secondary" onclick="resetChess()">🔄 New Chess Match</button>
+        </div>
+
+        <div class="chess-wrapper">
+          <div id="chess-board"></div>
+          <div class="chess-info-bar">
+            <span>You: White ⚪</span>
+            <span id="chess-eval">Aadarsh-AI: Black ⚫</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================
+         GAME 4: DEVELOPER WORDLE
+         ========================================= -->
+    <section id="tab-wordle" class="game-section">
+      <div class="game-card">
+        <div class="game-header">
+          <div class="game-title">
+            <span>🟩 Developer Wordle</span>
+            <span class="game-status-badge" id="wordle-status">GUESS 1 OF 6</span>
+          </div>
+          <button class="btn-action btn-secondary" onclick="resetWordle()">🔄 New Word</button>
+        </div>
+
+        <div class="wordle-wrapper">
+          <div class="wordle-grid" id="wordle-grid"></div>
+          <div class="keyboard" id="keyboard"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================
+         TAB 5: LEADERBOARD
+         ========================================= -->
+    <section id="tab-leaderboard" class="game-section">
+      <div class="game-card">
+        <div class="game-header">
+          <div class="game-title">
+            <span>🏆 Hall of Fame &amp; Leaderboard</span>
+          </div>
+          <button class="btn-action" onclick="openUsernameModal()">✏️ Set My Username</button>
+        </div>
+
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 12px;">
+          Win games across the arcade to earn points, claim victory streaks, and rank on the Hall of Fame!
+        </p>
+
+        <table class="leaderboard-table">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Player</th>
+              <th>Score</th>
+              <th>Wins</th>
+              <th>Badges</th>
+            </tr>
+          </thead>
+          <tbody id="leaderboard-body">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- Username Modal -->
+  <div class="modal-overlay" id="username-modal">
+    <div class="modal-card">
+      <h3>Enter Your Name / Handle</h3>
+      <p style="color: var(--text-muted); font-size: 0.85rem;">This name will appear on the Hall of Fame scoreboard!</p>
+      <input type="text" id="username-input" class="modal-input" maxlength="20" placeholder="e.g. dev_sarah or @yourname" />
+      <div style="display: flex; justify-content: flex-end; gap: 8px;">
+        <button class="btn-action btn-secondary" onclick="closeUsernameModal()">Cancel</button>
+        <button class="btn-action" onclick="saveUsername()">Save Name</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>⚡ Aadarsh's Cyber Arcade • Built with Web Standards &amp; GitHub Pages • Playable anywhere!</p>
+  </footer>
+
+  <script>
+    /* ==========================================================
+       AUDIO SYNTHESIZER (Synthetic Retro Web Audio API)
+       ========================================================== */
+    let audioCtx = null;
+    let soundEnabled = true;
+
+    function initAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+    }
+
+    function playTone(freq, type, duration) {
+      if (!soundEnabled) return;
+      try {
+        initAudio();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) {}
+    }
+
+    function soundMove() { playTone(440, 'sine', 0.08); }
+    function soundDrop() { playTone(280, 'triangle', 0.12); }
+    function soundWin() {
+      setTimeout(() => playTone(523, 'triangle', 0.1), 0);
+      setTimeout(() => playTone(659, 'triangle', 0.1), 120);
+      setTimeout(() => playTone(784, 'triangle', 0.15), 240);
+      setTimeout(() => playTone(1046, 'triangle', 0.3), 360);
+    }
+    function soundError() { playTone(150, 'sawtooth', 0.15); }
+
+    function toggleSound() {
+      soundEnabled = !soundEnabled;
+      document.getElementById('sound-icon').textContent = soundEnabled ? '🔊' : '🔇';
+    }
+
+    /* ==========================================================
+       USER PROFILE & LEADERBOARD LOGIC
+       ========================================================== */
+    let currentUser = localStorage.getItem('arcade_user') || 'Challenger';
+    let userStats = JSON.parse(localStorage.getItem('arcade_stats') || JSON.stringify({
+      score: 0,
+      wins: { c4: 0, ttt: 0, chess: 0, wordle: 0 },
+      badges: []
+    }));
+
+    function saveStats() {
+      localStorage.setItem('arcade_user', currentUser);
+      localStorage.setItem('arcade_stats', JSON.stringify(userStats));
+      updateUIHeader();
+      renderLeaderboard();
+    }
+
+    function updateUIHeader() {
+      document.getElementById('display-username').textContent = '@' + currentUser;
+      document.getElementById('display-score').textContent = userStats.score;
+    }
+
+    function awardPoints(pts, gameKey, won = false) {
+      userStats.score += pts;
+      if (won) {
+        userStats.wins[gameKey] = (userStats.wins[gameKey] || 0) + 1;
+        confetti({ particleCount: 70, spread: 60, origin: { y: 0.6 } });
+        soundWin();
+      }
+      // Badges
+      const b = new Set(userStats.badges || []);
+      if (userStats.wins.chess >= 1) b.add('👑 Grandmaster');
+      if (userStats.wins.wordle >= 1) b.add('⚡ Wordle Wizard');
+      if (userStats.wins.c4 >= 1) b.add('🎯 Tactician');
+      if (userStats.wins.ttt >= 1) b.add('🤖 AI Slayer');
+      userStats.badges = Array.from(b);
+
+      saveStats();
+    }
+
+    function renderLeaderboard() {
+      const tbody = document.getElementById('leaderboard-body');
+      tbody.innerHTML = '';
+
+      // Default champion: sudo-aadarsh
+      const players = [
+        { name: 'sudo-aadarsh', score: 120, wins: 7, badges: ['👑 Grandmaster', '⚡ Wordle Wizard', '🎯 Tactician'] },
+        { name: currentUser, score: userStats.score, wins: Object.values(userStats.wins).reduce((a,b)=>a+b, 0), badges: userStats.badges }
+      ];
+
+      players.sort((a, b) => b.score - a.score);
+
+      players.forEach((p, idx) => {
+        const tr = document.createElement('tr');
+        if (idx === 0) tr.classList.add('champion');
+        const rankMedal = idx === 0 ? '🥇 1' : (idx === 1 ? '🥈 2' : `#${idx+1}`);
+        const badgesHtml = p.badges && p.badges.length 
+          ? p.badges.map(b => `<span class="badge-chip">${b}</span>`).join('') 
+          : '<span style="color:var(--text-muted);font-size:0.8rem;">Rookie</span>';
+
+        tr.innerHTML = `
+          <td style="font-weight:700;">${rankMedal}</td>
+          <td><b style="color:var(--cyan);">@${p.name}</b></td>
+          <td><b style="color:var(--gold);">${p.score} pts</b></td>
+          <td>${p.wins} wins</td>
+          <td>${badgesHtml}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function openUsernameModal() {
+      document.getElementById('username-input').value = currentUser;
+      document.getElementById('username-modal').classList.add('open');
+    }
+
+    function closeUsernameModal() {
+      document.getElementById('username-modal').classList.remove('open');
+    }
+
+    function saveUsername() {
+      const input = document.getElementById('username-input').value.trim().replace(/^@/, '');
+      if (input) {
+        currentUser = input;
+        saveStats();
+      }
+      closeUsernameModal();
+    }
+
+    /* ==========================================================
+       TAB SWITCHING
+       ========================================================== */
+    function switchTab(tabId) {
+      document.querySelectorAll('.game-section').forEach(sec => sec.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+
+      const target = document.getElementById('tab-' + tabId);
+      if (target) target.classList.add('active');
+
+      const activeBtn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.getAttribute('onclick').includes(tabId));
+      if (activeBtn) activeBtn.classList.add('active');
+
+      window.location.hash = tabId;
+    }
+
+    /* ==========================================================
+       GAME 1: CONNECT FOUR LOGIC
+       ========================================================== */
+    const C4_ROWS = 6;
+    const C4_COLS = 7;
+    let c4Board = [];
+    let c4Active = true;
+
+    function initConnect4() {
+      const btnContainer = document.getElementById('c4-buttons');
+      const gridContainer = document.getElementById('c4-grid');
+      btnContainer.innerHTML = '';
+      gridContainer.innerHTML = '';
+
+      for (let c = 0; c < C4_COLS; c++) {
+        const btn = document.createElement('button');
+        btn.className = 'c4-drop-btn';
+        btn.textContent = '⬇';
+        btn.onclick = () => handleC4Drop(c);
+        btnContainer.appendChild(btn);
+      }
+
+      for (let r = 0; r < C4_ROWS; r++) {
+        for (let c = 0; c < C4_COLS; c++) {
+          const cell = document.createElement('div');
+          cell.className = 'c4-cell';
+          cell.id = `c4-${r}-${c}`;
+          gridContainer.appendChild(cell);
+        }
+      }
+      resetConnect4();
+    }
+
+    function resetConnect4() {
+      c4Board = Array(C4_ROWS).fill(null).map(() => Array(C4_COLS).fill(0));
+      c4Active = true;
+      document.getElementById('c4-status').textContent = 'YOUR TURN (🟡)';
+      document.getElementById('c4-status').style.color = 'var(--cyan)';
+
+      for (let r = 0; r < C4_ROWS; r++) {
+        for (let c = 0; c < C4_COLS; c++) {
+          const el = document.getElementById(`c4-${r}-${c}`);
+          el.className = 'c4-cell';
+        }
+      }
+      document.querySelectorAll('.c4-drop-btn').forEach(b => b.disabled = false);
+    }
+
+    function handleC4Drop(col) {
+      if (!c4Active) return;
+
+      let row = -1;
+      for (let r = C4_ROWS - 1; r >= 0; r--) {
+        if (c4Board[r][col] === 0) {
+          row = r;
+          break;
+        }
+      }
+      if (row === -1) return; // Full col
+
+      // Drop player piece
+      c4Board[row][col] = 1;
+      document.getElementById(`c4-${row}-${col}`).classList.add('yellow');
+      soundDrop();
+
+      if (checkC4Win(1)) {
+        c4Active = false;
+        document.getElementById('c4-status').textContent = '🎉 YOU WON! (+30 pts)';
+        document.getElementById('c4-status').style.color = 'var(--gold)';
+        awardPoints(30, 'c4', true);
+        return;
+      }
+
+      if (c4Board.every(row => row.every(cell => cell !== 0))) {
+        c4Active = false;
+        document.getElementById('c4-status').textContent = "🤝 DRAW GAME!";
+        return;
+      }
+
+      // AI Counter
+      document.getElementById('c4-status').textContent = 'AI THINKING... (🔵)';
+      setTimeout(c4AIMove, 250);
+    }
+
+    function c4AIMove() {
+      if (!c4Active) return;
+
+      const validCols = [];
+      for (let c = 0; c < C4_COLS; c++) {
+        if (c4Board[0][c] === 0) validCols.push(c);
+      }
+      if (!validCols.length) return;
+
+      // 1. Can AI win immediately?
+      let chosenCol = null;
+      for (let c of validCols) {
+        let r = getAvailableC4Row(c);
+        c4Board[r][c] = 2;
+        if (checkC4Win(2)) chosenCol = c;
+        c4Board[r][c] = 0;
+        if (chosenCol !== null) break;
+      }
+
+      // 2. Block player immediate win
+      if (chosenCol === null) {
+        for (let c of validCols) {
+          let r = getAvailableC4Row(c);
+          c4Board[r][c] = 1;
+          if (checkC4Win(1)) chosenCol = c;
+          c4Board[r][c] = 0;
+          if (chosenCol !== null) break;
+        }
+      }
+
+      // 3. Fallback: prefer center
+      if (chosenCol === null) {
+        const pref = [3, 2, 4, 1, 5, 0, 6];
+        chosenCol = pref.find(c => validCols.includes(c));
+      }
+
+      let r = getAvailableC4Row(chosenCol);
+      c4Board[r][chosenCol] = 2;
+      document.getElementById(`c4-${r}-${chosenCol}`).classList.add('blue');
+      soundDrop();
+
+      if (checkC4Win(2)) {
+        c4Active = false;
+        document.getElementById('c4-status').textContent = '🤖 AADARSH-AI WON!';
+        document.getElementById('c4-status').style.color = 'var(--red)';
+        return;
+      }
+
+      document.getElementById('c4-status').textContent = 'YOUR TURN (🟡)';
+    }
+
+    function getAvailableC4Row(col) {
+      for (let r = C4_ROWS - 1; r >= 0; r--) {
+        if (c4Board[r][col] === 0) return r;
+      }
+      return -1;
+    }
+
+    function checkC4Win(p) {
+      // Horizontal
+      for (let r = 0; r < C4_ROWS; r++) {
+        for (let c = 0; c < C4_COLS - 3; c++) {
+          if (c4Board[r][c]===p && c4Board[r][c+1]===p && c4Board[r][c+2]===p && c4Board[r][c+3]===p) return true;
+        }
+      }
+      // Vertical
+      for (let r = 0; r < C4_ROWS - 3; r++) {
+        for (let c = 0; c < C4_COLS; c++) {
+          if (c4Board[r][c]===p && c4Board[r+1][c]===p && c4Board[r+2][c]===p && c4Board[r+3][c]===p) return true;
+        }
+      }
+      // Diagonal Down-Right
+      for (let r = 0; r < C4_ROWS - 3; r++) {
+        for (let c = 0; c < C4_COLS - 3; c++) {
+          if (c4Board[r][c]===p && c4Board[r+1][c+1]===p && c4Board[r+2][c+2]===p && c4Board[r+3][c+3]===p) return true;
+        }
+      }
+      // Diagonal Up-Right
+      for (let r = 3; r < C4_ROWS; r++) {
+        for (let c = 0; c < C4_COLS - 3; c++) {
+          if (c4Board[r][c]===p && c4Board[r-1][c+1]===p && c4Board[r-2][c+2]===p && c4Board[r-3][c+3]===p) return true;
+        }
+      }
+      return false;
+    }
+
+    /* ==========================================================
+       GAME 2: TIC-TAC-TOE LOGIC
+       ========================================================== */
+    let tttBoard = Array(9).fill('');
+    let tttActive = true;
+
+    function initTicTacToe() {
+      const grid = document.getElementById('ttt-grid');
+      grid.innerHTML = '';
+      for (let i = 0; i < 9; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'ttt-cell';
+        cell.onclick = () => handleTTTClick(i);
+        grid.appendChild(cell);
+      }
+      resetTicTacToe();
+    }
+
+    function resetTicTacToe() {
+      tttBoard = Array(9).fill('');
+      tttActive = true;
+      document.getElementById('ttt-status').textContent = 'YOUR TURN (❌)';
+      document.getElementById('ttt-status').style.color = 'var(--cyan)';
+      const cells = document.querySelectorAll('.ttt-cell');
+      cells.forEach(c => {
+        c.textContent = '';
+        c.className = 'ttt-cell';
+      });
+    }
+
+    function handleTTTClick(idx) {
+      if (!tttActive || tttBoard[idx] !== '') return;
+
+      tttBoard[idx] = 'X';
+      const cell = document.querySelectorAll('.ttt-cell')[idx];
+      cell.textContent = '❌';
+      cell.classList.add('x');
+      soundMove();
+
+      if (checkTTTWinner('X')) {
+        tttActive = false;
+        document.getElementById('ttt-status').textContent = '🎉 YOU WON! (+20 pts)';
+        document.getElementById('ttt-status').style.color = 'var(--gold)';
+        awardPoints(20, 'ttt', true);
+        return;
+      }
+
+      if (tttBoard.every(c => c !== '')) {
+        tttActive = false;
+        document.getElementById('ttt-status').textContent = "🤝 DRAW GAME!";
+        return;
+      }
+
+      // AI move
+      document.getElementById('ttt-status').textContent = 'AI THINKING... (⭕)';
+      setTimeout(tttAIMove, 200);
+    }
+
+    function tttAIMove() {
+      if (!tttActive) return;
+      const empty = tttBoard.map((v, i) => v === '' ? i : null).filter(v => v !== null);
+      if (!empty.length) return;
+
+      // Smart Minimax
+      let bestMove = null;
+      let bestScore = -999;
+      for (let idx of empty) {
+        tttBoard[idx] = 'O';
+        let score = tttMinimax(0, false);
+        tttBoard[idx] = '';
+        if (score > bestScore) {
+          bestScore = score;
+          bestMove = idx;
+        }
+      }
+
+      tttBoard[bestMove] = 'O';
+      const cell = document.querySelectorAll('.ttt-cell')[bestMove];
+      cell.textContent = '⭕';
+      cell.classList.add('o');
+      soundMove();
+
+      if (checkTTTWinner('O')) {
+        tttActive = false;
+        document.getElementById('ttt-status').textContent = '🤖 AADARSH-AI WON!';
+        document.getElementById('ttt-status').style.color = 'var(--red)';
+        return;
+      }
+
+      if (tttBoard.every(c => c !== '')) {
+        tttActive = false;
+        document.getElementById('ttt-status').textContent = "🤝 DRAW GAME!";
+        return;
+      }
+
+      document.getElementById('ttt-status').textContent = 'YOUR TURN (❌)';
+    }
+
+    function tttMinimax(depth, isMax) {
+      if (checkTTTWinner('O')) return 10 - depth;
+      if (checkTTTWinner('X')) return depth - 10;
+      if (tttBoard.every(c => c !== '')) return 0;
+
+      if (isMax) {
+        let best = -999;
+        for (let i = 0; i < 9; i++) {
+          if (tttBoard[i] === '') {
+            tttBoard[i] = 'O';
+            best = Math.max(best, tttMinimax(depth + 1, false));
+            tttBoard[i] = '';
+          }
+        }
+        return best;
+      } else {
+        let best = 999;
+        for (let i = 0; i < 9; i++) {
+          if (tttBoard[i] === '') {
+            tttBoard[i] = 'X';
+            best = Math.min(best, tttMinimax(depth + 1, true));
+            tttBoard[i] = '';
+          }
+        }
+        return best;
+      }
+    }
+
+    function checkTTTWinner(p) {
+      const lines = [
+        [0,1,2],[3,4,5],[6,7,8],
+        [0,3,6],[1,4,7],[2,5,8],
+        [0,4,8],[2,4,6]
+      ];
+      return lines.some(([a,b,c]) => tttBoard[a]===p && tttBoard[b]===p && tttBoard[c]===p);
+    }
+
+    /* ==========================================================
+       GAME 3: CHESS ENGINE (chess.js)
+       ========================================================== */
+    let chess = null;
+    let selectedSquare = null;
+
+    const PIECE_GLYPHS = {
+      p: '♟', r: '♜', n: '♞', b: '♝', q: '♛', k: '♚',
+      P: '♙', R: '♖', N: '♘', B: '♗', Q: '♕', K: '♔'
+    };
+
+    function initChess() {
+      chess = new Chess();
+      renderChessBoard();
+    }
+
+    function resetChess() {
+      chess.reset();
+      selectedSquare = null;
+      document.getElementById('chess-status').textContent = 'WHITE TO MOVE';
+      document.getElementById('chess-status').style.color = 'var(--cyan)';
+      renderChessBoard();
+    }
+
+    function renderChessBoard() {
+      const boardEl = document.getElementById('chess-board');
+      boardEl.innerHTML = '';
+      const b = chess.board();
+
+      for (let r = 0; r < 8; r++) {
+        for (let c = 0; c < 8; c++) {
+          const sqName = String.fromCharCode(97 + c) + (8 - r);
+          const sqEl = document.createElement('div');
+          const isLight = (r + c) % 2 === 0;
+          sqEl.className = `chess-sq ${isLight ? 'light' : 'dark'}`;
+          sqEl.id = `sq-${sqName}`;
+
+          const piece = b[r][c];
+          if (piece) {
+            sqEl.textContent = piece.color === 'w' ? PIECE_GLYPHS[piece.type.toUpperCase()] : PIECE_GLYPHS[piece.type];
+            sqEl.style.color = piece.color === 'w' ? '#ffffff' : '#000000';
+            sqEl.style.textShadow = piece.color === 'w' ? '0 1px 3px rgba(0,0,0,0.8)' : '0 1px 2px rgba(255,255,255,0.4)';
+          }
+
+          sqEl.onclick = () => handleChessSquareClick(sqName);
+          boardEl.appendChild(sqEl);
+        }
+      }
+    }
+
+    function handleChessSquareClick(sqName) {
+      if (chess.game_over()) return;
+
+      // If clicked already selected
+      if (selectedSquare === sqName) {
+        clearChessHighlights();
+        selectedSquare = null;
+        return;
+      }
+
+      // If moving to square
+      if (selectedSquare) {
+        const move = chess.move({
+          from: selectedSquare,
+          to: sqName,
+          promotion: 'q'
+        });
+
+        if (move) {
+          soundMove();
+          clearChessHighlights();
+          selectedSquare = null;
+          renderChessBoard();
+
+          if (chess.in_checkmate()) {
+            document.getElementById('chess-status').textContent = '👑 CHECKMATE! YOU WON (+50 pts)';
+            document.getElementById('chess-status').style.color = 'var(--gold)';
+            awardPoints(50, 'chess', true);
+            return;
+          }
+
+          // AI Move (Black)
+          document.getElementById('chess-status').textContent = 'AI THINKING... (⚫)';
+          setTimeout(chessAIMove, 250);
+          return;
+        }
+      }
+
+      // Select piece
+      const piece = chess.get(sqName);
+      if (piece && piece.color === 'w') {
+        clearChessHighlights();
+        selectedSquare = sqName;
+        document.getElementById(`sq-${sqName}`).classList.add('selected');
+
+        const moves = chess.moves({ square: sqName, verbose: true });
+        moves.forEach(m => {
+          document.getElementById(`sq-${m.to}`).classList.add('highlight');
+        });
+      }
+    }
+
+    function clearChessHighlights() {
+      document.querySelectorAll('.chess-sq').forEach(el => {
+        el.classList.remove('selected', 'highlight');
+      });
+    }
+
+    function chessAIMove() {
+      if (chess.game_over()) return;
+
+      const moves = chess.moves({ verbose: true });
+      if (!moves.length) return;
+
+      // Simple heuristic: capture high value, else random
+      let bestMove = moves[0];
+      let bestVal = -999;
+      const vals = { p: 1, n: 3, b: 3, r: 5, q: 9, k: 0 };
+
+      for (let m of moves) {
+        let val = m.captured ? vals[m.captured] * 10 : 0;
+        if (val > bestVal) {
+          bestVal = val;
+          bestMove = m;
+        }
+      }
+
+      chess.move(bestMove);
+      soundMove();
+      renderChessBoard();
+
+      if (chess.in_checkmate()) {
+        document.getElementById('chess-status').textContent = '🤖 AADARSH-AI DELIVERED CHECKMATE!';
+        document.getElementById('chess-status').style.color = 'var(--red)';
+        return;
+      }
+
+      if (chess.in_check()) {
+        document.getElementById('chess-status').textContent = '⚠️ CHECK! WHITE KING UNDER ATTACK';
+        document.getElementById('chess-status').style.color = 'var(--gold)';
+      } else {
+        document.getElementById('chess-status').textContent = 'WHITE TO MOVE';
+      }
+    }
+
+    /* ==========================================================
+       GAME 4: DEVELOPER WORDLE LOGIC
+       ========================================================== */
+    const DEV_WORDS = [
+      "REACT", "LINUX", "REDIS", "ASYNC", "PROXY", "STACK", "CLOUD", "BYTES",
+      "QUERY", "CACHE", "TOKEN", "GRAPH", "ROBOT", "LOGIC", "SPARK", "KAFKA",
+      "SWIFT", "SHELL", "PATCH", "FLOAT", "INDEX", "MACRO", "PARSE", "PIPES",
+      "QUEUE", "ROUTE", "SCALE", "SCOPE", "TABLE", "YIELD", "AGILE", "BENCH",
+      "BLOCK", "CRASH", "FETCH", "FLASK", "HOOKS", "MODEL", "MUTEX", "OAUTH",
+      "PANEL", "REGEX", "RESET", "SHARD", "TESTS", "VALID", "WHILE", "CONST",
+      "DEBUG", "EVENT", "INPUT", "BUILD", "CLONE", "ARRAY"
+    ];
+
+    let wordleTarget = "REACT";
+    let wordleGuesses = [];
+    let wordleCurrentGuess = "";
+    let wordleActive = true;
+
+    function initWordle() {
+      buildWordleGrid();
+      buildWordleKeyboard();
+      resetWordle();
+
+      // Physical keyboard support
+      window.addEventListener('keydown', (e) => {
+        if (!document.getElementById('tab-wordle').classList.contains('active')) return;
+        if (e.key === 'Enter') handleWordleKey('ENTER');
+        else if (e.key === 'Backspace') handleWordleKey('⌫');
+        else if (/^[a-zA-Z]$/.test(e.key)) handleWordleKey(e.key.toUpperCase());
+      });
+    }
+
+    function resetWordle() {
+      wordleTarget = DEV_WORDS[Math.floor(Math.random() * DEV_WORDS.length)];
+      wordleGuesses = [];
+      wordleCurrentGuess = "";
+      wordleActive = true;
+      document.getElementById('wordle-status').textContent = 'GUESS 1 OF 6';
+      document.getElementById('wordle-status').style.color = 'var(--cyan)';
+
+      document.querySelectorAll('.wordle-tile').forEach(t => {
+        t.textContent = '';
+        t.className = 'wordle-tile';
+      });
+
+      document.querySelectorAll('.key-btn').forEach(k => {
+        k.className = k.classList.contains('wide') ? 'key-btn wide' : 'key-btn';
+      });
+    }
+
+    function buildWordleGrid() {
+      const grid = document.getElementById('wordle-grid');
+      grid.innerHTML = '';
+      for (let r = 0; r < 6; r++) {
+        const row = document.createElement('div');
+        row.className = 'wordle-row';
+        row.id = `w-row-${r}`;
+        for (let c = 0; c < 5; c++) {
+          const tile = document.createElement('div');
+          tile.className = 'wordle-tile';
+          tile.id = `w-tile-${r}-${c}`;
+          row.appendChild(tile);
+        }
+        grid.appendChild(row);
+      }
+    }
+
+    function buildWordleKeyboard() {
+      const kb = document.getElementById('keyboard');
+      kb.innerHTML = '';
+      const rows = [
+        ['Q','W','E','R','T','Y','U','I','O','P'],
+        ['A','S','D','F','G','H','J','K','L'],
+        ['ENTER','Z','X','C','V','B','N','M','⌫']
+      ];
+
+      rows.forEach(r => {
+        const rowEl = document.createElement('div');
+        rowEl.className = 'keyboard-row';
+        r.forEach(k => {
+          const btn = document.createElement('button');
+          btn.className = `key-btn ${k.length > 1 ? 'wide' : ''}`;
+          btn.textContent = k;
+          btn.id = `key-${k}`;
+          btn.onclick = () => handleWordleKey(k);
+          rowEl.appendChild(btn);
+        });
+        kb.appendChild(rowEl);
+      });
+    }
+
+    function handleWordleKey(k) {
+      if (!wordleActive) return;
+
+      if (k === '⌫') {
+        if (wordleCurrentGuess.length > 0) {
+          wordleCurrentGuess = wordleCurrentGuess.slice(0, -1);
+          updateWordleRow();
+        }
+      } else if (k === 'ENTER') {
+        if (wordleCurrentGuess.length !== 5) {
+          soundError();
+          return;
+        }
+        submitWordleGuess();
+      } else if (wordleCurrentGuess.length < 5) {
+        wordleCurrentGuess += k;
+        updateWordleRow();
+        soundMove();
+      }
+    }
+
+    function updateWordleRow() {
+      const r = wordleGuesses.length;
+      for (let c = 0; c < 5; c++) {
+        const tile = document.getElementById(`w-tile-${r}-${c}`);
+        tile.textContent = wordleCurrentGuess[c] || '';
+        if (wordleCurrentGuess[c]) tile.classList.add('pop');
+        else tile.classList.remove('pop');
+      }
+    }
+
+    function submitWordleGuess() {
+      const r = wordleGuesses.length;
+      const guess = wordleCurrentGuess;
+      const targetChars = wordleTarget.split('');
+      const colors = Array(5).fill('grey');
+
+      // First pass: Green
+      for (let i = 0; i < 5; i++) {
+        if (guess[i] === targetChars[i]) {
+          colors[i] = 'green';
+          targetChars[i] = null;
+        }
+      }
+      // Second pass: Yellow
+      for (let i = 0; i < 5; i++) {
+        if (colors[i] !== 'green' && targetChars.includes(guess[i])) {
+          colors[i] = 'yellow';
+          targetChars[targetChars.indexOf(guess[i])] = null;
+        }
+      }
+
+      // Animate Tiles & Key colors
+      for (let i = 0; i < 5; i++) {
+        const tile = document.getElementById(`w-tile-${r}-${i}`);
+        tile.classList.add(colors[i]);
+
+        const key = document.getElementById(`key-${guess[i]}`);
+        if (key) {
+          if (colors[i] === 'green') {
+            key.className = 'key-btn green';
+          } else if (colors[i] === 'yellow' && !key.classList.contains('green')) {
+            key.className = 'key-btn yellow';
+          } else if (!key.classList.contains('green') && !key.classList.contains('yellow')) {
+            key.className = 'key-btn grey';
+          }
+        }
+      }
+
+      wordleGuesses.push(guess);
+      wordleCurrentGuess = "";
+
+      if (guess === wordleTarget) {
+        wordleActive = false;
+        const tries = wordleGuesses.length;
+        const pts = 25 + (6 - tries) * 3;
+        document.getElementById('wordle-status').textContent = `🎉 CRACKED IN ${tries}/6! (+${pts} pts)`;
+        document.getElementById('wordle-status').style.color = 'var(--gold)';
+        awardPoints(pts, 'wordle', true);
+        return;
+      }
+
+      if (wordleGuesses.length >= 6) {
+        wordleActive = false;
+        document.getElementById('wordle-status').textContent = `💀 THE WORD WAS: ${wordleTarget}`;
+        document.getElementById('wordle-status').style.color = 'var(--red)';
+        return;
+      }
+
+      document.getElementById('wordle-status').textContent = `GUESS ${wordleGuesses.length + 1} OF 6`;
+    }
+
+    /* ==========================================================
+       STARTUP INIT
+       ========================================================== */
+    window.onload = () => {
+      updateUIHeader();
+      renderLeaderboard();
+      initConnect4();
+      initTicTacToe();
+      initChess();
+      initWordle();
+
+      // Check URL hash (e.g. #connect4, #chess)
+      const hash = window.location.hash.replace('#', '');
+      if (['c4', 'ttt', 'chess', 'wordle', 'leaderboard'].includes(hash)) {
+        switchTab(hash);
+      }
+    };
+  </script>
+</body>
+</html>
