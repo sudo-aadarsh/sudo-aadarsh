@@ -19,7 +19,7 @@
   &nbsp;
   <a href="https://sudo-aadarsh.github.io/sudo-aadarsh/#cricket" title="Play Super Cricket (Bat & Bowl)"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/tiles/cricket-dark.svg"><source media="(prefers-color-scheme: light)" srcset="assets/tiles/cricket-light.svg"><img src="assets/tiles/cricket-light.svg" width="135" alt="Play Super Cricket"></picture></a>
   &nbsp;
-  <a href="https://sudo-aadarsh.github.io/sudo-aadarsh/#wordle" title="Play Developer Wordle"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/tiles/wordle-dark.svg"><source media="(prefers-color-scheme: light)" srcset="assets/tiles/wordle-light.svg"><img src="assets/tiles/wordle-light.svg" width="135" alt="Play Developer Wordle"></picture></a>
+  <a href="https://sudo-aadarsh.github.io/sudo-aadarsh/#apex" title="Play Apex Velocity 3D Racing"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/tiles/apex-dark.svg"><source media="(prefers-color-scheme: light)" srcset="assets/tiles/apex-light.svg"><img src="assets/tiles/apex-light.svg" width="135" alt="Play Apex Velocity"></picture></a>
   &nbsp;
   <a href="https://sudo-aadarsh.github.io/sudo-aadarsh/#leaderboard" title="View Arcade Leaderboard"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/tiles/leaderboard-dark.svg"><source media="(prefers-color-scheme: light)" srcset="assets/tiles/leaderboard-light.svg"><img src="assets/tiles/leaderboard-light.svg" width="135" alt="View Arcade Leaderboard"></picture></a>
 </p>
