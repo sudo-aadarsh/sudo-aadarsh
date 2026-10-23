@@ -4222,7 +4222,7 @@
       resetCricketMatch();
       initWordlePuzzle();
 
-      const route = window.location.hash.replace('#', '');
+      const route = (window.location.hash || '').replace('#', '');
       if (route === 'wordle' || route === 'apex') {
         selectTab('apex');
       } else if (['chess', 'ttt', 'cricket', 'leaderboard'].includes(route)) {
@@ -4231,6 +4231,15 @@
         selectTab('chess');
       }
     };
+
+    window.addEventListener('hashchange', () => {
+      const h = (window.location.hash || '').replace('#', '');
+      if (h === 'wordle' || h === 'apex') {
+        selectTab('apex');
+      } else if (['chess', 'ttt', 'cricket', 'leaderboard'].includes(h)) {
+        selectTab(h);
+      }
+    });
   </script>
 </body>
 </html>
