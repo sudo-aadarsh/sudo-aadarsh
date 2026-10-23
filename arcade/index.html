@@ -1474,8 +1474,8 @@
       <button class="segment-tab-item" id="tab-btn-cricket" onclick="selectTab('cricket')">
         Super Cricket
       </button>
-      <button class="segment-tab-item" id="tab-btn-wordle" onclick="selectTab('wordle')">
-        Developer Wordle
+      <button class="segment-tab-item" id="tab-btn-apex" onclick="selectTab('apex')">
+        Apex Velocity
       </button>
       <button class="segment-tab-item" id="tab-btn-leaderboard" onclick="selectTab('leaderboard')">
         Leaderboard
@@ -1658,31 +1658,23 @@
     </div>
 
     <!-- =========================================================================
-         GAME 4: DEVELOPER WORDLE (HINT SENTENCE BESIDE EACH GUESS ROW)
+         GAME 4: APEX VELOCITY (3D RACING GAME)
          ========================================================================= -->
-    <div class="viewport-panel" id="panel-wordle">
-      <div class="game-arena-card">
-        <div class="arena-header-strip">
+    <div class="viewport-panel" id="panel-apex">
+      <div class="game-arena-card" style="padding:0; overflow:hidden; border-radius:12px;">
+        <div class="arena-header-strip" style="padding:16px 20px;">
           <div class="arena-title-area">
-            <h2>Developer Wordle</h2>
-            <p>Guess the 5-letter software engineering term with progressive hint sentences beside each row</p>
+            <h2>Apex Velocity</h2>
+            <p>High-Fidelity 3D Car Racing • 12 Cars • 6 Circuits • Dynamic Weather • Real Physics</p>
           </div>
-          <div class="status-text-pill" id="wordle-status-badge">ATTEMPT 1 OF 6</div>
+          <div style="display:flex; gap:10px;">
+            <a href="./apex/" target="_blank" class="ui-btn" style="text-decoration:none; display:flex; align-items:center; gap:6px;">
+              <span>FULLSCREEN POP-OUT</span> ↗
+            </a>
+          </div>
         </div>
-
-        <div class="wordle-balanced-layout">
-          <!-- Left: 6 Guess Rows -->
-          <div class="wordle-matrix-column" id="matrix-wordle-rows"></div>
-
-          <!-- Right: 6 Aligned Hint Sentences -->
-          <div class="wordle-hints-column" id="column-wordle-hints"></div>
-        </div>
-
-        <!-- Virtual Keyboard -->
-        <div class="keyboard-deck-wrap" id="keyboard-deck-wrap"></div>
-
-        <div style="display:flex; justify-content:center; margin-top:20px;">
-          <button class="ui-btn" onclick="resetWordlePuzzle()">NEW WORD PUZZLE</button>
+        <div style="width:100%; height:720px; position:relative; background:#030712;">
+          <iframe id="apex-game-frame" src="./apex/index.html" style="width:100%; height:100%; border:none; display:block;" allow="autoplay"></iframe>
         </div>
       </div>
     </div>
@@ -1952,6 +1944,7 @@
        NAVIGATION TABS
        ========================================================================= */
     function selectTab(tabId) {
+      if (tabId === 'wordle') tabId = 'apex';
       document.querySelectorAll('.viewport-panel').forEach(p => p.classList.remove('active'));
       document.querySelectorAll('.segment-tab-item').forEach(b => b.classList.remove('active'));
 
@@ -4230,7 +4223,9 @@
       initWordlePuzzle();
 
       const route = window.location.hash.replace('#', '');
-      if (['chess', 'ttt', 'cricket', 'wordle', 'leaderboard'].includes(route)) {
+      if (route === 'wordle' || route === 'apex') {
+        selectTab('apex');
+      } else if (['chess', 'ttt', 'cricket', 'leaderboard'].includes(route)) {
         selectTab(route);
       } else {
         selectTab('chess');
