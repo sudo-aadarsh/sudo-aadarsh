@@ -29,7 +29,23 @@
 - Eliminates accidental reverse engagement during normal braking to a stop or during race countdown.
 - Touching the throttle immediately clears reverse and returns the transmission into 1st gear for instantaneous forward launch.
 
-## Version 1.5.0 - Dynamic Handling Precision, Silky Physics & Photorealistic Circuit Graphics
+## Version 1.5.1 - Gantry Structural Alignment, Pure Alpine White BMW M4 & Realistic Circuit Lighting
+
+### 1. Overhead Gantry Structural Orientation & Pitch-Black Monolith Elimination
+- Resolved the critical bug where start/finish and sponsor gantry crossbars were rotated 90 degrees longitudinally along the track.
+- Replaced angular rotation calculations with exact 3D orthonormal basis matrices (`makeBasis(binormal, normal, tangent)`), guaranteeing crossbars cleanly span from the left pillar to the right pillar across the exact road width on all banked, climbing, and winding track segments.
+- Completely eliminated the floating 25-meter black slab that previously cast unwanted shadows and obstructed overhead driver visibility.
+- Upgraded gantry truss materials to high-grade galvanized motorsport steel (`0x94a3b8`) with reflective metallic PBR shading.
+- Mounted 5 red FIA starting lamps directly onto the front face of the start/finish crossbar facing the starting grid.
+- Integrated high-output downward-pointing LED track illuminator strips beneath every gantry, bathing the start straight and sector checkpoints in radiant race lighting.
+- Installed double-sided sponsor banners facing both oncoming and exiting traffic across sectors.
+
+### 2. Full Pure Alpine White BMW M4 Body Recolor
+- Resolved issue where baked diffuse textures kept the rear quarter panels, trunk lid, and rear bumper of the BMW M4 dark.
+- Stripped baked diffuse maps from bodywork shaders and recolored all exterior panels (`white41`, `body151`, `black161`, `black151`, `ff41`, `tail71`, `zx1`, `livery`) to pure glossy Alpine White (`#ffffff` / `0xf8fafc`) with multi-coat automotive clear coat (`roughness: 0.16, metalness: 0.84`).
+- Preserved authentic contrasting shadow-line details: gloss-black kidney grilles, tinted glass, red LED taillight clusters, chrome quad exhaust tips, and iconic blue/white BMW roundel emblems.
+- Added dynamic body paint recoloring for Lamborghini models (`Mt_Body`).
+
 
 ### 1. Agile Steering Sensitivity & Suspension Jitter Elimination
 - Re-calibrated the speed-sensitive steering response: full lock (34 deg) up to 40 km/h, agile turn-in (15 deg) through medium chicanes, and firm high-speed aerodynamic bite (7 deg) for confident apex clipping.
