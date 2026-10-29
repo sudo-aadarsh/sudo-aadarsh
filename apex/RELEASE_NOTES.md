@@ -40,3 +40,8 @@
 ### 2. Camera Angular Oscillation & Wobble Fix
 - Replaced mismatched separate position/look-at lerp rates with unified, critically damped camera tracking vectors.
 - Camera position and look-at target now track the vehicle in synchronized fluid harmony without micro-jitter or directional fluttering.
+
+### 3. Glowing Carbon-Ceramic Brake Rotors & Dynamic Exhaust Flames
+- Fixed brake detection logic in vehicle physics so brake lights and brake rotor effects activate reliably during high-speed deceleration.
+- Carbon-ceramic brake rotors glow with incandescent molten cherry-red / orange emissive heat (up to 2.2 intensity) under hard braking and dissipate heat naturally through corner exits.
+- Added dynamic 3D exhaust backfire flame cones erupting with cyan-blue core and orange outer bursts during high-rev downshifts and overrun pops.
