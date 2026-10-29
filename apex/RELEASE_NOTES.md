@@ -17,3 +17,9 @@
 - Eliminated the glitch where AI bot cars could occasionally render only wheels with a missing chassis body.
 - Preserved high-fidelity 3D sculpted supercar/GT procedural bodywork (aerodynamic greenhouse, rear diffuser, splitter, carbon wings, LED lights, interior) for all AI opponents.
 - Guaranteed 100% chassis visibility, zero network latency, and zero WebGL instance clipping across the entire grid.
+
+### 4. Continuous Engine Rumble & Deceleration Overrun Acoustics
+- Fixed engine sound disappearing when releasing the forward (W/Up) button.
+- Designed a dual-architecture hybrid acoustic engine: continuous multi-harmonic mechanical synthesizer coupled with high-fidelity real engine and throttle roar samples.
+- When coasting or decelerating with throttle released, authentic engine braking overrun roar (0.35 - 0.85 volume) and exhaust burbles remain prominently audible.
+- Stationary idle now delivers a continuous, warm mechanical burble with sub-bass exhaust presence (45 - 120 Hz) that never cuts out.
