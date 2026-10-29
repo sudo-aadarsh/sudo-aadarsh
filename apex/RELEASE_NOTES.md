@@ -23,3 +23,8 @@
 - Designed a dual-architecture hybrid acoustic engine: continuous multi-harmonic mechanical synthesizer coupled with high-fidelity real engine and throttle roar samples.
 - When coasting or decelerating with throttle released, authentic engine braking overrun roar (0.35 - 0.85 volume) and exhaust burbles remain prominently audible.
 - Stationary idle now delivers a continuous, warm mechanical burble with sub-bass exhaust presence (45 - 120 Hz) that never cuts out.
+
+### 5. Timed Reverse Shift Threshold & Grid Anti-Stall
+- Added a 250ms continuous brake-hold threshold before shifting into Reverse (Gear -1) while stationary.
+- Eliminates accidental reverse engagement during normal braking to a stop or during race countdown.
+- Touching the throttle immediately clears reverse and returns the transmission into 1st gear for instantaneous forward launch.
