@@ -45,3 +45,9 @@
 - Fixed brake detection logic in vehicle physics so brake lights and brake rotor effects activate reliably during high-speed deceleration.
 - Carbon-ceramic brake rotors glow with incandescent molten cherry-red / orange emissive heat (up to 2.2 intensity) under hard braking and dissipate heat naturally through corner exits.
 - Added dynamic 3D exhaust backfire flame cones erupting with cyan-blue core and orange outer bursts during high-rev downshifts and overrun pops.
+
+### 4. Realistic Circuit Architecture, Braking Boards & Overhead Sponsor Gantries
+- Added 3D corner braking distance countdown boards (150m, 100m, 50m) approaching every heavy braking zone with bold high-contrast FIA styling.
+- Installed high-resolution black-and-white checkered start/finish line spanning the entire road width alongside painted grid boxes (1 to 6).
+- Built overhead illuminated race sponsor gantries (Apex Velocity Grand Prix, Brembo, Pirelli, Shell V-Power, Motul) across circuit sectors with glowing LED telemetry backlighting.
+- Installed stacked red-and-white motorsport tire walls (Tecpro) along high-curvature corner runoff zones.
