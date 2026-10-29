@@ -36,3 +36,7 @@
 - Boosted steering turn-in responsiveness rate to 12.5 s⁻¹ and flattened input shaping curve for immediate, crisp response on initial keypress.
 - Increased physical cornering lateral grip limit to 1.55G, delivering authentic GT3 downforce-assisted handling.
 - Replaced laggy suspension spring calculations and hard floor snapping with smooth, critically damped road elevation tracking, eliminating all vertical physics oscillation, stutter, and chattering while moving.
+
+### 2. Camera Angular Oscillation & Wobble Fix
+- Replaced mismatched separate position/look-at lerp rates with unified, critically damped camera tracking vectors.
+- Camera position and look-at target now track the vehicle in synchronized fluid harmony without micro-jitter or directional fluttering.
