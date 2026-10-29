@@ -28,3 +28,26 @@
 - Added a 250ms continuous brake-hold threshold before shifting into Reverse (Gear -1) while stationary.
 - Eliminates accidental reverse engagement during normal braking to a stop or during race countdown.
 - Touching the throttle immediately clears reverse and returns the transmission into 1st gear for instantaneous forward launch.
+
+## Version 1.5.0 - Dynamic Handling Precision, Silky Physics & Photorealistic Circuit Graphics
+
+### 1. Agile Steering Sensitivity & Suspension Jitter Elimination
+- Re-calibrated the speed-sensitive steering response: full lock (34 deg) up to 40 km/h, agile turn-in (15 deg) through medium chicanes, and firm high-speed aerodynamic bite (7 deg) for confident apex clipping.
+- Boosted steering turn-in responsiveness rate to 12.5 s⁻¹ and flattened input shaping curve for immediate, crisp response on initial keypress.
+- Increased physical cornering lateral grip limit to 1.55G, delivering authentic GT3 downforce-assisted handling.
+- Replaced laggy suspension spring calculations and hard floor snapping with smooth, critically damped road elevation tracking, eliminating all vertical physics oscillation, stutter, and chattering while moving.
+
+### 2. Camera Angular Oscillation & Wobble Fix
+- Replaced mismatched separate position/look-at lerp rates with unified, critically damped camera tracking vectors.
+- Camera position and look-at target now track the vehicle in synchronized fluid harmony without micro-jitter or directional fluttering.
+
+### 3. Glowing Carbon-Ceramic Brake Rotors & Dynamic Exhaust Flames
+- Fixed brake detection logic in vehicle physics so brake lights and brake rotor effects activate reliably during high-speed deceleration.
+- Carbon-ceramic brake rotors glow with incandescent molten cherry-red / orange emissive heat (up to 2.2 intensity) under hard braking and dissipate heat naturally through corner exits.
+- Added dynamic 3D exhaust backfire flame cones erupting with cyan-blue core and orange outer bursts during high-rev downshifts and overrun pops.
+
+### 4. Realistic Circuit Architecture, Braking Boards & Overhead Sponsor Gantries
+- Added 3D corner braking distance countdown boards (150m, 100m, 50m) approaching every heavy braking zone with bold high-contrast FIA styling.
+- Installed high-resolution black-and-white checkered start/finish line spanning the entire road width alongside painted grid boxes (1 to 6).
+- Built overhead illuminated race sponsor gantries (Apex Velocity Grand Prix, Brembo, Pirelli, Shell V-Power, Motul) across circuit sectors with glowing LED telemetry backlighting.
+- Installed stacked red-and-white motorsport tire walls (Tecpro) along high-curvature corner runoff zones.
