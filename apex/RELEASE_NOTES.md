@@ -28,3 +28,11 @@
 - Added a 250ms continuous brake-hold threshold before shifting into Reverse (Gear -1) while stationary.
 - Eliminates accidental reverse engagement during normal braking to a stop or during race countdown.
 - Touching the throttle immediately clears reverse and returns the transmission into 1st gear for instantaneous forward launch.
+
+## Version 1.5.0 - Dynamic Handling Precision, Silky Physics & Photorealistic Circuit Graphics
+
+### 1. Agile Steering Sensitivity & Suspension Jitter Elimination
+- Re-calibrated the speed-sensitive steering response: full lock (34 deg) up to 40 km/h, agile turn-in (15 deg) through medium chicanes, and firm high-speed aerodynamic bite (7 deg) for confident apex clipping.
+- Boosted steering turn-in responsiveness rate to 12.5 s⁻¹ and flattened input shaping curve for immediate, crisp response on initial keypress.
+- Increased physical cornering lateral grip limit to 1.55G, delivering authentic GT3 downforce-assisted handling.
+- Replaced laggy suspension spring calculations and hard floor snapping with smooth, critically damped road elevation tracking, eliminating all vertical physics oscillation, stutter, and chattering while moving.
