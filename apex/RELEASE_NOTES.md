@@ -1,5 +1,26 @@
 # Apex Velocity - Release Notes
 
+## Version 1.5.3 - 3D Garage Vehicle Framing, Interactive Inspection & Formula 1 Dynamics
+
+### 1. 3D Garage Vehicle Framing & Card Occlusion Fix
+- Resolved issue where vehicles were rendered in the center of the viewport and partially hidden behind the vehicle specifications card.
+- Implemented lateral pan framing in the showroom camera (`panOffset = 1.45m`), shifting the rendered car into the open right ~64% of the viewport.
+- Supercars (Ferrari 458, Lamborghini Huracán, BMW M4) are now 100% visible from nose to tail without any overlap from the UI card.
+- Compacted the specifications card to 370px width with refined padding and glassmorphism backdrop blur.
+
+### 2. Interactive 3D Orbit & Zoom Showroom Inspection
+- Enabled full 360-degree interactive camera orbit inspection: click and drag with mouse/touch to rotate around the vehicle at any angle.
+- Added vertical elevation adjustment (0.65m to 3.2m) to inspect roof aerodynamics and ground diffuser channels.
+- Added mouse wheel zoom (3.8m to 7.8m distance) to inspect detailed alloy wheel spokes, brake calipers, and cockpit interior.
+- Added intelligent auto-spin resume with smooth timer pause during manual inspection.
+
+### 3. Formula 1 Aerodynamic Downforce & Precision Controls
+- Implemented realistic aerodynamic ground-effect downforce physics ($F_{\text{downforce}} = \frac{1}{2} \rho C_{df} A v^2$).
+- Downforce increases tire normal load ($F_N = mg + F_{\text{downforce}}$), providing massive high-speed lateral grip up to 4.5G for glued-down "on-rails" cornering without slide washout or wall collisions.
+- Upgraded steering response to Formula 1 race rack calibration: 18.5 s⁻¹ turn-in responsiveness, 24.0 s⁻¹ snap-centering, and direct linear rack response.
+- Integrated carbon-composite high-speed aerodynamic braking scaling with downforce, allowing late, aggressive braking into apexes.
+
+
 ## Version 1.5.2 - Supercar Alignment, Per-Gear Speed Limits & Wheel Mesh Fix
 
 ### 1. Ferrari 458 Italia Grid & Driving Orientation Correction
