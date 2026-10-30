@@ -1,5 +1,26 @@
 # Apex Velocity - Release Notes
 
+## Version 1.5.2 - Supercar Alignment, Per-Gear Speed Limits & Wheel Mesh Fix
+
+### 1. Ferrari 458 Italia Grid & Driving Orientation Correction
+- Resolved the critical bug where the green Ferrari 458 Italia (Veloce GT-R) was loaded 180 degrees reversed, facing backwards toward the camera on the starting grid.
+- Inspected the internal GLTF coordinate system of `ferrari.glb` (headlights at $Z = -1.84$, taillights at $Z = +0.91$) and applied a 180-degree yaw rotation (`rotation.y = Math.PI`).
+- The Ferrari now points forward down the race track along $+Z$ on the starting grid and throughout the race with authentic rear-chase camera perspective.
+
+### 2. Elimination of Floating Overhead Tyres & Duplicate Wheel Meshes
+- Resolved the visual glitch where procedural wheel assemblies were flung into the air and floated near overhead track structures.
+- Corrected double coordinate transformation in wheel placement by anchoring wheels strictly in local coordinate offsets relative to the vehicle root chassis.
+- When loading high-fidelity 3D supercar models (Ferrari 458, Lamborghini Huracán, BMW M4) that feature integrated wheel geometries, procedural wheel meshes are automatically hidden (`w.visible = false`), eliminating duplicate or ghost floating wheels.
+
+### 3. Physical Gear-Specific Speed Limits & Rev Limiter Governor
+- Implemented real-world physical transmission mechanics where each individual gear possesses a strict top speed calculated from the drivetrain gear ratio, final drive, tire rolling radius, and engine redline RPM ($v_{\max} = \frac{\text{redlineRpm} \times 2\pi r_{\text{tire}}}{60 \times |R_g| \times F_d} \times 3.6$ km/h).
+- In lower gears (such as 1st gear), vehicles can no longer accelerate endlessly into triple-digit speeds:
+  - Strada-R: 1st $\le 58.8$ km/h, 2nd $\le 98.5$ km/h, 3rd $\le 139.4$ km/h, 4th $\le 179.5$ km/h, 5th $\le 223$ km/h, 6th $\le 260$ km/h.
+  - Veloce GT-R (Ferrari): 1st gear strictly capped at $72.6$ km/h.
+  - Reverse (Gear -1): Governed strictly to 42 km/h.
+- Added progressive fuel cut power tapering between 90% and 100% of gear redline, realistic rev limiter stutter bounce at 98%, and authentic engine overrun compression braking when downshifting or overspeeding in lower gears.
+
+
 ## Version 1.4.2 - Supercar Acoustics, Alpine White BMW & AI Race Intelligence
 
 ### 1. BMW Strada-R Factory Paint Overhaul
