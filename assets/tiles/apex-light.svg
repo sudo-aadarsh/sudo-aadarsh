@@ -6,14 +6,29 @@
       <stop offset="100%" stop-color="#f1f5f9"/>
     </linearGradient>
     <linearGradient id="apexBorderLight" x1="0" y1="0" x2="135" y2="135" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#0284c7" stop-opacity="0.8"/>
+      <stop offset="0%" stop-color="#0284c7" stop-opacity="0.9"/>
       <stop offset="100%" stop-color="#cbd5e1" stop-opacity="0.9"/>
     </linearGradient>
-    <linearGradient id="carBodyLightGrad" x1="20" y1="40" x2="115" y2="65" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#0284c7"/>
-      <stop offset="60%" stop-color="#0369a1"/>
+    <linearGradient id="supercarChassisLight" x1="20" y1="36" x2="114" y2="68" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="35%" stop-color="#0284c7"/>
+      <stop offset="75%" stop-color="#0369a1"/>
       <stop offset="100%" stop-color="#075985"/>
     </linearGradient>
+    <linearGradient id="glassWindshieldLight" x1="42" y1="35" x2="72" y2="48" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="50%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+    <radialGradient id="apexHeadlightBeamLight" cx="96" cy="54" r="26" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0284c7" stop-opacity="0.5"/>
+      <stop offset="60%" stop-color="#38bdf8" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="apexAuraLight" cx="67.5" cy="50" r="30" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0284c7" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#0284c7" stop-opacity="0"/>
+    </radialGradient>
   </defs>
 
   <!-- Card Background -->
@@ -21,49 +36,106 @@
   <rect x="1" y="1" width="133" height="133" rx="14" stroke="url(#apexBorderLight)" stroke-width="1.5"/>
 
   <!-- Top Accent Glow -->
-  <path d="M24 2 H111" stroke="#0284c7" stroke-width="2.5" stroke-linecap="round" opacity="0.9"/>
+  <path d="M22 2 H113" stroke="#0284c7" stroke-width="2.5" stroke-linecap="round" opacity="0.95"/>
 
   <!-- Top Category Tag -->
   <text x="67.5" y="19" font-family="'JetBrains Mono', -apple-system, monospace" font-size="8" font-weight="700" fill="#0369a1" text-anchor="middle" letter-spacing="1.5">3D RACING</text>
 
-  <!-- 3D Racing Supercar Silhouette -->
-  <g transform="translate(18, 30)">
-    <!-- Speed Lines Behind Car -->
-    <path d="M2 18 H20" stroke="#0284c7" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
-    <path d="M6 14 H18" stroke="#0369a1" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
-    <path d="M0 24 H14" stroke="#0284c7" stroke-width="1.5" stroke-linecap="round" opacity="0.3"/>
+  <!-- Ambient Blue Speed Glow -->
+  <circle cx="67.5" cy="50" r="28" fill="url(#apexAuraLight)"/>
 
-    <!-- Car Body -->
-    <!-- Rear Wing -->
-    <path d="M12 12 H26 V14 H12 Z" fill="#0284c7"/>
-    <path d="M16 14 L18 20 H22 L20 14 Z" fill="#0369a1"/>
+  <!-- Dynamic Speed Streaks Behind Car -->
+  <g opacity="0.45">
+    <path d="M12 42 H30" stroke="#0284c7" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M16 48 H26" stroke="#0369a1" stroke-width="1.2" stroke-linecap="round"/>
+    <path d="M10 54 H22" stroke="#0284c7" stroke-width="1.6" stroke-linecap="round"/>
+    <path d="M18 58 H32" stroke="#0284c7" stroke-width="1.2" stroke-linecap="round"/>
+  </g>
 
-    <!-- Main Chassis & Cockpit -->
-    <path d="M22 22 L34 14 C42 12 56 12 66 16 L84 22 L94 24 C97 25 98 27 96 29 L92 31 H16 C14 31 13 29 15 27 L22 22 Z" fill="url(#carBodyLightGrad)"/>
+  <!-- Road Ground Contact Shadow -->
+  <ellipse cx="68" cy="67.5" rx="42" ry="4.5" fill="#94a3b8" opacity="0.45"/>
 
-    <!-- Cockpit Windshield -->
-    <path d="M38 16 C46 13.5 56 13.5 64 16 L76 21 H32 L38 16 Z" fill="#0f172a" opacity="0.9"/>
-    <path d="M42 17 L60 17 L70 20 H36 Z" stroke="#38bdf8" stroke-width="0.8" opacity="0.7"/>
+  <!-- Headlight Beam Cone -->
+  <polygon points="94,54 122,46 122,64 94,57" fill="url(#apexHeadlightBeamLight)"/>
 
-    <!-- Front Splitter & Headlight Beam -->
-    <path d="M88 28 L98 28" stroke="#0284c7" stroke-width="1.8" stroke-linecap="round"/>
-    <polygon points="98,27 106,25 106,31 98,29" fill="#0284c7" opacity="0.2"/>
+  <!-- GT Supercar Vector Construction -->
+  <g id="apex-gt-supercar-light">
+    <!-- Swan-Neck Carbon GT Rear Wing -->
+    <path d="M25 33 H42 V35.5 H25 Z" fill="#0f172a"/>
+    <path d="M25 33 H42" stroke="#0284c7" stroke-width="0.8" opacity="0.9"/>
+    <!-- Wing Pylons -->
+    <path d="M30 35.5 L34 43 H37 L33 35.5 Z" fill="#0284c7"/>
 
-    <!-- Wheels (Wheels with Blue Rims) -->
-    <!-- Rear Wheel -->
-    <circle cx="28" cy="30" r="7" fill="#1e293b" stroke="#0284c7" stroke-width="1.6"/>
-    <circle cx="28" cy="30" r="3" fill="#0284c7"/>
+    <!-- Main Aerodynamic Body Shell -->
+    <path d="M30 46 
+             L45 35 
+             C56 33.5, 68 34, 76 38 
+             L93 46 
+             C98 48.5, 106 50, 107 53 
+             C107.5 54.5, 105 56, 102 57 
+             L102 61 
+             L25 61 
+             C23 58, 24 53, 27 49 
+             Z" 
+          fill="url(#supercarChassisLight)"/>
 
-    <!-- Front Wheel -->
-    <circle cx="78" cy="30" r="7" fill="#1e293b" stroke="#0284c7" stroke-width="1.6"/>
-    <circle cx="78" cy="30" r="3" fill="#0284c7"/>
+    <!-- Front Splitter & Ground Effects (Low Carbon Undertray) -->
+    <path d="M22 61 H106 L108 63.5 H20 Z" fill="#0f172a"/>
+    <path d="M96 61 H106 L107.5 63 H98 Z" fill="#0284c7"/>
+
+    <!-- Sculpted Side Air Intake Duct -->
+    <polygon points="56,50 72,50 68,56 52,56" fill="#0f172a" opacity="0.95"/>
+    <path d="M56 50 L72 50" stroke="#38bdf8" stroke-width="0.8" opacity="0.8"/>
+
+    <!-- Cockpit Glass Canopy / Windshield -->
+    <path d="M47 37 
+             C56 35, 66 35.5, 73 39 
+             L83 46 
+             H42 
+             Z" 
+          fill="url(#glassWindshieldLight)"/>
+    <path d="M50 37.5 L78 44" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round" opacity="0.85"/>
+
+    <!-- Dual LED Projector Headlights -->
+    <polygon points="95,50 102,51 101,54 94,53" fill="#ffffff"/>
+    <polygon points="95,50 102,51 101,54 94,53" stroke="#0284c7" stroke-width="1"/>
+
+    <!-- Front Wheel Assembly -->
+    <g transform="translate(86, 52)">
+      <!-- Tire Outer Ring -->
+      <circle cx="9" cy="9" r="8.5" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
+      <!-- Glowing Brake Rotor -->
+      <circle cx="9" cy="9" r="6" fill="#94a3b8" opacity="0.6"/>
+      <!-- Electric Cyan Caliper -->
+      <rect x="11.5" y="5" width="2.5" height="4.5" rx="1" fill="#0284c7"/>
+      <!-- Split-Spoke Forged Alloy Rim -->
+      <circle cx="9" cy="9" r="5.5" fill="none" stroke="#e2e8f0" stroke-width="1.4"/>
+      <path d="M9 3.5 V14.5 M3.5 9 H14.5 M5 5 L13 13 M13 5 L5 13" stroke="#cbd5e1" stroke-width="0.8"/>
+      <!-- Center Lug Nut -->
+      <circle cx="9" cy="9" r="1.5" fill="#0284c7"/>
+    </g>
+
+    <!-- Rear Wheel Assembly -->
+    <g transform="translate(32, 52)">
+      <!-- Tire Outer Ring -->
+      <circle cx="9" cy="9" r="8.5" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
+      <!-- Brake Rotor -->
+      <circle cx="9" cy="9" r="6" fill="#94a3b8" opacity="0.6"/>
+      <!-- Caliper -->
+      <rect x="11.5" y="5" width="2.5" height="4.5" rx="1" fill="#0284c7"/>
+      <!-- Split-Spoke Forged Alloy Rim -->
+      <circle cx="9" cy="9" r="5.5" fill="none" stroke="#e2e8f0" stroke-width="1.4"/>
+      <path d="M9 3.5 V14.5 M3.5 9 H14.5 M5 5 L13 13 M13 5 L5 13" stroke="#cbd5e1" stroke-width="0.8"/>
+      <!-- Center Lug Nut -->
+      <circle cx="9" cy="9" r="1.5" fill="#0284c7"/>
+    </g>
   </g>
 
   <!-- Title -->
-  <text x="67.5" y="85" font-family="'Outfit', -apple-system, sans-serif" font-size="11" font-weight="800" fill="#0f172a" text-anchor="middle" letter-spacing="1">APEX VELOCITY</text>
+  <text x="67.5" y="87" font-family="'Outfit', -apple-system, sans-serif" font-size="11" font-weight="800" fill="#0f172a" text-anchor="middle" letter-spacing="0.8">APEX VELOCITY</text>
 
   <!-- Interactive Action Button Pill -->
-  <rect x="22" y="98" width="91" height="24" rx="12" fill="rgba(2, 132, 199, 0.1)" stroke="#0284c7" stroke-width="1.4"/>
-  <polygon points="45,105 45,115 54,110" fill="#0284c7"/>
-  <text x="73" y="113.5" font-family="'Outfit', -apple-system, sans-serif" font-size="10.5" font-weight="800" fill="#0284c7" text-anchor="middle" letter-spacing="1.2">PLAY</text>
+  <rect x="22" y="99" width="91" height="24" rx="12" fill="rgba(2, 132, 199, 0.1)" stroke="#0284c7" stroke-width="1.3"/>
+  <polygon points="44,106 44,116 53,111" fill="#0369a1"/>
+  <text x="73" y="114.5" font-family="'Outfit', -apple-system, sans-serif" font-size="10.5" font-weight="800" fill="#0369a1" text-anchor="middle" letter-spacing="1.2">PLAY</text>
 </svg>
