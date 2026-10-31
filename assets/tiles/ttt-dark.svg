@@ -1,38 +1,101 @@
 <svg width="135" height="135" viewBox="0 0 135 135" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="tttBg" x1="0" y1="0" x2="135" y2="135" gradientUnits="userSpaceOnUse">
+    <linearGradient id="tttBgDark" x1="0" y1="0" x2="135" y2="135" gradientUnits="userSpaceOnUse">
       <stop offset="0%" stop-color="#141926"/>
-      <stop offset="100%" stop-color="#0a0d16"/>
+      <stop offset="50%" stop-color="#0e1320"/>
+      <stop offset="100%" stop-color="#080b12"/>
     </linearGradient>
-    <linearGradient id="tttBorder" x1="0" y1="0" x2="135" y2="135" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.6"/>
-      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.15"/>
+    <linearGradient id="tttBorderDark" x1="0" y1="0" x2="135" y2="135" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.85"/>
+      <stop offset="50%" stop-color="#0284c7" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#f43f5e" stop-opacity="0.25"/>
     </linearGradient>
+    <linearGradient id="cyanXGrad" x1="32" y1="30" x2="66" y2="68" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#e0f2fe"/>
+      <stop offset="25%" stop-color="#38bdf8"/>
+      <stop offset="70%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#0369a1"/>
+    </linearGradient>
+    <linearGradient id="pinkOGrad" x1="68" y1="32" x2="102" y2="70" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffe4e6"/>
+      <stop offset="25%" stop-color="#fb7185"/>
+      <stop offset="70%" stop-color="#f43f5e"/>
+      <stop offset="100%" stop-color="#be123c"/>
+    </linearGradient>
+    <radialGradient id="tttGlowCyan" cx="49" cy="49" r="26" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0284c7" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#0284c7" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="tttGlowPink" cx="85" cy="49" r="26" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#f43f5e" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#f43f5e" stop-opacity="0"/>
+    </radialGradient>
   </defs>
 
-  <rect x="1" y="1" width="133" height="133" rx="14" fill="url(#tttBg)"/>
-  <rect x="1" y="1" width="133" height="133" rx="14" stroke="url(#tttBorder)" stroke-width="1.5"/>
+  <!-- Card Background -->
+  <rect x="1" y="1" width="133" height="133" rx="14" fill="url(#tttBgDark)"/>
+  <rect x="1" y="1" width="133" height="133" rx="14" stroke="url(#tttBorderDark)" stroke-width="1.5"/>
 
   <!-- Top Accent Glow -->
-  <path d="M24 2 H111" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" opacity="0.85"/>
+  <path d="M22 2 H113" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" opacity="0.9"/>
 
   <!-- Top Category Tag -->
-  <text x="67.5" y="19" font-family="'JetBrains Mono', -apple-system, monospace" font-size="8" font-weight="700" fill="#38bdf8" text-anchor="middle" letter-spacing="1.5" opacity="0.85">VERSUS AI</text>
+  <text x="67.5" y="19" font-family="'JetBrains Mono', -apple-system, monospace" font-size="8" font-weight="700" fill="#38bdf8" text-anchor="middle" letter-spacing="1.5">VERSUS AI</text>
 
-  <!-- Minimalist X and O Favicon -->
-  <g transform="translate(40, 29)">
-    <!-- X in Cyan -->
-    <line x1="4" y1="8" x2="22" y2="26" stroke="#38bdf8" stroke-width="4" stroke-linecap="round"/>
-    <line x1="22" y1="8" x2="4" y2="26" stroke="#38bdf8" stroke-width="4" stroke-linecap="round"/>
-    <!-- O in Coral -->
-    <circle cx="44" cy="17" r="9" stroke="#f43f5e" stroke-width="4" fill="none"/>
+  <!-- Dual Ambient Halos -->
+  <circle cx="48" cy="49" r="24" fill="url(#tttGlowCyan)"/>
+  <circle cx="86" cy="49" r="24" fill="url(#tttGlowPink)"/>
+
+  <!-- Subtle Cyber Isometric Background Grid -->
+  <g opacity="0.18">
+    <line x1="38" y1="28" x2="96" y2="28" stroke="#38bdf8" stroke-width="1" stroke-dasharray="2 3"/>
+    <line x1="32" y1="48" x2="102" y2="48" stroke="#38bdf8" stroke-width="1"/>
+    <line x1="34" y1="68" x2="100" y2="68" stroke="#38bdf8" stroke-width="1" stroke-dasharray="2 3"/>
+    <line x1="67.5" y1="26" x2="67.5" y2="72" stroke="#38bdf8" stroke-width="1.2"/>
+  </g>
+
+  <!-- 3D Neon Cyan "X" -->
+  <g id="neon-x">
+    <!-- Under Shadow -->
+    <path d="M36 71 L64 71" stroke="#0284c7" stroke-width="4" stroke-linecap="round" opacity="0.3"/>
+
+    <!-- Left-to-Right Arm -->
+    <path d="M37 36 L61 64" stroke="#0369a1" stroke-width="7" stroke-linecap="round"/>
+    <path d="M37 36 L61 64" stroke="url(#cyanXGrad)" stroke-width="5" stroke-linecap="round"/>
+    <path d="M37 36 L61 64" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" opacity="0.85"/>
+
+    <!-- Right-to-Left Arm -->
+    <path d="M61 36 L37 64" stroke="#0369a1" stroke-width="7" stroke-linecap="round"/>
+    <path d="M61 36 L37 64" stroke="url(#cyanXGrad)" stroke-width="5" stroke-linecap="round"/>
+    <path d="M61 36 L37 64" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" opacity="0.85"/>
+  </g>
+
+  <!-- 3D Neon Ruby "O" -->
+  <g id="neon-o">
+    <!-- Drop Shadow -->
+    <ellipse cx="86" cy="70" rx="14" ry="2.5" fill="#be123c" opacity="0.35"/>
+
+    <!-- Outer Glow Rim -->
+    <circle cx="86" cy="50" r="14.5" stroke="#be123c" stroke-width="6.5"/>
+    <!-- Main Gradient Ring -->
+    <circle cx="86" cy="50" r="14.5" stroke="url(#pinkOGrad)" stroke-width="4.8"/>
+    <!-- Inner Core Bevel Specular -->
+    <circle cx="85.5" cy="49.5" r="14.5" stroke="#ffffff" stroke-width="1.3" opacity="0.8" fill="none"/>
+    <!-- Deep Inner Recess -->
+    <circle cx="86" cy="50" r="11" fill="#0b0f19" opacity="0.85"/>
+  </g>
+
+  <!-- Duel Intersection Spark / Lens Glint -->
+  <g transform="translate(67.5, 49.5)">
+    <polygon points="0,-4 1,-1 4,0 1,1 0,4 -1,1 -4,0 -1,-1" fill="#ffffff"/>
+    <circle cx="0" cy="0" r="1.5" fill="#38bdf8"/>
   </g>
 
   <!-- Title -->
-  <text x="67.5" y="85" font-family="'Outfit', -apple-system, sans-serif" font-size="11.5" font-weight="800" fill="#f8fafc" text-anchor="middle" letter-spacing="0.8">TIC-TAC-TOE</text>
+  <text x="67.5" y="87" font-family="'Outfit', -apple-system, sans-serif" font-size="11.5" font-weight="800" fill="#f8fafc" text-anchor="middle" letter-spacing="0.8">TIC-TAC-TOE</text>
 
   <!-- Interactive Action Button Pill -->
-  <rect x="22" y="98" width="91" height="24" rx="12" fill="rgba(56, 189, 248, 0.15)" stroke="#38bdf8" stroke-width="1.2"/>
-  <polygon points="45,105 45,115 54,110" fill="#38bdf8"/>
-  <text x="73" y="113.5" font-family="'Outfit', -apple-system, sans-serif" font-size="10.5" font-weight="800" fill="#38bdf8" text-anchor="middle" letter-spacing="1.2">PLAY</text>
+  <rect x="22" y="99" width="91" height="24" rx="12" fill="rgba(56, 189, 248, 0.16)" stroke="#38bdf8" stroke-width="1.3"/>
+  <polygon points="44,106 44,116 53,111" fill="#38bdf8"/>
+  <text x="73" y="114.5" font-family="'Outfit', -apple-system, sans-serif" font-size="10.5" font-weight="800" fill="#38bdf8" text-anchor="middle" letter-spacing="1.2">PLAY</text>
 </svg>

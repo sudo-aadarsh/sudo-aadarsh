@@ -6,34 +6,93 @@
       <stop offset="100%" stop-color="#f1f5f9"/>
     </linearGradient>
     <linearGradient id="tttBorderLight" x1="0" y1="0" x2="135" y2="135" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#0284c7" stop-opacity="0.8"/>
+      <stop offset="0%" stop-color="#0284c7" stop-opacity="0.9"/>
       <stop offset="100%" stop-color="#cbd5e1" stop-opacity="0.9"/>
     </linearGradient>
+    <linearGradient id="cyanXGradLight" x1="32" y1="30" x2="66" y2="68" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="40%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#0369a1"/>
+    </linearGradient>
+    <linearGradient id="pinkOGradLight" x1="68" y1="32" x2="102" y2="70" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#fb7185"/>
+      <stop offset="40%" stop-color="#e11d48"/>
+      <stop offset="100%" stop-color="#9f1239"/>
+    </linearGradient>
+    <radialGradient id="tttGlowCyanLight" cx="49" cy="49" r="26" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0284c7" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#0284c7" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="tttGlowPinkLight" cx="85" cy="49" r="26" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#f43f5e" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#f43f5e" stop-opacity="0"/>
+    </radialGradient>
   </defs>
 
+  <!-- Card Background -->
   <rect x="1" y="1" width="133" height="133" rx="14" fill="url(#tttBgLight)"/>
   <rect x="1" y="1" width="133" height="133" rx="14" stroke="url(#tttBorderLight)" stroke-width="1.5"/>
 
   <!-- Top Accent Glow -->
-  <path d="M24 2 H111" stroke="#0284c7" stroke-width="2.5" stroke-linecap="round" opacity="0.9"/>
+  <path d="M22 2 H113" stroke="#0284c7" stroke-width="2.5" stroke-linecap="round" opacity="0.95"/>
 
   <!-- Top Category Tag -->
   <text x="67.5" y="19" font-family="'JetBrains Mono', -apple-system, monospace" font-size="8" font-weight="700" fill="#0369a1" text-anchor="middle" letter-spacing="1.5">VERSUS AI</text>
 
-  <!-- Minimalist X and O Favicon -->
-  <g transform="translate(40, 29)">
-    <!-- X in Deep Blue -->
-    <line x1="4" y1="8" x2="22" y2="26" stroke="#0284c7" stroke-width="4.5" stroke-linecap="round"/>
-    <line x1="22" y1="8" x2="4" y2="26" stroke="#0284c7" stroke-width="4.5" stroke-linecap="round"/>
-    <!-- O in Crimson Coral -->
-    <circle cx="44" cy="17" r="9" stroke="#e11d48" stroke-width="4.5" fill="none"/>
+  <!-- Dual Ambient Halos -->
+  <circle cx="48" cy="49" r="24" fill="url(#tttGlowCyanLight)"/>
+  <circle cx="86" cy="49" r="24" fill="url(#tttGlowPinkLight)"/>
+
+  <!-- Subtle Cyber Isometric Background Grid -->
+  <g opacity="0.25">
+    <line x1="38" y1="28" x2="96" y2="28" stroke="#94a3b8" stroke-width="1" stroke-dasharray="2 3"/>
+    <line x1="32" y1="48" x2="102" y2="48" stroke="#94a3b8" stroke-width="1"/>
+    <line x1="34" y1="68" x2="100" y2="68" stroke="#94a3b8" stroke-width="1" stroke-dasharray="2 3"/>
+    <line x1="67.5" y1="26" x2="67.5" y2="72" stroke="#94a3b8" stroke-width="1.2"/>
+  </g>
+
+  <!-- 3D Electric Blue "X" -->
+  <g id="neon-x-light">
+    <!-- Under Shadow -->
+    <path d="M37 69 L61 69" stroke="#cbd5e1" stroke-width="4" stroke-linecap="round" opacity="0.6"/>
+
+    <!-- Left-to-Right Arm -->
+    <path d="M37 36 L61 64" stroke="#082f49" stroke-width="7" stroke-linecap="round"/>
+    <path d="M37 36 L61 64" stroke="url(#cyanXGradLight)" stroke-width="5" stroke-linecap="round"/>
+    <path d="M37 36 L61 64" stroke="#e0f2fe" stroke-width="1.5" stroke-linecap="round" opacity="0.9"/>
+
+    <!-- Right-to-Left Arm -->
+    <path d="M61 36 L37 64" stroke="#082f49" stroke-width="7" stroke-linecap="round"/>
+    <path d="M61 36 L37 64" stroke="url(#cyanXGradLight)" stroke-width="5" stroke-linecap="round"/>
+    <path d="M61 36 L37 64" stroke="#e0f2fe" stroke-width="1.5" stroke-linecap="round" opacity="0.9"/>
+  </g>
+
+  <!-- 3D Crimson "O" -->
+  <g id="neon-o-light">
+    <!-- Drop Shadow -->
+    <ellipse cx="86" cy="70" rx="14" ry="2.5" fill="#cbd5e1" opacity="0.65"/>
+
+    <!-- Outer Deep Shadow Rim -->
+    <circle cx="86" cy="50" r="14.5" stroke="#881337" stroke-width="6.5"/>
+    <!-- Main Gradient Ring -->
+    <circle cx="86" cy="50" r="14.5" stroke="url(#pinkOGradLight)" stroke-width="4.8"/>
+    <!-- Inner Core Bevel Specular -->
+    <circle cx="85.5" cy="49.5" r="14.5" stroke="#ffe4e6" stroke-width="1.3" opacity="0.9" fill="none"/>
+    <!-- Deep Inner Recess -->
+    <circle cx="86" cy="50" r="11" fill="#f8fafc" opacity="0.95"/>
+  </g>
+
+  <!-- Duel Intersection Spark -->
+  <g transform="translate(67.5, 49.5)">
+    <polygon points="0,-4 1,-1 4,0 1,1 0,4 -1,1 -4,0 -1,-1" fill="#0284c7"/>
+    <circle cx="0" cy="0" r="1.4" fill="#ffffff"/>
   </g>
 
   <!-- Title -->
-  <text x="67.5" y="85" font-family="'Outfit', -apple-system, sans-serif" font-size="11.5" font-weight="800" fill="#0f172a" text-anchor="middle" letter-spacing="0.8">TIC-TAC-TOE</text>
+  <text x="67.5" y="87" font-family="'Outfit', -apple-system, sans-serif" font-size="11.5" font-weight="800" fill="#0f172a" text-anchor="middle" letter-spacing="0.8">TIC-TAC-TOE</text>
 
   <!-- Interactive Action Button Pill -->
-  <rect x="22" y="98" width="91" height="24" rx="12" fill="rgba(2, 132, 199, 0.1)" stroke="#0284c7" stroke-width="1.4"/>
-  <polygon points="45,105 45,115 54,110" fill="#0369a1"/>
-  <text x="73" y="113.5" font-family="'Outfit', -apple-system, sans-serif" font-size="10.5" font-weight="800" fill="#0369a1" text-anchor="middle" letter-spacing="1.2">PLAY</text>
+  <rect x="22" y="99" width="91" height="24" rx="12" fill="rgba(2, 132, 199, 0.1)" stroke="#0284c7" stroke-width="1.3"/>
+  <polygon points="44,106 44,116 53,111" fill="#0369a1"/>
+  <text x="73" y="114.5" font-family="'Outfit', -apple-system, sans-serif" font-size="10.5" font-weight="800" fill="#0369a1" text-anchor="middle" letter-spacing="1.2">PLAY</text>
 </svg>
