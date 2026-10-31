@@ -214,6 +214,10 @@
       transition: all 0.15s ease;
       text-align: center;
       white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
     }
 
     .segment-tab-item:hover {
@@ -1466,19 +1470,19 @@
   <div class="tab-nav-wrapper">
     <div class="segmented-control-bar">
       <button class="segment-tab-item active" id="tab-btn-chess" onclick="selectTab('chess')">
-        Chess vs AI
+        <span>♟️</span> Chess vs AI
       </button>
       <button class="segment-tab-item" id="tab-btn-ttt" onclick="selectTab('ttt')">
-        Tic-Tac-Toe
+        <span>⚔️</span> Tic-Tac-Toe
       </button>
       <button class="segment-tab-item" id="tab-btn-cricket" onclick="selectTab('cricket')">
-        Super Cricket
+        <span>🏏</span> Super Cricket
       </button>
       <button class="segment-tab-item" id="tab-btn-apex" onclick="selectTab('apex')">
-        Apex Velocity
+        <span>🏎️</span> Apex Velocity
       </button>
       <button class="segment-tab-item" id="tab-btn-leaderboard" onclick="selectTab('leaderboard')">
-        Leaderboard
+        <span>🏆</span> Leaderboard
       </button>
     </div>
   </div>
@@ -1944,22 +1948,47 @@
        NAVIGATION TABS
        ========================================================================= */
     function selectTab(tabId) {
+      if (!tabId) tabId = 'chess';
       if (tabId === 'wordle') tabId = 'apex';
+
+      // Verify panel exists, fallback to chess if not found
+      let pane = document.getElementById('panel-' + tabId);
+      if (!pane) {
+        tabId = 'chess';
+        pane = document.getElementById('panel-chess');
+      }
+
       document.querySelectorAll('.viewport-panel').forEach(p => p.classList.remove('active'));
       document.querySelectorAll('.segment-tab-item').forEach(b => b.classList.remove('active'));
 
-      const pane = document.getElementById('panel-' + tabId);
       if (pane) pane.classList.add('active');
 
       const btn = document.getElementById('tab-btn-' + tabId);
       if (btn) btn.classList.add('active');
 
-      window.location.hash = tabId;
+      // Update URL hash cleanly
+      if ((window.location.hash || '').replace('#', '') !== tabId) {
+        try {
+          history.replaceState(null, '', '#' + tabId);
+        } catch (_) {
+          window.location.hash = tabId;
+        }
+      }
 
       if (tabId === 'cricket') {
-        resizeCricketCanvas();
-        startCricketLoop();
-        updateCricketControlsVisibility();
+        try {
+          resizeCricketCanvas();
+          startCricketLoop();
+          updateCricketControlsVisibility();
+        } catch (e) {
+          console.warn('Cricket activation error:', e);
+        }
+      } else if (tabId === 'leaderboard') {
+        try {
+          renderLeaderboardView();
+        } catch (e) {
+          console.warn('Leaderboard activation error:', e);
+        }
       }
     }
 
@@ -3965,11 +3994,13 @@
     let isWordleDone = false;
 
     function initWordlePuzzle() {
+      const panel = document.getElementById('panel-wordle');
+      if (!panel) return; // Wordle replaced by Apex Velocity
       createWordleLayoutDOM();
       resetWordlePuzzle();
 
       window.addEventListener('keydown', (e) => {
-        if (!document.getElementById('panel-wordle').classList.contains('active')) return;
+        if (!panel.classList.contains('active')) return;
         if (e.key === 'Enter') processWordleKey('ENTER');
         else if (e.key === 'Backspace') processWordleKey('BACKSPACE');
         else if (/^[a-zA-Z]$/.test(e.key)) processWordleKey(e.key.toUpperCase());
@@ -3977,13 +4008,15 @@
     }
 
     function resetWordlePuzzle() {
+      const badge = document.getElementById('wordle-status-badge');
+      if (!badge) return;
       activeWordObj = TECH_DICTIONARY[Math.floor(Math.random() * TECH_DICTIONARY.length)];
       submittedGuesses = [];
       currentTypingStr = "";
       isWordleDone = false;
 
-      document.getElementById('wordle-status-badge').textContent = 'ATTEMPT 1 OF 6';
-      document.getElementById('wordle-status-badge').style.color = 'var(--text-main)';
+      badge.textContent = 'ATTEMPT 1 OF 6';
+      badge.style.color = 'var(--text-main)';
 
       document.querySelectorAll('.letter-slot-box').forEach(b => {
         b.textContent = '';
@@ -3999,6 +4032,7 @@
 
     function createWordleLayoutDOM() {
       const rowsContainer = document.getElementById('matrix-wordle-rows');
+      if (!rowsContainer) return;
       rowsContainer.innerHTML = '';
       for (let r = 0; r < 6; r++) {
         const row = document.createElement('div');
@@ -4013,6 +4047,7 @@
       }
 
       const hintsCol = document.getElementById('column-wordle-hints');
+      if (!hintsCol) return;
       hintsCol.innerHTML = '';
       for (let r = 0; r < 6; r++) {
         const card = document.createElement('div');
@@ -4209,36 +4244,43 @@
       applyArcadeTheme(target, true);
     }
 
-    // Immediate run to avoid theme flicker before onload
+    // Immediate theme sync
     initArcadeTheme();
 
-    window.onload = () => {
-      initArcadeTheme();
-      renderHeaderStats();
-      renderLeaderboardView();
-      initChessGame();
-      initTTTGame();
-      resizeCricketCanvas();
-      resetCricketMatch();
-      initWordlePuzzle();
-
-      const route = (window.location.hash || '').replace('#', '');
-      if (route === 'wordle' || route === 'apex') {
-        selectTab('apex');
-      } else if (['chess', 'ttt', 'cricket', 'leaderboard'].includes(route)) {
-        selectTab(route);
-      } else {
-        selectTab('chess');
-      }
-    };
-
-    window.addEventListener('hashchange', () => {
-      const h = (window.location.hash || '').replace('#', '');
+    function handleInitialRoute() {
+      const h = (window.location.hash || '').replace('#', '').trim().toLowerCase();
       if (h === 'wordle' || h === 'apex') {
         selectTab('apex');
       } else if (['chess', 'ttt', 'cricket', 'leaderboard'].includes(h)) {
         selectTab(h);
+      } else if (!h) {
+        selectTab('chess');
       }
+    }
+
+    // Run routing immediately to avoid any initial tab flicker or delay
+    handleInitialRoute();
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', handleInitialRoute);
+    }
+
+    window.onload = () => {
+      try { initArcadeTheme(); } catch (e) { console.warn(e); }
+      try { renderHeaderStats(); } catch (e) { console.warn(e); }
+      try { renderLeaderboardView(); } catch (e) { console.warn(e); }
+      try { initChessGame(); } catch (e) { console.warn(e); }
+      try { initTTTGame(); } catch (e) { console.warn(e); }
+      try {
+        resizeCricketCanvas();
+        resetCricketMatch();
+      } catch (e) { console.warn(e); }
+
+      handleInitialRoute();
+    };
+
+    window.addEventListener('hashchange', () => {
+      handleInitialRoute();
     });
   </script>
 </body>
