@@ -1,41 +1,115 @@
 <svg width="135" height="135" viewBox="0 0 135 135" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="cricketBg" x1="0" y1="0" x2="135" y2="135" gradientUnits="userSpaceOnUse">
+    <linearGradient id="cricketBgDark" x1="0" y1="0" x2="135" y2="135" gradientUnits="userSpaceOnUse">
       <stop offset="0%" stop-color="#141926"/>
-      <stop offset="100%" stop-color="#0a0d16"/>
+      <stop offset="50%" stop-color="#0e1320"/>
+      <stop offset="100%" stop-color="#080b12"/>
     </linearGradient>
-    <linearGradient id="cricketBorder" x1="0" y1="0" x2="135" y2="135" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#10b981" stop-opacity="0.6"/>
-      <stop offset="100%" stop-color="#10b981" stop-opacity="0.15"/>
+    <linearGradient id="cricketBorderDark" x1="0" y1="0" x2="135" y2="135" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#10b981" stop-opacity="0.85"/>
+      <stop offset="50%" stop-color="#059669" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.2"/>
     </linearGradient>
+    <linearGradient id="cricketWillowGrad" x1="42" y1="26" x2="68" y2="68" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#fef3c7"/>
+      <stop offset="30%" stop-color="#fde68a"/>
+      <stop offset="70%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </linearGradient>
+    <radialGradient id="cricketBallSphere" cx="79" cy="46" r="13" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#f87171"/>
+      <stop offset="35%" stop-color="#dc2626"/>
+      <stop offset="80%" stop-color="#991b1b"/>
+      <stop offset="100%" stop-color="#450a0a"/>
+    </radialGradient>
+    <radialGradient id="cricketAuraDark" cx="67.5" cy="50" r="30" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#10b981" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#10b981" stop-opacity="0"/>
+    </radialGradient>
   </defs>
 
-  <rect x="1" y="1" width="133" height="133" rx="14" fill="url(#cricketBg)"/>
-  <rect x="1" y="1" width="133" height="133" rx="14" stroke="url(#cricketBorder)" stroke-width="1.5"/>
+  <!-- Card Background -->
+  <rect x="1" y="1" width="133" height="133" rx="14" fill="url(#cricketBgDark)"/>
+  <rect x="1" y="1" width="133" height="133" rx="14" stroke="url(#cricketBorderDark)" stroke-width="1.5"/>
 
   <!-- Top Accent Glow -->
-  <path d="M24 2 H111" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" opacity="0.85"/>
+  <path d="M22 2 H113" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" opacity="0.9"/>
 
   <!-- Top Category Tag -->
-  <text x="67.5" y="19" font-family="'JetBrains Mono', -apple-system, monospace" font-size="8" font-weight="700" fill="#10b981" text-anchor="middle" letter-spacing="1.5" opacity="0.85">BAT &amp; BOWL</text>
+  <text x="67.5" y="19" font-family="'JetBrains Mono', -apple-system, monospace" font-size="8" font-weight="700" fill="#34d399" text-anchor="middle" letter-spacing="1.5">BAT &amp; BOWL</text>
 
-  <!-- Cricket Bat & Ball Favicon -->
-  <g transform="translate(45, 27) scale(0.9)">
-    <!-- Wooden Bat Angled -->
-    <rect x="12" y="4" width="5" height="10" rx="1" fill="#ffffff" transform="rotate(-35 12 4)"/>
-    <rect x="11" y="12" width="10" height="26" rx="2" fill="#d97706" transform="rotate(-35 11 12)"/>
-    <rect x="13" y="14" width="6" height="22" rx="1" fill="#b45309" transform="rotate(-35 13 14)"/>
+  <!-- Subtle Green Pitch Aura -->
+  <circle cx="67.5" cy="50" r="28" fill="url(#cricketAuraDark)"/>
 
-    <!-- Red Cricket Ball with Seam -->
-    <circle cx="34" cy="30" r="7.5" fill="#dc2626"/>
-    <path d="M29 32 C33 28, 35 28, 39 32" stroke="#ffffff" stroke-width="1.2" fill="none"/>
+  <!-- Ground Shadows -->
+  <ellipse cx="46" cy="73" rx="16" ry="3" fill="#020617" opacity="0.75"/>
+  <ellipse cx="82" cy="65" rx="9" ry="2.5" fill="#020617" opacity="0.6"/>
+
+  <!-- Background Classic Wickets / Stumps & Bails -->
+  <g opacity="0.55">
+    <!-- Three Timber Stumps -->
+    <rect x="76" y="27" width="2.5" height="34" rx="1.2" fill="#d97706"/>
+    <rect x="81.5" y="27" width="2.5" height="34" rx="1.2" fill="#d97706"/>
+    <rect x="87" y="27" width="2.5" height="34" rx="1.2" fill="#d97706"/>
+    <!-- Two Horizontal Bails -->
+    <rect x="75" y="25.5" width="7" height="1.8" rx="0.9" fill="#fde68a"/>
+    <rect x="83" y="25.5" width="7" height="1.8" rx="0.9" fill="#fde68a"/>
+  </g>
+
+  <!-- Handcrafted English Willow Cricket Bat -->
+  <g transform="rotate(-38 52 46)">
+    <!-- Cane Handle Grip with Texture Rings -->
+    <rect x="49" y="10" width="5.5" height="18" rx="2.2" fill="#f1f5f9"/>
+    <!-- Black / Gray Grip Spirals -->
+    <line x1="49" y1="13" x2="54.5" y2="13" stroke="#334155" stroke-width="0.9"/>
+    <line x1="49" y1="16" x2="54.5" y2="16" stroke="#334155" stroke-width="0.9"/>
+    <line x1="49" y1="19" x2="54.5" y2="19" stroke="#334155" stroke-width="0.9"/>
+    <line x1="49" y1="22" x2="54.5" y2="22" stroke="#334155" stroke-width="0.9"/>
+    <line x1="49" y1="25" x2="54.5" y2="25" stroke="#334155" stroke-width="0.9"/>
+
+    <!-- Rubber Grip Flared Cone -->
+    <polygon points="48,27 55.5,27 57,30 46.5,30" fill="#1e293b"/>
+
+    <!-- Main Willow Blade (Beveled Edges & Spine) -->
+    <path d="M46.5 30 L57 30 L56 68 C56 70.5, 54 72, 51.5 72 C49 72, 47 70.5, 47 68 Z" fill="url(#cricketWillowGrad)"/>
+
+    <!-- Blade Center Spine Highlight -->
+    <path d="M51.5 31 L51.5 68" stroke="#fef3c7" stroke-width="1.2" stroke-linecap="round" opacity="0.8"/>
+
+    <!-- Maker's Crest Badge on Bat Face -->
+    <polygon points="49.5,37 53.5,37 54.5,44 51.5,47 48.5,44" fill="#dc2626"/>
+    <polygon points="50.2,38 52.8,38 53.5,43 51.5,45.5 49.5,43" fill="#fbbf24"/>
+
+    <!-- Rubber Toe Guard (Black Base) -->
+    <path d="M47 68 C47 70.5, 49 72, 51.5 72 C54 72, 56 70.5, 56 68 Z" fill="#0f172a"/>
+  </g>
+
+  <!-- Dynamic Curved Motion Trail Behind Ball -->
+  <path d="M58 56 C68 57, 74 52, 79 46" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 3" opacity="0.8"/>
+  <path d="M56 59 C65 60, 72 55, 77 49" stroke="#34d399" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+
+  <!-- 3D Cherry-Red Leather Cricket Ball -->
+  <g id="cricket-ball">
+    <!-- Ball Body -->
+    <circle cx="82" cy="45" r="10.5" fill="url(#cricketBallSphere)"/>
+
+    <!-- Distinct White Seam with Cross Stitches -->
+    <path d="M73 48 C76 41, 85 41, 91 48" stroke="#ffffff" stroke-width="1.6" fill="none" opacity="0.95"/>
+    <line x1="75" y1="45" x2="77" y2="47" stroke="#ffffff" stroke-width="0.8" opacity="0.85"/>
+    <line x1="78" y1="43" x2="80" y2="45" stroke="#ffffff" stroke-width="0.8" opacity="0.85"/>
+    <line x1="81" y1="42.5" x2="83" y2="44.5" stroke="#ffffff" stroke-width="0.8" opacity="0.85"/>
+    <line x1="84" y1="43" x2="86" y2="45" stroke="#ffffff" stroke-width="0.8" opacity="0.85"/>
+    <line x1="87" y1="44.5" x2="89" y2="46.5" stroke="#ffffff" stroke-width="0.8" opacity="0.85"/>
+
+    <!-- Spherical Gloss Reflection Highlight -->
+    <ellipse cx="78.5" cy="40.5" rx="3.5" ry="2" fill="#ffffff" opacity="0.55" transform="rotate(-30 78.5 40.5)"/>
   </g>
 
   <!-- Title -->
-  <text x="67.5" y="85" font-family="'Outfit', -apple-system, sans-serif" font-size="12" font-weight="800" fill="#f8fafc" text-anchor="middle" letter-spacing="1">CRICKET</text>
+  <text x="67.5" y="87" font-family="'Outfit', -apple-system, sans-serif" font-size="12" font-weight="800" fill="#f8fafc" text-anchor="middle" letter-spacing="1">CRICKET</text>
 
   <!-- Interactive Action Button Pill -->
-  <rect x="22" y="98" width="91" height="24" rx="12" fill="rgba(16, 185, 129, 0.15)" stroke="#10b981" stroke-width="1.2"/>
-  <polygon points="45,105 45,115 54,110" fill="#10b981"/>
-  <text x="73" y="113.5" font-family="'Outfit', -apple-system, sans-serif" font-size="10.5" font-weight="800" fill="#10b981" text-anchor="middle" letter-spacing="1.2">PLAY</text>
+  <rect x="22" y="99" width="91" height="24" rx="12" fill="rgba(16, 185, 129, 0.16)" stroke="#10b981" stroke-width="1.3"/>
+  <polygon points="44,106 44,116 53,111" fill="#34d399"/>
+  <text x="73" y="114.5" font-family="'Outfit', -apple-system, sans-serif" font-size="10.5" font-weight="800" fill="#34d399" text-anchor="middle" letter-spacing="1.2">PLAY</text>
 </svg>
